@@ -1,4 +1,4 @@
 package org.gestoriarr.appgestoriarr.controller;
 
-public class usuarioController {
+public class UsuarioController {
 }
