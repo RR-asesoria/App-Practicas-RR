@@ -1,4 +1,4 @@
 package org.gestoriarr.appgestoriarr.repository;
 
-public class ClienteAppHistoricoRepo {
+public interface ClienteAppHistoricoRepo {
 }
