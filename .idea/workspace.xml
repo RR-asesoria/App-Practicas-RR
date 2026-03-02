@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="probando">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="sacamos un .idea que no sabemos de donde salio">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/.idea/FrontEnd.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/PruebaFront.txt" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/PruebaFront.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +94,7 @@
       <workItem from="1772191654795" duration="16000" />
       <workItem from="1772191682852" duration="14000" />
       <workItem from="1772191732553" duration="632000" />
-      <workItem from="1772460589833" duration="816000" />
+      <workItem from="1772460589833" duration="1150000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -108,7 +104,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772460711016</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="sacamos un .idea que no sabemos de donde salio">
+      <option name="closed" value="true" />
+      <created>1772461469179</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1772461469179</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,6 +120,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="probando" />
-    <option name="LAST_COMMIT_MESSAGE" value="probando" />
+    <MESSAGE value="sacamos un .idea que no sabemos de donde salio" />
+    <option name="LAST_COMMIT_MESSAGE" value="sacamos un .idea que no sabemos de donde salio" />
   </component>
 </project>
