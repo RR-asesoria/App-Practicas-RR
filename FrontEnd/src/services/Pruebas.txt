@@ -1,0 +1,1 @@
+Aquí se pondrá la lógica para conectarse con el BackEnd (llamadas a la API)
