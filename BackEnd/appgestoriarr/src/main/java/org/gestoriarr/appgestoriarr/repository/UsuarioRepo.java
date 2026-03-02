@@ -1,4 +1,4 @@
 package org.gestoriarr.appgestoriarr.repository;
 
-public interface UsuarioRepo {
+public class UsuarioRepo {
 }
