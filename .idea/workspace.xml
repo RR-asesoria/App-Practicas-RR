@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Agrego contenido a los txt de las carpetas">
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/views/Script.js" afterDir="false" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Agregamos el Script que faltaba">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +96,7 @@
       <workItem from="1772191654795" duration="16000" />
       <workItem from="1772191682852" duration="14000" />
       <workItem from="1772191732553" duration="632000" />
-      <workItem from="1772460589833" duration="2169000" />
+      <workItem from="1772460589833" duration="3674000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -138,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772462513387</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Agregamos el Script que faltaba">
+      <option name="closed" value="true" />
+      <created>1772462827377</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1772462827377</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +158,7 @@
     <MESSAGE value="Agregamos las carpetas del frontEnd" />
     <MESSAGE value="Agregamos las carpetas del frontEnd ahora con contenido" />
     <MESSAGE value="Agrego contenido a los txt de las carpetas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agrego contenido a los txt de las carpetas" />
+    <MESSAGE value="Agregamos el Script que faltaba" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agregamos el Script que faltaba" />
   </component>
 </project>
