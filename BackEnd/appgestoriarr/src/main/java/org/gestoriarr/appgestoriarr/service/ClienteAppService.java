@@ -1,4 +1,4 @@
 package org.gestoriarr.appgestoriarr.service;
 
-public class UsuarioServiceImp {
+public class ClienteAppService {
 }
