@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.gestoriarr.appgestoriarr.model.enums.*;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -26,10 +27,10 @@ public class ClienteApp {
     private boolean datosFiscalesDescargados;
     private String importe;
     private TipoFacturado tipoFacturado;
-    private RecogidaDatos recogidaDatos;
+    private TipoRecogidaDatos recogidaDatos;
     private boolean excelDatosElaboracion;
-    private Borrador borrador;
-    private Presentada presentada;
+    private TipoBorrador borrador;
+    private TipoPresentada presentada;
     private String cobrado;
     private TipoCliente tipoCliente;
     private EstadoCliente estadoCliente;
