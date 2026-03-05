@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.model;
 
 import lombok.*;
+import org.gestoriarr.appgestoriarr.model.enums.Rol;
 
 @Getter
 @Setter
