@@ -17,7 +17,6 @@ import java.util.Date;
 
 public class ClienteApp {
 
-
     private String nombre;
     private String nifCif;
     private Date fechaNacimiento;
@@ -35,7 +34,5 @@ public class ClienteApp {
     private TipoCliente tipoCliente;
     private EstadoCliente estadoCliente;
     private String casilla505Actual;
-
-
 
 }
