@@ -127,34 +127,21 @@ public class ClienteAppRepo {
         }
     }
 
-
-    // Buscador dinámico universal
-
-    public List<ClienteApp> findByFilters(Map<String, FiltroCliente> filtros) {
+    public List<ClienteApp> findByFilters(Map<String, Object> filtros) {
         try {
-            Query query = clientes();
+            Query query = clientes(); // referencia a la colección Firestore
 
-            for (Map.Entry<String, FiltroCliente> entry : filtros.entrySet()) {
+            // Aplicar solo filtros no nulos
+            for (Map.Entry<String, Object> entry : filtros.entrySet()) {
                 String campo = entry.getKey();
-                FiltroCliente filtro = entry.getValue();
+                Object valor = entry.getValue();
 
-                if (filtro.getValorIgual() != null) {
-                    query = query.whereEqualTo(campo, filtro.getValorIgual());
-                }
-                if (filtro.getValorMin() != null) {
-                    query = query.whereGreaterThanOrEqualTo(campo, filtro.getValorMin());
-                }
-                if (filtro.getValorMax() != null) {
-                    query = query.whereLessThanOrEqualTo(campo, filtro.getValorMax());
-                }
-                if (filtro.getValorParcial() != null) {
-                    query = query
-                            .orderBy(campo)
-                            .startAt(filtro.getValorParcial())
-                            .endAt(filtro.getValorParcial() + "\uf8ff");
+                if (valor != null) {
+                    query = query.whereEqualTo(campo, valor);
                 }
             }
 
+            // Ejecutar query
             QuerySnapshot resultado = query.get().get();
             List<ClienteApp> lista = new ArrayList<>();
             for (DocumentSnapshot doc : resultado.getDocuments()) {
@@ -163,7 +150,7 @@ public class ClienteAppRepo {
             return lista;
 
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error buscando clientes", e);
         }
     }
 }

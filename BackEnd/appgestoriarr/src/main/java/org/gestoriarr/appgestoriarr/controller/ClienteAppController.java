@@ -2,6 +2,7 @@ package org.gestoriarr.appgestoriarr.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -126,21 +127,19 @@ public class ClienteAppController {
         }
     }
 
-    // =========================
-    // BUSQUEDA POR FILTROS
-    // =========================
-    @Operation(summary = "Buscar clientes", description = "Busca clientes según los filtros indicados")
+    //busqueda dinamica
+    @Operation(summary = "Buscar clientes", description = "Busca clientes según filtros exactos seleccionados")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
+            @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClienteApp.class))))
     })
     @PostMapping("/buscar")
     public List<ClienteApp> buscarPorFiltros(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Filtros de búsqueda por atributos",
+                    description = "Filtros de búsqueda exacta por atributos (tipoCliente, nifCif, estadoCliente...)",
                     required = true,
-                    content = @Content(schema = @Schema(implementation = FiltroCliente.class))
+                    content = @Content(schema = @Schema(implementation = ClienteApp.class))
             )
-            @RequestBody Map<String, FiltroCliente> filtros) {
+            @RequestBody Map<String, Object> filtros) {
         return clienteService.buscarPorFiltros(filtros);
     }
 

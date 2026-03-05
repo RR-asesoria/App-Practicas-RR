@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteAppService {
@@ -65,13 +66,14 @@ public class ClienteAppService {
         repo.deleteById(nifCif);
     }
 
-    // =========================
-    // BUSQUEDA DINAMICA (por filtros)
-    // =========================
-    public List<ClienteApp> buscarPorFiltros(Map<String, FiltroCliente> filtros) {
-        return repo.findByFilters(filtros);
-    }
+    public List<ClienteApp> buscarPorFiltros(Map<String, Object> filtros) {
+        // Limpiamos filtros nulos para que no rompa Firestore
+        Map<String, Object> filtrosNoNulos = filtros.entrySet().stream()
+                .filter(e -> e.getValue() != null)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
+        return repo.findByFilters(filtrosNoNulos);
+    }
     // =========================
     // BUSCAR POR NOMBRE PARCIAL
     // =========================
