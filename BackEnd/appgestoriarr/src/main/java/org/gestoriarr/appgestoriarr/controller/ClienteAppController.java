@@ -1,5 +1,11 @@
 package org.gestoriarr.appgestoriarr.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.repository.FiltroCliente;
 import org.gestoriarr.appgestoriarr.service.ClienteAppService;
@@ -23,8 +29,19 @@ public class ClienteAppController {
     // =========================
     // CREAR CLIENTE
     // =========================
+    @Operation(summary = "Crear cliente", description = "Crea un nuevo cliente en la base de datos")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Cliente creado correctamente"),
+            @ApiResponse(responseCode = "409", description = "El cliente ya existe", content = @Content)
+    })
     @PostMapping
-    public ResponseEntity<String> crearCliente(@RequestBody ClienteApp cliente) {
+    public ResponseEntity<String> crearCliente(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos del cliente a crear",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ClienteApp.class))
+            )
+            @RequestBody ClienteApp cliente) {
         try {
             clienteService.crearCliente(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body("Cliente creado correctamente");
@@ -36,8 +53,14 @@ public class ClienteAppController {
     // =========================
     // OBTENER CLIENTE POR DNI
     // =========================
+    @Operation(summary = "Obtener cliente", description = "Obtiene un cliente por su NIF/CIF")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Cliente encontrado", content = @Content(schema = @Schema(implementation = ClienteApp.class))),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
+    })
     @GetMapping("/{nifCif}")
-    public ResponseEntity<ClienteApp> obtenerCliente(@PathVariable String nifCif) {
+    public ResponseEntity<ClienteApp> obtenerCliente(
+            @Parameter(description = "NIF/CIF del cliente", required = true) @PathVariable String nifCif) {
         try {
             ClienteApp cliente = clienteService.obtenerCliente(nifCif);
             return ResponseEntity.ok(cliente);
@@ -49,6 +72,10 @@ public class ClienteAppController {
     // =========================
     // OBTENER TODOS LOS CLIENTES
     // =========================
+    @Operation(summary = "Obtener todos los clientes", description = "Devuelve la lista completa de clientes")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Lista de clientes", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
+    })
     @GetMapping
     public List<ClienteApp> obtenerTodos() {
         return clienteService.obtenerTodos();
@@ -57,11 +84,22 @@ public class ClienteAppController {
     // =========================
     // ACTUALIZAR CLIENTE
     // =========================
+    @Operation(summary = "Actualizar cliente", description = "Actualiza los datos de un cliente existente")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Cliente actualizado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
+    })
     @PutMapping("/{nifCif}")
-    public ResponseEntity<String> actualizarCliente(@PathVariable String nifCif,
-                                                    @RequestBody ClienteApp cliente) {
+    public ResponseEntity<String> actualizarCliente(
+            @Parameter(description = "NIF/CIF del cliente a actualizar", required = true) @PathVariable String nifCif,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos del cliente a actualizar",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ClienteApp.class))
+            )
+            @RequestBody ClienteApp cliente) {
         try {
-            cliente.setNifCif(nifCif); // Aseguramos que el DNI sea consistente
+            cliente.setNifCif(nifCif); // Aseguramos consistencia
             clienteService.actualizarCliente(cliente);
             return ResponseEntity.ok("Cliente actualizado correctamente");
         } catch (RuntimeException e) {
@@ -72,8 +110,14 @@ public class ClienteAppController {
     // =========================
     // ELIMINAR CLIENTE
     // =========================
+    @Operation(summary = "Eliminar cliente", description = "Elimina un cliente por su NIF/CIF")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
+    })
     @DeleteMapping("/{nifCif}")
-    public ResponseEntity<String> eliminarCliente(@PathVariable String nifCif) {
+    public ResponseEntity<String> eliminarCliente(
+            @Parameter(description = "NIF/CIF del cliente a eliminar", required = true) @PathVariable String nifCif) {
         try {
             clienteService.eliminarCliente(nifCif);
             return ResponseEntity.ok("Cliente eliminado correctamente");
@@ -85,24 +129,45 @@ public class ClienteAppController {
     // =========================
     // BUSQUEDA POR FILTROS
     // =========================
+    @Operation(summary = "Buscar clientes", description = "Busca clientes según los filtros indicados")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
+    })
     @PostMapping("/buscar")
-    public List<ClienteApp> buscarPorFiltros(@RequestBody Map<String, FiltroCliente> filtros) {
+    public List<ClienteApp> buscarPorFiltros(
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Filtros de búsqueda por atributos",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = FiltroCliente.class))
+            )
+            @RequestBody Map<String, FiltroCliente> filtros) {
         return clienteService.buscarPorFiltros(filtros);
     }
 
     // =========================
     // BUSQUEDA POR NOMBRE PARCIAL
     // =========================
+    @Operation(summary = "Buscar clientes por nombre", description = "Busca clientes por coincidencia parcial de nombre")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
+    })
     @GetMapping("/buscar/nombre")
-    public List<ClienteApp> buscarPorNombre(@RequestParam String nombre) {
+    public List<ClienteApp> buscarPorNombre(
+            @Parameter(description = "Texto del nombre a buscar", required = true) @RequestParam String nombre) {
         return clienteService.buscarPorNombre(nombre);
     }
 
     // =========================
     // MOVER CASILLA 505
     // =========================
+    @Operation(summary = "Mover casilla505", description = "Pasa la casilla505Actual a casilla505Anterior y resetea la actual")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Casilla505 movida correctamente"),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
+    })
     @PostMapping("/{nifCif}/mover-casilla505")
-    public ResponseEntity<String> moverCasilla505(@PathVariable String nifCif) {
+    public ResponseEntity<String> moverCasilla505(
+            @Parameter(description = "NIF/CIF del cliente", required = true) @PathVariable String nifCif) {
         try {
             clienteService.moverCasilla505(nifCif);
             return ResponseEntity.ok("Casilla505 movida correctamente");
