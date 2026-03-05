@@ -36,7 +36,7 @@ public class ClienteAppHistoricoController {
         return clienteHistoricoService.obtenerTodosClientes();
     }
 
-    @DeleteMapping("/{nifCif")
+    @DeleteMapping("/{nifCif}")
     public ResponseEntity<String> eliminarCliente(@PathVariable String nifCif) {
         try {
             clienteHistoricoService.eliminarCliente(nifCif);
