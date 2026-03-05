@@ -1,8 +1,11 @@
 package org.gestoriarr.appgestoriarr.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.FirestoreClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
@@ -32,5 +35,11 @@ public class FirebaseConfig {
             System.err.println("Failed to initialize Firebase: " + e.getMessage());
             throw new RuntimeException("Failed to initialize Firebase", e);
         }
+    }
+
+    @Bean
+    public Firestore firestore() {
+        // Este es el bean que Spring inyectará en tu repo
+        return FirestoreClient.getFirestore();
     }
 }
