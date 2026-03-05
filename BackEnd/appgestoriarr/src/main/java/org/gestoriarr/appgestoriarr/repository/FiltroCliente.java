@@ -1,6 +1,5 @@
 package org.gestoriarr.appgestoriarr.repository;
 
-
 public class FiltroCliente {
 
     private Object valorIgual;
@@ -10,7 +9,6 @@ public class FiltroCliente {
 
     public FiltroCliente() {}
 
-    // Getters y setters
     public Object getValorIgual() { return valorIgual; }
     public void setValorIgual(Object valorIgual) { this.valorIgual = valorIgual; }
     public String getValorParcial() { return valorParcial; }

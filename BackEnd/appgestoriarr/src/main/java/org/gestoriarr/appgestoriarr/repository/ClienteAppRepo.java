@@ -25,21 +25,18 @@ public class ClienteAppRepo {
     }
 
     // =========================
-    // CRUD
+    // CRUD / estilo Spring Data
     // =========================
 
-    public void crearCliente(ClienteApp cliente) {
+    public void save(ClienteApp cliente) {
         try {
-            if (existeCliente(cliente.getNifCif())) {
-                throw new RuntimeException("El cliente ya existe");
-            }
             clientes().document(cliente.getNifCif()).set(cliente).get();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public boolean existeCliente(String nifCif) {
+    public boolean existsById(String nifCif) {
         try {
             DocumentSnapshot doc = clientes().document(nifCif).get().get();
             return doc.exists();
@@ -48,7 +45,7 @@ public class ClienteAppRepo {
         }
     }
 
-    public ClienteApp obtenerCliente(String nifCif) {
+    public ClienteApp findById(String nifCif) {
         try {
             DocumentSnapshot doc = clientes().document(nifCif).get().get();
             if (!doc.exists()) return null;
@@ -58,19 +55,28 @@ public class ClienteAppRepo {
         }
     }
 
-    public List<ClienteApp> obtenerTodos() {
+    public List<ClienteApp> findAll() {
         try {
             QuerySnapshot query = clientes().get().get();
-            return query.getDocuments()
-                    .stream()
-                    .map(doc -> doc.toObject(ClienteApp.class))
-                    .toList();
+            List<ClienteApp> lista = new ArrayList<>();
+            for (DocumentSnapshot doc : query.getDocuments()) {
+                lista.add(doc.toObject(ClienteApp.class));
+            }
+            return lista;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void actualizarCliente(ClienteApp cliente) {
+    public void deleteById(String nifCif) {
+        try {
+            clientes().document(nifCif).delete().get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(ClienteApp cliente) {
         try {
             clientes().document(cliente.getNifCif())
                     .set(cliente, SetOptions.merge())
@@ -80,23 +86,16 @@ public class ClienteAppRepo {
         }
     }
 
-    public void eliminarCliente(String nifCif) {
-        try {
-            clientes().document(nifCif).delete().get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     // =========================
     // Busqueda parcial por nombre
     // =========================
-    public List<ClienteApp> buscarPorNombre(String nombre) {
+    public List<ClienteApp> findByNombreContaining(String nombre) {
         try {
             Query query = clientes()
                     .orderBy("nombre")
                     .startAt(nombre)
                     .endAt(nombre + "\uf8ff");
+
             QuerySnapshot resultado = query.get().get();
             List<ClienteApp> lista = new ArrayList<>();
             for (DocumentSnapshot doc : resultado.getDocuments()) {
@@ -117,9 +116,11 @@ public class ClienteAppRepo {
             DocumentSnapshot doc = clienteRef.get().get();
             if (!doc.exists()) return;
             String casillaActual = doc.getString("casilla505Actual");
+
             Map<String,Object> updates = new HashMap<>();
             updates.put("casilla505anterior", casillaActual);
             updates.put("casilla505Actual", null);
+
             clienteRef.update(updates).get();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -129,9 +130,10 @@ public class ClienteAppRepo {
     // =========================
     // Buscador dinámico universal
     // =========================
-    public List<ClienteApp> buscarAvanzado(Map<String, FiltroCliente> filtros) {
+    public List<ClienteApp> findByFilters(Map<String, FiltroCliente> filtros) {
         try {
             Query query = clientes();
+
             for (Map.Entry<String, FiltroCliente> entry : filtros.entrySet()) {
                 String campo = entry.getKey();
                 FiltroCliente filtro = entry.getValue();
@@ -164,5 +166,4 @@ public class ClienteAppRepo {
             throw new RuntimeException(e);
         }
     }
-
 }
