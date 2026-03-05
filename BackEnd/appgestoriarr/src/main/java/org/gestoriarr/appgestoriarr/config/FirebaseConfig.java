@@ -19,7 +19,7 @@ public class FirebaseConfig {
             // Check if Firebase is already initialized
             if (FirebaseApp.getApps().isEmpty()) {
                 // Load the service account key from resources folder
-                ClassPathResource resource = new ClassPathResource("key.json");
+                ClassPathResource resource = new ClassPathResource("keyfirebase.json");
 
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(resource.getInputStream()))
