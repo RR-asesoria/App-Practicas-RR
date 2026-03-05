@@ -222,30 +222,26 @@ public class ClienteAppRepo {
 
 // pasar la casilla505
 
-    public void actualizarCasilla505DesdeHistorico(String nifCif) {
+    public void moverCasilla505(String nifCif) {
 
         try {
 
-            DocumentSnapshot historico =
-                    historicos()
-                            .document(nifCif)
-                            .get()
-                            .get();
+            DocumentReference clienteRef = clientes().document(nifCif);
 
-            if (!historico.exists()) {
+            DocumentSnapshot doc = clienteRef.get().get();
+
+            if (!doc.exists()) {
                 return;
             }
 
-            String casilla505Actual =
-                    historico.getString("casilla505Actual");
+            String casillaActual = doc.getString("casilla505Actual");
 
-            clientes()
-                    .document(nifCif)
-                    .update(
-                            "casilla505anterior",
-                            casilla505Actual
-                    )
-                    .get();
+            Map<String,Object> updates = new HashMap<>();
+
+            updates.put("casilla505anterior", casillaActual);
+            updates.put("casilla505Actual", null);
+
+            clienteRef.update(updates).get();
 
         } catch (Exception e) {
 
