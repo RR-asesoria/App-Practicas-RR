@@ -46,7 +46,7 @@ public class ClienteAppHistoricoController {
         }
     }
 
-    @GetMapping("/buscar")
+    @PostMapping("/buscar")
     public List<ClienteAppHistorico> buscarPorFiltros(@RequestBody Map<String, FiltroCliente> filtros) {
         return clienteHistoricoService.buscarPorFiltros(filtros);
     }
