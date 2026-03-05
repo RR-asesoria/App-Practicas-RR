@@ -1,0 +1,8 @@
+package org.gestoriarr.appgestoriarr.model.enums;
+
+public enum TipoRecogidaDatos {
+    FACTURARELLENANO,
+    FACTURARELLENASIENVIADANO,
+    FACTURARELLENASIENVIADASIFIRMADANO,
+    FACTURARELLENASIENVIADASIFIRMADASI
+}
