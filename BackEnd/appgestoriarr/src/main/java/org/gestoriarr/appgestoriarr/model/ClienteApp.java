@@ -1,9 +1,6 @@
 package org.gestoriarr.appgestoriarr.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.gestoriarr.appgestoriarr.model.enums.*;
 
 import java.time.LocalDate;
@@ -13,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 
 
 public class ClienteApp {

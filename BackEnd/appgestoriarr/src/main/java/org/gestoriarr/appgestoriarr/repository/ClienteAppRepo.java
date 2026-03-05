@@ -24,9 +24,9 @@ public class ClienteAppRepo {
         return db.collection("ClienteAppHistorico");
     }
 
-    // =========================
+
     // CRUD / estilo Spring Data
-    // =========================
+
 
     public void save(ClienteApp cliente) {
         try {
@@ -86,9 +86,9 @@ public class ClienteAppRepo {
         }
     }
 
-    // =========================
+
     // Busqueda parcial por nombre
-    // =========================
+
     public List<ClienteApp> findByNombreContaining(String nombre) {
         try {
             Query query = clientes()
@@ -107,9 +107,9 @@ public class ClienteAppRepo {
         }
     }
 
-    // =========================
+
     // Mover casilla505Actual -> casilla505Anterior
-    // =========================
+
     public void moverCasilla505(String nifCif) {
         try {
             DocumentReference clienteRef = clientes().document(nifCif);
@@ -127,9 +127,9 @@ public class ClienteAppRepo {
         }
     }
 
-    // =========================
+
     // Buscador dinámico universal
-    // =========================
+
     public List<ClienteApp> findByFilters(Map<String, FiltroCliente> filtros) {
         try {
             Query query = clientes();
