@@ -2,6 +2,7 @@ package org.gestoriarr.appgestoriarr.service;
 
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
+import org.gestoriarr.appgestoriarr.repository.FiltroCliente;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,101 +20,72 @@ public class ClienteAppService {
     // =========================
     // CREAR CLIENTE
     // =========================
-
     public void crearCliente(ClienteApp cliente) {
-
-        if (repo.existeCliente(cliente.getNifCif())) {
+        if (repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente ya existe");
         }
-
-        repo.crearCliente(cliente);
+        repo.save(cliente);
     }
 
     // =========================
     // OBTENER CLIENTE
     // =========================
-
     public ClienteApp obtenerCliente(String nifCif) {
-
-        ClienteApp cliente = repo.obtenerCliente(nifCif);
-
+        ClienteApp cliente = repo.findById(nifCif);
         if (cliente == null) {
             throw new RuntimeException("Cliente no encontrado");
         }
-
         return cliente;
     }
 
     // =========================
     // OBTENER TODOS
     // =========================
-
     public List<ClienteApp> obtenerTodos() {
-
-        return repo.obtenerTodos();
-
+        return repo.findAll();
     }
 
     // =========================
     // ACTUALIZAR CLIENTE
     // =========================
-
     public void actualizarCliente(ClienteApp cliente) {
-
-        if (!repo.existeCliente(cliente.getNifCif())) {
+        if (!repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente no existe");
         }
-
-        repo.actualizarCliente(cliente);
-
+        repo.update(cliente);
     }
 
     // =========================
     // ELIMINAR CLIENTE
     // =========================
-
     public void eliminarCliente(String nifCif) {
-
-        if (!repo.existeCliente(nifCif)) {
+        if (!repo.existsById(nifCif)) {
             throw new RuntimeException("El cliente no existe");
         }
-
-        repo.eliminarCliente(nifCif);
-
+        repo.deleteById(nifCif);
     }
 
     // =========================
-    // BUSQUEDA DINAMICA
+    // BUSQUEDA DINAMICA (por filtros)
     // =========================
-
-    public List<ClienteApp> buscar(Map<String, Object> filtros) {
-
-        return repo.buscar(filtros);
-
+    public List<ClienteApp> buscarPorFiltros(Map<String, FiltroCliente> filtros) {
+        return repo.findByFilters(filtros);
     }
 
     // =========================
-    // BUSCAR POR NOMBRE
+    // BUSCAR POR NOMBRE PARCIAL
     // =========================
-
     public List<ClienteApp> buscarPorNombre(String nombre) {
-
-        return repo.buscarPorNombre(nombre);
-
+        return repo.findByNombreContaining(nombre);
     }
 
     // =========================
-    // COPIAR CASILLA 505
+    // COPIAR/MOVER CASILLA 505
     // =========================
-
-    public void actualizarCasilla505DesdeHistorico(String nifCif) {
-
-        if (!repo.existeCliente(nifCif)) {
+    public void moverCasilla505(String nifCif) {
+        if (!repo.existsById(nifCif)) {
             throw new RuntimeException("El cliente no existe");
         }
-
-        repo.actualizarCasilla505DesdeHistorico(nifCif);
-
+        repo.moverCasilla505(nifCif);
     }
-
 }
