@@ -16,6 +16,7 @@ public class SecurityConfig {
                         .anyRequest().permitAll() // permite todo sin autenticación
                 );
 
+
         return http.build();
     }
 }
