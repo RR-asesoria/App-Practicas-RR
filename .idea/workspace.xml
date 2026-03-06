@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="subo el index.html" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="subo el consultarTablas.html">
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/menu.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +101,7 @@
       <workItem from="1772460589833" duration="5709000" />
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
-      <workItem from="1772790778342" duration="2458000" />
+      <workItem from="1772790778342" duration="2774000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -187,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772795563763</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="subo el consultarTablas.html">
+      <option name="closed" value="true" />
+      <created>1772795753061</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1772795753061</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -205,6 +217,7 @@
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
     <MESSAGE value="edito css" />
     <MESSAGE value="subo el index.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="subo el index.html" />
+    <MESSAGE value="subo el consultarTablas.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="subo el consultarTablas.html" />
   </component>
 </project>
