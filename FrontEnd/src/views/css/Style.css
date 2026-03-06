@@ -1,0 +1,292 @@
+/*Css del Login*/
+
+
+body.login-page{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f5f5;
+    font-family:Arial, sans-serif;
+}
+
+.login{
+    width:220px;
+    height: 140px;
+    padding:16px;
+    background:white;
+    border-radius:14px;
+    box-shadow:0 6px 16px rgba(0, 0, 0, 0.08);
+    text-align:center;
+}
+
+.login h2{
+    font-size:16px;
+    margin-top:50;
+    margin-bottom:12px;
+}
+
+.login input{
+    display:block;
+    width:85%;
+    margin:6px auto;
+    padding:7px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.login input:focus{
+    outline:none;
+    border:1px solid #787878;
+}
+
+.login button{
+    width:65%;
+    margin:10px auto 0 auto;
+    display:block;
+    padding:7px;
+    border:none;
+    border-radius:8px;
+    background:#4a6cf7;
+    color:white;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.login button:hover{
+    background:#3c5ce0;
+}
+
+
+
+
+
+
+
+/*Css ConsultarTablas*/
+
+body.consultarTablas-page {
+    margin-left: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* La tarjeta base renombrada */
+.consultas {
+    background-color: #ffffff;
+    padding: 18px 40px; /* Aquí tienes el espacio a los costados */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+}
+
+/* Ancho del buscador */
+.consultas-ancho {
+    width: 850px;
+}
+
+.consultas-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.consultas-header i {
+    font-size: 28px;
+    color: #2d3436;
+}
+
+.consultas-header h2 {
+    font-size: 15px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    text-transform: uppercase;
+}
+
+/* Alineación horizontal */
+.consultas-menu-horizontal {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.consultas-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.consultas-item label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #7f8fa6;
+    text-transform: uppercase;
+}
+
+/* Inputs */
+.consultas-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 13px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+/* Botón Aceptar/Buscar */
+.consultas-aceptar {
+    padding: 11px 20px;
+    background-color: #00a8ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.consultas-aceptar:hover {
+    background-color: #0097e6;
+}
+
+/* Tabla de consultas */
+.consultas-tabla-container {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.consultas-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.consultas-tabla th {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #2d3436;
+}
+
+.consultas-tabla td {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.tabla-vacia {
+    text-align: center;
+    color: #ccc;
+    padding: 20px !important;
+}
+
+
+
+
+
+/*Css Usuarios*/
+
+body .usuariosBody {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Div Principal */
+.usuarios {
+    background-color: #ffffff;
+    width: 260px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+}
+
+.usuarios-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.usuarios-header i {
+    font-size: 28px;
+    color: #2d3436;
+}
+
+.usuarios-header h2 {
+    font-size: 15px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    letter-spacing: 0.5px;
+}
+
+.usuarios-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+/* Botones de navegación */
+.usuarios-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background-color: #ffffff;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2f3640;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.usuarios-btn:hover {
+    border-color: #00a8ff;
+    color: #00a8ff;
+    background-color: #f0f9ff;
+}
+
+.usuarios-btn i {
+    font-size: 14px;
+    color: #7f8fa6;
+}
+
+.usuarios-btn:hover i {
+    color: #00a8ff;
+}
+
+/* Botón Aceptar final */
+.usuarios-aceptar {
+    width: 100%;
+    padding: 12px;
+    background-color: #00a8ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.usuarios-aceptar:hover {
+    background-color: #0097e6;
+}

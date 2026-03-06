@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Agregamos el Script que faltaba">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico htmls">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +100,10 @@
       <workItem from="1772191654795" duration="16000" />
       <workItem from="1772191682852" duration="14000" />
       <workItem from="1772191732553" duration="632000" />
-      <workItem from="1772460589833" duration="3674000" />
+      <workItem from="1772460589833" duration="5709000" />
+      <workItem from="1772701848979" duration="1311000" />
+      <workItem from="1772703351932" duration="3592000" />
+      <workItem from="1772790778342" duration="1057000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -146,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772462827377</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Modifico htmls">
+      <option name="closed" value="true" />
+      <created>1772464441444</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1772464441444</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +174,7 @@
     <MESSAGE value="Agregamos las carpetas del frontEnd ahora con contenido" />
     <MESSAGE value="Agrego contenido a los txt de las carpetas" />
     <MESSAGE value="Agregamos el Script que faltaba" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregamos el Script que faltaba" />
+    <MESSAGE value="Modifico htmls" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifico htmls" />
   </component>
 </project>
