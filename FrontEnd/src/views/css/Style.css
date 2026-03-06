@@ -290,3 +290,231 @@ body .usuariosBody {
 .usuarios-aceptar:hover {
     background-color: #0097e6;
 }
+
+/* Aquí empieza el CSS de Carlos */
+
+/* ===== VARIABLES ===== */
+
+:root{
+
+    --color-primary:#4a6cf7;
+    --color-bg:#eef1f6;
+    --color-card:#ffffff;
+    --color-border:#dcdcdc;
+    --color-text:#333;
+
+    --radius:8px;
+    --transition:0.25s;
+
+}
+
+/* ===== RESET ===== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:var(--color-bg);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+/* CSS Menú */
+
+/* ===== APP ===== */
+
+.app{
+
+    width:720px;
+    background:var(--color-card);
+    border-radius:var(--radius);
+    padding:40px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    position:relative;
+
+}
+
+/* ===== HEADER ===== */
+
+.app__title{
+
+    text-align:center;
+    font-weight:500;
+    margin-bottom:40px;
+    color:var(--color-text);
+
+}
+
+/* ===== MENU ===== */
+
+.menu{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+
+}
+
+/* ===== BUTTON ===== */
+
+.menu__button{
+
+    width:260px;
+    padding:12px 16px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:#f7f8fa;
+    border:1px solid var(--color-border);
+    border-radius:var(--radius);
+
+    font-size:14px;
+    cursor:pointer;
+
+    transition:all var(--transition);
+
+}
+
+.menu__button i{
+
+    color:var(--color-primary);
+
+}
+
+/* hover */
+
+.menu__button:hover{
+
+    background:#f0f3ff;
+    border-color:var(--color-primary);
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+
+}
+
+/* active */
+
+.menu__button:active{
+
+    transform:scale(.97);
+
+}
+
+/* ===== INFO BOX ===== */
+
+.info{
+
+    position:absolute;
+    right:-260px;
+    top:160px;
+
+    width:220px;
+
+    background:#fafafa;
+    border:1px solid var(--color-border);
+
+    padding:15px;
+
+    font-size:13px;
+    line-height:1.5;
+
+    border-radius:var(--radius);
+
+}
+
+/* ===== IMPORT ===== */
+
+.import{
+
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+
+}
+
+#importButton i{
+
+    color:#2aa44f;
+
+}
+
+#excelFile{
+
+    display:none;
+
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:900px){
+
+    .info{
+
+        position:static;
+        margin-top:30px;
+        width:100%;
+
+    }
+
+}
+
+/* CSS Agregar Cliente */
+
+.agregarCliente-page .form-card{
+
+    width:520px;
+    margin:auto;
+    padding:30px;
+
+    background:white;
+    border:1px solid var(--color-border);
+    border-radius:8px;
+
+}
+
+.cliente-form{
+
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:12px 20px;
+
+}
+
+.cliente-form label{
+
+    font-size:13px;
+    color:#444;
+    align-self:center;
+
+}
+
+.cliente-form input{
+
+    height:26px;
+    border:1px solid #bbb;
+    padding:4px 6px;
+    font-size:13px;
+
+    transition: border-color 0.2s ease;
+
+}
+
+.cliente-form input:focus{
+
+    outline:none;
+    border-color:#4a6cf7;
+
+}
+
+/* Aquí termina el CSS de Carlos */
