@@ -316,7 +316,12 @@ body .usuariosBody {
     padding:0;
 }
 
-body{
+
+/* CSS Menú */
+
+/* ===== APP ===== */
+
+.bodyMenu{
 
     font-family: "Segoe UI", Arial, sans-serif;
     background:var(--color-bg);
@@ -326,10 +331,6 @@ body{
     align-items:center;
 
 }
-
-/* CSS Menú */
-
-/* ===== APP ===== */
 
 .app{
 
