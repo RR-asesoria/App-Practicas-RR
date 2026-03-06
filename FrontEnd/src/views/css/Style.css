@@ -80,7 +80,7 @@ body.consultarTablas-page {
 /* La tarjeta base renombrada */
 .consultas {
     background-color: #ffffff;
-    padding: 18px 40px; /* Aquí tienes el espacio a los costados */
+    padding: 18px 40px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     border: 1px solid #e1e4e8;
