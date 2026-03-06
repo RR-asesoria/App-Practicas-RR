@@ -6,13 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * FiltroCliente permite filtrar cualquier campo de ClienteApp.
- * Puede filtrar por:
- *  - valorIgual (igualdad exacta)
- *  - valorMin / valorMax (rangos numéricos o fechas)
- *  - valorParcial (texto que empieza con ...)
- */
+//CLASE PARA ELIMINAR, YA NO ES NECESARIA PERO HAY QUE QUITAR LA LOGICA DE HISTÓRICO
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,21 +14,18 @@ import lombok.Setter;
 @Builder
 public class FiltroCliente {
 
-    /** Igualdad exacta */
+
     private Object valorIgual;
 
-    /** Búsqueda parcial (String) */
+
     private String valorParcial;
 
-    /** Valor mínimo (Number o fecha) */
     private Object valorMin;
 
-    /** Valor máximo (Number o fecha) */
+
     private Object valorMax;
 
-    /**
-     * Métodos de fábrica para simplificar creación de filtros:
-     */
+
     public static FiltroCliente igual(Object valor) {
         return FiltroCliente.builder().valorIgual(valor).build();
     }

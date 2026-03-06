@@ -2,7 +2,6 @@ package org.gestoriarr.appgestoriarr.service;
 
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
-import org.gestoriarr.appgestoriarr.repository.FiltroCliente;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

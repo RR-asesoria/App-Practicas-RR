@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
-import org.gestoriarr.appgestoriarr.repository.FiltroCliente;
 import org.gestoriarr.appgestoriarr.service.ClienteAppService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -132,7 +131,7 @@ public class ClienteAppController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClienteApp.class))))
     })
-    @PostMapping("/buscar")
+    @PostMapping("/buscarporfiltros")
     public List<ClienteApp> buscarPorFiltros(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Filtros de búsqueda exacta por atributos (tipoCliente, nifCif, estadoCliente...)",
