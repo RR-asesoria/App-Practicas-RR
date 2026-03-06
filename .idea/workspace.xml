@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="edito css">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -97,7 +99,7 @@
       <workItem from="1772460589833" duration="5709000" />
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
-      <workItem from="1772790778342" duration="1361000" />
+      <workItem from="1772790778342" duration="2147000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -163,7 +165,23 @@
       <option name="project" value="LOCAL" />
       <updated>1772794358315</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez">
+      <option name="closed" value="true" />
+      <created>1772794612364</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1772794612364</updated>
+    </task>
+    <task id="LOCAL-00010" summary="edito css">
+      <option name="closed" value="true" />
+      <created>1772794673571</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1772794673571</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +196,8 @@
     <MESSAGE value="Agregamos el Script que faltaba" />
     <MESSAGE value="Modifico htmls" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
+    <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
+    <MESSAGE value="edito css" />
+    <option name="LAST_COMMIT_MESSAGE" value="edito css" />
   </component>
 </project>
