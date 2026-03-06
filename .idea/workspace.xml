@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico htmls">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" afterDir="false" />
-    </list>
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +97,7 @@
       <workItem from="1772460589833" duration="5709000" />
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
-      <workItem from="1772790778342" duration="1057000" />
+      <workItem from="1772790778342" duration="1361000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -161,7 +155,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772464441444</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css">
+      <option name="closed" value="true" />
+      <created>1772794358315</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1772794358315</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +177,7 @@
     <MESSAGE value="Agrego contenido a los txt de las carpetas" />
     <MESSAGE value="Agregamos el Script que faltaba" />
     <MESSAGE value="Modifico htmls" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifico htmls" />
+    <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
+    <option name="LAST_COMMIT_MESSAGE" value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
   </component>
 </project>
