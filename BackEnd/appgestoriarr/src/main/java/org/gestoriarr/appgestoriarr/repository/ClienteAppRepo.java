@@ -4,6 +4,8 @@ import com.google.cloud.firestore.*;
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -137,7 +139,19 @@ public class ClienteAppRepo {
                 Object valor = entry.getValue();
 
                 if (valor != null) {
-                    query = query.whereEqualTo(campo, valor);
+                    // Convertimos string ISO a Date si el campo es fecha
+                    if ("fechaNacimiento".equals(campo) && valor instanceof String) {
+                        String fechaStr = ((String) valor).trim();
+                        try {
+                            Instant instant = Instant.parse(fechaStr); // parse ISO 8601
+                            Date fecha = Date.from(instant);           // convertimos a java.util.Date
+                            query = query.whereEqualTo(campo, fecha);
+                        } catch (DateTimeParseException e) {
+                            throw new RuntimeException("Formato de fecha inválido: " + fechaStr, e);
+                        }
+                    } else {
+                        query = query.whereEqualTo(campo, valor);
+                    }
                 }
             }
 
