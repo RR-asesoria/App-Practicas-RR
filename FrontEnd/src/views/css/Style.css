@@ -472,6 +472,17 @@ body.usuariosBody {
 
 /* CSS Agregar Cliente */
 
+body.agregarCliente-page{
+
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:var(--color-bg);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
 .agregarCliente-page .form-card{
 
     width:520px;
