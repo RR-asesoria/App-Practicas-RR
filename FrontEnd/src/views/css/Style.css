@@ -389,10 +389,20 @@ body.usuariosBody {
 
 }
 
-.menu__button i{
+.menu__button .fa-user-plus{
+    color:#4a6cf7;
+}
 
-    color:var(--color-primary);
+.menu__button .fa-table{
+    color:#00a8ff;
+}
 
+.menu__button .fa-rotate{
+    color:#e67e22;
+}
+
+.menu__button .fa-users{
+    color:#9b59b6;
 }
 
 /* hover */
