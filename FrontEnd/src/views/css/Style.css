@@ -12,9 +12,9 @@ body.login-page{
 }
 
 .login{
-    width:220px;
-    height: 140px;
-    padding:16px;
+    width:360px;
+    height: 260px;
+    padding:40px;
     background:white;
     border-radius:14px;
     box-shadow:0 6px 16px rgba(0, 0, 0, 0.08);
@@ -22,19 +22,18 @@ body.login-page{
 }
 
 .login h2{
-    font-size:16px;
-    margin-top:50;
-    margin-bottom:12px;
+    font-size:24px;
+    margin-bottom:16px;
 }
 
 .login input{
     display:block;
     width:85%;
     margin:6px auto;
-    padding:7px;
+    padding:10px;
     border:1px solid #ddd;
     border-radius:8px;
-    font-size:12px;
+    font-size:16px;
 }
 
 .login input:focus{
@@ -43,15 +42,15 @@ body.login-page{
 }
 
 .login button{
-    width:65%;
-    margin:10px auto 0 auto;
+    width:85%;
+    margin:18px auto 0 auto;
     display:block;
     padding:7px;
     border:none;
     border-radius:8px;
     background:#4a6cf7;
     color:white;
-    font-size:12px;
+    font-size:20px;
     cursor:pointer;
 }
 
