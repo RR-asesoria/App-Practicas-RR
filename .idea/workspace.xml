@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="modifico css">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="modifico css de usuarios">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +102,7 @@
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
       <workItem from="1772790778342" duration="5544000" />
-      <workItem from="1773047293259" duration="5035000" />
+      <workItem from="1773047293259" duration="6878000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -255,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773051617552</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="modifico css de usuarios">
+      <option name="closed" value="true" />
+      <created>1773052411994</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1773052411994</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +290,7 @@
     <MESSAGE value="modifico el estilo del index.html 2.0" />
     <MESSAGE value="modifico colores del css" />
     <MESSAGE value="modifico css" />
-    <option name="LAST_COMMIT_MESSAGE" value="modifico css" />
+    <MESSAGE value="modifico css de usuarios" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifico css de usuarios" />
   </component>
 </project>
