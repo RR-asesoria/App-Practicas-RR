@@ -385,6 +385,9 @@ body.usuariosBody {
 
     transition:all var(--transition);
 
+    text-decoration:none;
+    color:inherit;
+
 }
 
 .menu__button .fa-user-plus{
