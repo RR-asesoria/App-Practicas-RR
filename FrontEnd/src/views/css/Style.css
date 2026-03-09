@@ -235,7 +235,8 @@ body.usuariosBody {
 /* Div Principal */
 .usuarios {
     background-color: #ffffff;
-    width: 260px;
+    width: 400px;
+    height: 390px;
     padding: 18px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -244,16 +245,17 @@ body.usuariosBody {
 
 .usuarios-header {
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 32px;
+    margin-top: 20px;
 }
 
 .usuarios-header i {
-    font-size: 28px;
+    font-size: 38px;
     color: #2d3436;
 }
 
 .usuarios-header h2 {
-    font-size: 15px;
+    font-size: 25px;
     margin: 4px 0 0 0;
     color: #2d3436;
     letter-spacing: 0.5px;
@@ -262,7 +264,7 @@ body.usuariosBody {
 .usuarios-menu {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 18px;
 }
 
@@ -272,12 +274,12 @@ body.usuariosBody {
     justify-content: space-between;
     align-items: center;
     padding: 10px 12px;
-    background: #ffffff;
+    background:#f7f8fa;
     border: 1px solid #dcdde1;
     border-radius: 6px;
     text-decoration: none;
     color: #2f3640;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: 500;
     transition: all 0.2s;
 }
@@ -306,7 +308,7 @@ body.usuariosBody {
     border: none;
     border-radius: 6px;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 18px;
     cursor: pointer;
     text-transform: uppercase;
 }
