@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="subo el usuarios.html">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="modifico CSS">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/consultarTablas.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +101,8 @@
       <workItem from="1772460589833" duration="5709000" />
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
-      <workItem from="1772790778342" duration="3853000" />
+      <workItem from="1772790778342" duration="5544000" />
+      <workItem from="1773047293259" duration="1731000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -205,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772795978586</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="modifico CSS">
+      <option name="closed" value="true" />
+      <created>1772797186193</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1772797186193</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,6 +236,7 @@
     <MESSAGE value="subo el index.html" />
     <MESSAGE value="subo el consultarTablas.html" />
     <MESSAGE value="subo el usuarios.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="subo el usuarios.html" />
+    <MESSAGE value="modifico CSS" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifico CSS" />
   </component>
 </project>
