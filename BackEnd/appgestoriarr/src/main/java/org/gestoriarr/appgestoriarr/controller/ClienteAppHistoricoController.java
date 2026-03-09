@@ -81,7 +81,7 @@ public class ClienteAppHistoricoController {
                     required = true,
                     content = @Content(schema = @Schema(implementation = ClienteAppHistorico.class))
             )
-            @RequestBody Map<String, FiltroCliente> filtros) {
+            @RequestBody Map<String, Object> filtros) {
         return clienteHistoricoService.buscarPorFiltros(filtros);
     }
 

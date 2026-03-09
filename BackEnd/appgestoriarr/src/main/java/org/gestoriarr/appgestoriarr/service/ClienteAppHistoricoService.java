@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteAppHistoricoService {
@@ -29,13 +30,6 @@ public class ClienteAppHistoricoService {
         return repo.findAll();
     }
 
-    public void actualizarCliente(ClienteAppHistorico clienteAppHistorico) {
-        if (!repo.existsById(clienteAppHistorico.getNifCif())) {
-            throw new RuntimeException("El cliente ya existe");
-        }
-        repo.update(clienteAppHistorico);
-    }
-
     public void eliminarCliente(String nifCif) {
         if (!repo.existsById(nifCif)) {
             throw new RuntimeException("El cliente no existe");
@@ -43,9 +37,12 @@ public class ClienteAppHistoricoService {
         repo.deleteById(nifCif);
     }
 
-    public List<ClienteAppHistorico> buscarPorFiltros(Map<String, FiltroCliente> filtros) {
-        return repo.findByFilters(filtros);
-    }
+    public List<ClienteAppHistorico> buscarPorFiltros(Map<String, Object> filtros) {
+        Map<String, Object> filtrosNoNulos = filtros.entrySet().stream()
+                .filter(e -> e.getValue() != null)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        return repo.findByFilters(filtrosNoNulos);    }
 
     public List<ClienteAppHistorico> buscarPorNombre(String nombre) {
         return repo.findByNombreContaining(nombre);

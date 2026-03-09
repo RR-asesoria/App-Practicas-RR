@@ -1,11 +1,13 @@
 package org.gestoriarr.appgestoriarr.repository;
 
 import com.google.cloud.firestore.*;
-import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -85,30 +87,33 @@ public class ClienteAppHistoricoRepo {
         }
     }
 
-    public List<ClienteAppHistorico> findByFilters(Map<String, FiltroCliente> filtros) {
+    public List<ClienteAppHistorico> findByFilters(Map<String, Object> filtros) {
         try {
-            Query query = historicos();
+            Query query = historicos(); // referencia a la colección Firestore
 
-            for (Map.Entry<String, FiltroCliente> entry : filtros.entrySet()) {
+            // Aplicar solo filtros no nulos
+            for (Map.Entry<String, Object> entry : filtros.entrySet()) {
                 String campo = entry.getKey();
-                FiltroCliente filtro = entry.getValue();
+                Object valor = entry.getValue();
 
-                if (filtro.getValorIgual() != null) {
-                    query = query.whereEqualTo(campo, filtro.getValorIgual());
-                }
-                if (filtro.getValorMin() != null) {
-                    query = query.whereGreaterThanOrEqualTo(campo, filtro.getValorMin());
-                }
-                if (filtro.getValorMax() != null) {
-                    query = query.whereLessThanOrEqualTo(campo, filtro.getValorMax());
-                }
-                if (filtro.getValorParcial() != null) {
-                    query = query
-                            .orderBy(campo)
-                            .startAt(filtro.getValorParcial())
-                            .endAt(filtro.getValorParcial() + "\uf8ff");
+                if (valor != null) {
+                    // Convertimos string ISO a Date si el campo es fecha
+                    if ("fechaNacimiento".equals(campo) && valor instanceof String) {
+                        String fechaStr = ((String) valor).trim();
+                        try {
+                            Instant instant = Instant.parse(fechaStr); // parse ISO 8601
+                            Date fecha = Date.from(instant);           // convertimos a java.util.Date
+                            query = query.whereEqualTo(campo, fecha);
+                        } catch (DateTimeParseException e) {
+                            throw new RuntimeException("Formato de fecha inválido: " + fechaStr, e);
+                        }
+                    } else {
+                        query = query.whereEqualTo(campo, valor);
+                    }
                 }
             }
+
+            // Ejecutar query
             QuerySnapshot resultado = query.get().get();
             List<ClienteAppHistorico> lista = new ArrayList<>();
             for (DocumentSnapshot doc : resultado.getDocuments()) {
@@ -117,7 +122,7 @@ public class ClienteAppHistoricoRepo {
             return lista;
 
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error buscando clientes", e);
         }
     }
 }
