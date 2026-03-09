@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="modifico el estilo del index.html" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="modifico el estilo del index.html 2.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,7 +101,7 @@
       <workItem from="1772701848979" duration="1311000" />
       <workItem from="1772703351932" duration="3592000" />
       <workItem from="1772790778342" duration="5544000" />
-      <workItem from="1773047293259" duration="2367000" />
+      <workItem from="1773047293259" duration="3742000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -228,7 +231,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773049559635</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="modifico el estilo del index.html 2.0">
+      <option name="closed" value="true" />
+      <created>1773049965381</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1773049965381</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,6 +262,7 @@
     <MESSAGE value="modifico CSS" />
     <MESSAGE value="modifico el estilo del consultarTablas.html" />
     <MESSAGE value="modifico el estilo del index.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="modifico el estilo del index.html" />
+    <MESSAGE value="modifico el estilo del index.html 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="modifico el estilo del index.html 2.0" />
   </component>
 </project>
