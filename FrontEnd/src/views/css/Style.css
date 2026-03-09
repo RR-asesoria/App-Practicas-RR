@@ -1,5 +1,27 @@
-/*Css del Login*/
+/* ===== VARIABLES ===== */
 
+:root{
+
+    --color-primary:#4a6cf7;
+    --color-bg:#eef1f6;
+    --color-card:#ffffff;
+    --color-border:#dcdcdc;
+    --color-text:#333;
+
+    --radius:8px;
+    --transition:0.25s;
+
+}
+
+/* ===== RESET ===== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+/*Css del Login*/
 
 body.login-page{
     margin:0;
@@ -294,30 +316,6 @@ body.usuariosBody {
 }
 
 /* Aquí empieza el CSS de Carlos */
-
-/* ===== VARIABLES ===== */
-
-:root{
-
-    --color-primary:#4a6cf7;
-    --color-bg:#eef1f6;
-    --color-card:#ffffff;
-    --color-border:#dcdcdc;
-    --color-text:#333;
-
-    --radius:8px;
-    --transition:0.25s;
-
-}
-
-/* ===== RESET ===== */
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
 
 /* CSS Menú */
 
