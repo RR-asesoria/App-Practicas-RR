@@ -428,6 +428,7 @@ body.agregarBody {
 
 /* Botones de navegación */
 .agregarUsuarios-inp {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -521,6 +522,7 @@ body.passwordBody {
 
 /* Botones de navegación */
 .passwordUsuarios-inp {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -560,9 +562,94 @@ body.passwordBody {
 
 
 
+/*Css Eliminar Usuario*/
 
 
 
+body.eliminarBody {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Div Principal */
+.eliminar {
+    background-color: #ffffff;
+    width: 400px;
+    height: 390px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+    position: relative;
+}
+
+
+.eliminarUsuarios-header {
+    text-align: center;
+    margin-bottom: 32px;
+    margin-top: 20px;
+}
+
+.eliminarUsuarios-header i {
+    font-size: 26px;
+    color: #2d3436;
+}
+
+.eliminarUsuarios-header h2 {
+    font-size: 25px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    letter-spacing: 0.5px;
+}
+
+.eliminarUsuarios-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+/* Botones de navegación */
+.eliminarUsuarios-inp {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 12px;
+    background:#f7f8fa;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2f3640;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+
+
+.eliminar-aceptar{
+    width:100%;
+    margin:60px auto 0 auto;
+    display:block;
+    padding:14px;
+    border:none;
+    border-radius:8px;
+    background:#4a6cf7;
+    color:white;
+    font-size:20px;
+    font-weight: 350;
+    cursor:pointer;
+}
+
+.eliminar-aceptar:hover{
+    background:#3c5ce0;
+}
 
 
 

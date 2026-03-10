@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Agregamos el html password.html">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico usuarios.html">
+      <change afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregar.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarUsuario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,7 +104,7 @@
       <workItem from="1772703351932" duration="3592000" />
       <workItem from="1772790778342" duration="5544000" />
       <workItem from="1773047293259" duration="8822000" />
-      <workItem from="1773135221952" duration="5165000" />
+      <workItem from="1773135221952" duration="6247000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -297,7 +298,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773140178785</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Modifico usuarios.html">
+      <option name="closed" value="true" />
+      <created>1773140455568</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1773140455568</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,6 +348,7 @@
     <MESSAGE value="quito boton de usuarios de aceptar de usuarios.html" />
     <MESSAGE value="Agregamos el html agregar.html" />
     <MESSAGE value="Agregamos el html password.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregamos el html password.html" />
+    <MESSAGE value="Modifico usuarios.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifico usuarios.html" />
   </component>
 </project>
