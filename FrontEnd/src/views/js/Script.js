@@ -18,6 +18,10 @@ class App {
             this.initAgregarCliente();
         }
 
+        if(this.body.classList.contains("consultarTablas-page")){
+            this.initConsultarTablas();
+        }
+
     }
 
     /* ===== MENU PRINCIPAL ===== */
@@ -54,7 +58,36 @@ class App {
 
             e.preventDefault();
 
+            const inputs = form.querySelectorAll("input");
+
+            let cliente = {};
+
+            inputs.forEach(input => {
+
+                const label = input.previousElementSibling.textContent;
+                cliente[label] = input.value;
+
+            });
+
+            console.log(cliente);
+
             alert("Cliente guardado correctamente");
+
+        });
+
+    }
+
+    /* ===== CONSULTAR TABLAS ===== */
+
+    initConsultarTablas(){
+
+        const botonBuscar = document.querySelector(".consultas-aceptar");
+
+        if(!botonBuscar) return;
+
+        botonBuscar.addEventListener("click", () => {
+
+            alert("Función de búsqueda en desarrollo");
 
         });
 
