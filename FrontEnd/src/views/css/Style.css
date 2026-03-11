@@ -713,8 +713,8 @@ body.eliminarBody {
 
 .menu__button{
 
-    width:260px;
-    padding:12px 16px;
+    width:340px;
+    padding:20px 14px;
 
     display:flex;
     justify-content:space-between;
@@ -722,7 +722,7 @@ body.eliminarBody {
     background:#f7f8fa;
     border:1px solid var(--color-border);
     border-radius:var(--radius);
-    font-size:14px;
+    font-size:16px;
     cursor:pointer;
 
     transition:all var(--transition);

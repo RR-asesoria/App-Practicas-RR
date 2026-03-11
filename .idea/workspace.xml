@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico eliminarUsuario.html">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico agregarClienteNuevo.html y menu.html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +103,7 @@
       <workItem from="1772790778342" duration="5544000" />
       <workItem from="1773047293259" duration="8822000" />
       <workItem from="1773135221952" duration="7605000" />
-      <workItem from="1773220197223" duration="2677000" />
+      <workItem from="1773220197223" duration="3762000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -322,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773141826582</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Modifico agregarClienteNuevo.html y menu.html">
+      <option name="closed" value="true" />
+      <created>1773223076198</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1773223076198</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +347,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Agregamos las carpetas del frontEnd" />
     <MESSAGE value="Agregamos las carpetas del frontEnd ahora con contenido" />
     <MESSAGE value="Agrego contenido a los txt de las carpetas" />
     <MESSAGE value="Agregamos el Script que faltaba" />
@@ -365,6 +371,7 @@
     <MESSAGE value="Modifico usuarios.html" />
     <MESSAGE value="Agregue eliminarUsuario.html" />
     <MESSAGE value="Modifico eliminarUsuario.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifico eliminarUsuario.html" />
+    <MESSAGE value="Modifico agregarClienteNuevo.html y menu.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifico agregarClienteNuevo.html y menu.html" />
   </component>
 </project>
