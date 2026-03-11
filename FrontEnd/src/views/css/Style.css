@@ -919,4 +919,37 @@ body.agregarCliente-page{
 
 }
 
+.cliente-guardar{
+
+    grid-column: span 2;      /* ocupa las dos columnas del grid */
+
+    justify-self: center;     /* lo centra */
+
+    margin-top:25px;          /* separación del último input */
+
+    padding:10px 24px;
+
+    background:#4a6cf7;
+    color:white;
+
+    border:none;
+    border-radius:6px;
+
+    font-size:14px;
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    transition:0.2s;
+
+}
+
+.cliente-guardar:hover{
+
+    background:#3c5ce0;
+
+}
+
 /* Aquí termina el CSS de Carlos */
