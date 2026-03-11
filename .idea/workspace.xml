@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico usuarios.html">
-      <change afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" afterDir="false" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico eliminarUsuario.html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/usuarios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +103,8 @@
       <workItem from="1772703351932" duration="3592000" />
       <workItem from="1772790778342" duration="5544000" />
       <workItem from="1773047293259" duration="8822000" />
-      <workItem from="1773135221952" duration="6247000" />
+      <workItem from="1773135221952" duration="7605000" />
+      <workItem from="1773220197223" duration="2677000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -306,7 +306,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773140455568</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Agregue eliminarUsuario.html">
+      <option name="closed" value="true" />
+      <created>1773141624452</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1773141624452</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Modifico eliminarUsuario.html">
+      <option name="closed" value="true" />
+      <created>1773141826582</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1773141826582</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -324,8 +340,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="probando" />
-    <MESSAGE value="sacamos un .idea que no sabemos de donde salio" />
     <MESSAGE value="Agregamos las carpetas del frontEnd" />
     <MESSAGE value="Agregamos las carpetas del frontEnd ahora con contenido" />
     <MESSAGE value="Agrego contenido a los txt de las carpetas" />
@@ -349,6 +363,8 @@
     <MESSAGE value="Agregamos el html agregar.html" />
     <MESSAGE value="Agregamos el html password.html" />
     <MESSAGE value="Modifico usuarios.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifico usuarios.html" />
+    <MESSAGE value="Agregue eliminarUsuario.html" />
+    <MESSAGE value="Modifico eliminarUsuario.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modifico eliminarUsuario.html" />
   </component>
 </project>
