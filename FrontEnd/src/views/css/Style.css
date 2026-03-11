@@ -952,4 +952,44 @@ body.agregarCliente-page{
 
 }
 
+.tooltip{
+    position:relative;
+
+}
+
+.tooltip-text{
+
+    position:absolute;
+
+    bottom:-15px;
+    left:50%;
+    transform:translateX(-50%);
+
+    background:#f7f8fa;
+    color:black;
+
+    padding:6px 10px;
+    border-radius:6px;
+
+    font-size:12px;
+
+    white-space:nowrap;
+
+    opacity:0;
+    visibility:hidden;
+
+    transition:0.2s;
+
+    border: 1px solid black;
+
+
+}
+
+.tooltip:hover .tooltip-text{
+
+    opacity:1;
+    visibility:visible;
+
+}
+
 /* Aquí termina el CSS de Carlos */

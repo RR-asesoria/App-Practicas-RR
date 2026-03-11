@@ -24,33 +24,56 @@
 
   <section class="menu">
 
-    <a href="agregarClienteNuevo.html" class="menu__button">
+    <a href="agregarClienteNuevo.html" class="menu__button tooltip">
       <span>Agregar Cliente</span>
       <i class="fa-solid fa-user-plus"></i>
+
+      <span class="tooltip-text">
+        Agregar cliente
+      </span>
+
     </a>
 
-    <a href="consultarTablas.html" class="menu__button">
+    <a href="consultarTablas.html" class="menu__button tooltip">
       <span>Consultar Tablas</span>
       <i class="fa-solid fa-table"></i>
+
+      <span class="tooltip-text">
+        Consultar tablas
+      </span>
+
     </a>
 
-    <button class="menu__button">
+    <button class="menu__button tooltip">
       <span>Reseteo</span>
       <i class="fa-solid fa-rotate"></i>
+
+      <span class="tooltip-text">
+        Al pulsar este boton, luego de una confirmación, se resetea el año fiscal, dejando en blanco los datos fiscales de los clientes en este nuevo año y guardando lo que fue el anterior año en el historico
+      </span>
     </button>
 
-    <a href="usuarios.html" class="menu__button">
+    <a href="usuarios.html" class="menu__button tooltip">
       <span>Usuarios</span>
       <i class="fa-solid fa-users"></i>
+
+      <span class="tooltip-text">
+        Editar usuarios
+      </span>
+
     </a>
 
   </section>
 
   <section class="import">
 
-    <button class="menu__button" id="importButton">
+    <button class="menu__button tooltip" id="importButton">
       <span>Importar Excel</span>
       <i class="fa-solid fa-file-excel"></i>
+
+      <span class="tooltip-text">
+        Importa clientes desde un archivo Excel ya existente
+      </span>
     </button>
 
     <input type="file" id="excelFile" accept=".xlsx,.xls">
