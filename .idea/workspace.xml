@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Modifico Style.css">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="edito funcion para que se puedan subir Excels">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarUsuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarUsuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/password.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/password.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +108,7 @@
       <workItem from="1773135221952" duration="7605000" />
       <workItem from="1773220197223" duration="5889000" />
       <workItem from="1773307896128" duration="1415000" />
-      <workItem from="1773652217897" duration="3121000" />
+      <workItem from="1773652217897" duration="5226000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -348,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773309909259</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="edito funcion para que se puedan subir Excels">
+      <option name="closed" value="true" />
+      <created>1773656137548</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1773656137548</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -366,7 +376,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Agregamos el Script que faltaba" />
     <MESSAGE value="Modifico htmls" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
@@ -391,6 +400,7 @@
     <MESSAGE value="Modifico agregarClienteNuevo.html y menu.html" />
     <MESSAGE value="Modifico menu.html" />
     <MESSAGE value="Modifico Style.css" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modifico Style.css" />
+    <MESSAGE value="edito funcion para que se puedan subir Excels" />
+    <option name="LAST_COMMIT_MESSAGE" value="edito funcion para que se puedan subir Excels" />
   </component>
 </project>

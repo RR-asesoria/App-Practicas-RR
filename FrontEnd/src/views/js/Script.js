@@ -11,8 +11,21 @@ class App {
     init(){
 
         if(this.body.classList.contains("index-page")){
-            this.initMenuPrincipal();
+            this.initLogin();
         }
+
+        if(this.body.classList.contains("password-page")){
+            this.initCambiarPassword();
+        }
+
+        if(this.body.classList.contains("eliminar-page")){
+            this.initEliminarUsuario();
+        }
+
+        if(this.body.classList.contains("agregarUsuario-page")){
+            this.initAgregarUsuario();
+        }
+
 
 
         if(this.body.classList.contains("menu-page")){
@@ -97,6 +110,88 @@ class App {
         });
 
     }
+
+
+
+    /* ===== USUARIOS ===== */
+    /* Agregar Usuario */
+    initAgregarUsuario(){
+
+        const botonAceptar = document.querySelector(".agregar-aceptar");
+
+        if(!botonAceptar) return;
+
+        botonAceptar.addEventListener("click", () => {
+
+            const inputs = document.querySelectorAll(".agregarUsuarios-inp");
+
+            const usuario = inputs[0].value;
+            const password = inputs[1].value;
+
+            console.log("Nuevo usuario:", usuario);
+            console.log("Password:", password);
+
+            alert("Usuario agregado correctamente");
+
+            window.location.href = "../html/menu.html";
+
+        });
+
+    }
+
+
+
+
+    /* Cambiar Contraseña */
+    initCambiarPassword(){
+
+        const botonAceptar = document.querySelector(".password-aceptar");
+
+        if(!botonAceptar) return;
+
+        botonAceptar.addEventListener("click", () => {
+
+            const inputs = document.querySelectorAll(".passwordUsuarios-inp");
+
+            const usuario = inputs[0].value;
+            const nuevaPassword = inputs[1].value;
+
+            console.log("Usuario:", usuario);
+            console.log("Nueva contraseña:", nuevaPassword);
+
+            alert("Contraseña cambiada correctamente");
+
+            window.location.href = "../html/menu.html";
+
+        });
+
+    }
+
+
+    /* Eliminar usuario */
+    initEliminarUsuario(){
+
+        const botonAceptar = document.querySelector(".eliminar-aceptar");
+
+        if(!botonAceptar) return;
+
+        botonAceptar.addEventListener("click", () => {
+
+            const usuario = document.querySelector(".eliminarUsuarios-inp").value;
+
+            console.log("Usuario eliminado:", usuario);
+
+            alert("Usuario eliminado correctamente");
+
+            window.location.href = "../html/menu.html";
+
+        });
+
+    }
+
+
+
+
 
     /* ===== FUNCIONES ===== */
 
