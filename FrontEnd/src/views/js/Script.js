@@ -14,6 +14,11 @@ class App {
             this.initMenuPrincipal();
         }
 
+
+        if(this.body.classList.contains("menu-page")){
+            this.initMenuPrincipal();
+        }
+
         if(this.body.classList.contains("agregarCliente-page")){
             this.initAgregarCliente();
         }
@@ -122,3 +127,5 @@ document.addEventListener("DOMContentLoaded", () => {
     new App();
 
 });
+
+
