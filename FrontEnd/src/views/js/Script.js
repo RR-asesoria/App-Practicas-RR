@@ -27,7 +27,6 @@ class App {
         }
 
 
-
         if(this.body.classList.contains("menu-page")){
             this.initMenuPrincipal();
         }

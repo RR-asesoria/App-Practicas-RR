@@ -953,6 +953,39 @@ body.agregarCliente-page{
 
 }
 
+.cliente-actualizar{
+
+    grid-column: span 2;      /* ocupa las dos columnas del grid */
+
+    justify-self: center;     /* lo centra */
+
+    margin-top:25px;          /* separación del último input */
+
+    padding:10px 24px;
+
+    background:#4a6cf7;
+    color:white;
+
+    border:none;
+    border-radius:6px;
+
+    font-size:14px;
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    transition:0.2s;
+
+}
+
+.cliente-actualizar:hover{
+
+    background:#3c5ce0;
+
+}
+
 .tooltip{
     position:relative;
 
@@ -991,6 +1024,49 @@ body.agregarCliente-page{
     opacity:1;
     visibility:visible;
 
+}
+
+.acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.acciones a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-editar {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-eliminar {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #2980b9;
+}
+
+.btn-eliminar:hover {
+    background-color: #c0392b;
+}
+
+.consultas-tabla td {
+    text-align: center;
+}
+
+.consultas-tabla th {
+    text-align: center;
 }
 
 /* Aquí termina el CSS de Carlos */
