@@ -167,4 +167,12 @@ public class ClienteAppRepo {
             throw new RuntimeException("Error buscando clientes", e);
         }
     }
+
+
+
+
+    public Firestore getDb() {
+        return db;
+    }
+
 }

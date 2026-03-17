@@ -11,6 +11,7 @@ import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.service.ClienteAppService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -155,22 +156,19 @@ public class ClienteAppController {
         return clienteService.buscarPorNombre(nombre);
     }
 
-    // =========================
-    // MOVER CASILLA 505
-    // =========================
-    @Operation(summary = "Mover casilla505", description = "Pasa la casilla505Actual a casilla505Anterior y resetea la actual")
+
+    //cerrar el ejercicio y pasar la casilla505 junto el año fiscal
+    @PostMapping("/cierre-ejercicio")
+    //@PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Cierre de ejercicio", description = "Mueve todos los clientes a histórico y actualiza casilla505")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Casilla505 movida correctamente"),
-            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
+            @ApiResponse(responseCode = "200", description = "Cierre realizado correctamente"),
+            //@ApiResponse(responseCode = "403", description = "No autorizado, contacte con el administrador")
     })
-    @PostMapping("/{nifCif}/mover-casilla505")
-    public ResponseEntity<String> moverCasilla505(
-            @Parameter(description = "NIF/CIF del cliente", required = true) @PathVariable String nifCif) {
-        try {
-            clienteService.moverCasilla505(nifCif);
-            return ResponseEntity.ok("Casilla505 movida correctamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<String> cierreEjercicio() {
+        clienteService.cierreEjercicio();
+        return ResponseEntity.ok("Cierre de ejercicio realizado correctamente");
     }
+
+
 }

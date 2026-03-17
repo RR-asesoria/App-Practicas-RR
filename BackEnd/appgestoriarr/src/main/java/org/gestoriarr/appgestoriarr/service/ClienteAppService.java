@@ -1,9 +1,16 @@
 package org.gestoriarr.appgestoriarr.service;
 
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.WriteBatch;
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
+import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
+import org.gestoriarr.appgestoriarr.model.enums.*;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -80,13 +87,100 @@ public class ClienteAppService {
         return repo.findByNombreContaining(nombre);
     }
 
-    // =========================
-    // COPIAR/MOVER CASILLA 505
-    // =========================
-    public void moverCasilla505(String nifCif) {
-        if (!repo.existsById(nifCif)) {
-            throw new RuntimeException("El cliente no existe");
+    //@PreAuthorize("hasRole('ADMIN')")
+    public void cierreEjercicio() {
+
+        List<ClienteApp> clientes = repo.findAll();
+        int anioActual = Calendar.getInstance().get(Calendar.YEAR);
+
+        WriteBatch batch = repo.getDb().batch();
+        int contador = 0;
+
+        for (ClienteApp cliente : clientes) {
+
+            // Referencia cliente
+            DocumentReference clienteRef = repo.getDb()
+                    .collection("ClienteApp")
+                    .document(cliente.getNifCif());
+
+            // Referencia histórico
+            DocumentReference historicoRef = repo.getDb()
+                    .collection("ClienteAppHistorico")
+                    .document();
+
+            // =========================
+            // HISTÓRICO
+            // =========================
+
+            ClienteAppHistorico historico = ClienteAppHistorico.builder()
+                    .nifCif(cliente.getNifCif())
+                    .nombre(cliente.getNombre())
+                    .fechaNacimiento(new java.sql.Date(cliente.getFechaNacimiento().getTime()))
+                    .referencia(cliente.getReferencia())
+                    .numerosCC(cliente.getNumerosCC())
+                    .datosFiscalesDescargados(cliente.isDatosFiscalesDescargados())
+                    .importe(cliente.getImporte())
+                    .tipoFacturado(cliente.getTipoFacturado())
+                    .recogidaDatos(cliente.getRecogidaDatos())
+                    .excelDatosElaboracion(cliente.isExcelDatosElaboracion())
+                    .borrador(cliente.getBorrador())
+                    .presentada(cliente.getPresentada())
+                    .cobrado(cliente.getCobrado())
+                    .tipoCliente(cliente.getTipoCliente())
+                    .estadoCliente(cliente.getEstadoCliente())
+                    .casilla505Actual(cliente.getCasilla505Actual())
+                    .anioFiscal(String.valueOf(anioActual))
+                    .build();
+
+            batch.set(historicoRef, historico);
+
+            // =========================
+            // UPDATE CLIENTE
+            // =========================
+            Map<String, Object> updates = new HashMap<>();
+
+            // movimiento casilla
+            updates.put("casilla505anterior", cliente.getCasilla505Actual());
+            updates.put("casilla505Actual", null);
+
+            // defaults
+            updates.put("datosFiscalesDescargados", false);
+            updates.put("importe", "0");
+            updates.put("tipoFacturado", TipoFacturado.FACTURADONO);
+            updates.put("recogidaDatos", TipoRecogidaDatos.FACTURARELLENANO);
+            updates.put("excelDatosElaboracion", false);
+            updates.put("borrador", TipoBorrador.BORRADORCREADONO);
+            updates.put("presentada", TipoPresentada.CONFIRMADOPRESENTARNO);
+            updates.put("cobrado", "NO");
+            updates.put("estadoCliente", EstadoCliente.CONTACTADONO);
+
+            batch.update(clienteRef, updates);
+
+            contador+= 2;
+
+            // límite Firestore
+            if (contador >= 500) {
+                try {
+                    batch.commit().get();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                batch = repo.getDb().batch();
+                contador = 0;
+            }
         }
-        repo.moverCasilla505(nifCif);
+
+        // Commit final
+        if (contador > 0) {
+            try {
+                batch.commit().get();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
+
+
+
+
 }
