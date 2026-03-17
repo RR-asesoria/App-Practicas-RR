@@ -90,6 +90,8 @@ class App {
 
             alert("Cliente guardado correctamente");
 
+            window.location.href = "../html/consultarTablas.html";
+
         });
 
     }

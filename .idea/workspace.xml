@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="edito funcion para que se puedan subir Excels">
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_03_2026_12_03_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_03_2026_12_03__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarUsuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarUsuario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/eliminarUsuario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/password.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/password.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,7 +107,8 @@
       <workItem from="1773135221952" duration="7605000" />
       <workItem from="1773220197223" duration="5889000" />
       <workItem from="1773307896128" duration="1415000" />
-      <workItem from="1773652217897" duration="5226000" />
+      <workItem from="1773652217897" duration="6507000" />
+      <workItem from="1773738589533" duration="2755000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -358,7 +358,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773656137548</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS">
+      <option name="closed" value="true" />
+      <created>1773658267788</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1773658267788</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -376,7 +384,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modifico htmls" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
     <MESSAGE value="edito css" />
@@ -401,6 +408,7 @@
     <MESSAGE value="Modifico menu.html" />
     <MESSAGE value="Modifico Style.css" />
     <MESSAGE value="edito funcion para que se puedan subir Excels" />
-    <option name="LAST_COMMIT_MESSAGE" value="edito funcion para que se puedan subir Excels" />
+    <MESSAGE value="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS" />
+    <option name="LAST_COMMIT_MESSAGE" value="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS" />
   </component>
 </project>
