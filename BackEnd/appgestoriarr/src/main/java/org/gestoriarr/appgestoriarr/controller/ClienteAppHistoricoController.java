@@ -35,7 +35,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Cliente no Encontrado en el historico", content = @Content)
     })
     @GetMapping("/{nifCif}")
-    public ResponseEntity<ClienteAppHistorico> ObtenerCliente(@PathVariable String nifCif) {
+    public ResponseEntity<ClienteAppHistorico> obtenerCliente(@PathVariable String nifCif) {
         try {
             ClienteAppHistorico clienteAppHistorico = clienteHistoricoService.obtenerCliente(nifCif);
             return ResponseEntity.ok().body(clienteAppHistorico);
@@ -50,7 +50,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Historico de clientes no encontrado", content = @Content)
     })
     @GetMapping
-    public List<ClienteAppHistorico> ObtenerClientes() {
+    public List<ClienteAppHistorico> obtenerClientes() {
         return clienteHistoricoService.obtenerTodosClientes();
     }
 
