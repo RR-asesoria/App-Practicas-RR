@@ -23,7 +23,7 @@ public class ClienteAppHistorico {
     private String numerosCC;
     private boolean datosFiscalesDescargados;
     private String importe;
-    private TipoFacturado facturado;
+    private TipoFacturado tipoFacturado;
     private TipoRecogidaDatos recogidaDatos;
     private boolean excelDatosElaboracion;
     private TipoBorrador borrador;
