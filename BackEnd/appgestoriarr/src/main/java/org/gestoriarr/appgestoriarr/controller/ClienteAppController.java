@@ -27,9 +27,7 @@ public class ClienteAppController {
         this.clienteService = clienteService;
     }
 
-    // =========================
     // CREAR CLIENTE
-    // =========================
     @Operation(summary = "Crear cliente", description = "Crea un nuevo cliente en la base de datos")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Cliente creado correctamente"),
@@ -51,9 +49,7 @@ public class ClienteAppController {
         }
     }
 
-    // =========================
     // OBTENER CLIENTE POR DNI
-    // =========================
     @Operation(summary = "Obtener cliente", description = "Obtiene un cliente por su NIF/CIF")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cliente encontrado", content = @Content(schema = @Schema(implementation = ClienteApp.class))),
@@ -70,9 +66,7 @@ public class ClienteAppController {
         }
     }
 
-    // =========================
     // OBTENER TODOS LOS CLIENTES
-    // =========================
     @Operation(summary = "Obtener todos los clientes", description = "Devuelve la lista completa de clientes")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de clientes", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
@@ -82,9 +76,7 @@ public class ClienteAppController {
         return clienteService.obtenerTodos();
     }
 
-    // =========================
     // ACTUALIZAR CLIENTE
-    // =========================
     @Operation(summary = "Actualizar cliente", description = "Actualiza los datos de un cliente existente")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cliente actualizado correctamente"),
@@ -108,9 +100,7 @@ public class ClienteAppController {
         }
     }
 
-    // =========================
     // ELIMINAR CLIENTE
-    // =========================
     @Operation(summary = "Eliminar cliente", description = "Elimina un cliente por su NIF/CIF")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente"),
@@ -143,9 +133,7 @@ public class ClienteAppController {
         return clienteService.buscarPorFiltros(filtros);
     }
 
-    // =========================
     // BUSQUEDA POR NOMBRE PARCIAL
-    // =========================
     @Operation(summary = "Buscar clientes por nombre", description = "Busca clientes por coincidencia parcial de nombre")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
