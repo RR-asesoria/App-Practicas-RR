@@ -27,7 +27,7 @@ public class ClienteAppRepo {
     }
 
 
-    // CRUD / estilo Spring Data
+    // CRUD
 
 
     public void save(ClienteApp cliente) {
@@ -110,24 +110,7 @@ public class ClienteAppRepo {
     }
 
 
-    // Mover casilla505Actual -> casilla505Anterior
 
-    public void moverCasilla505(String nifCif) {
-        try {
-            DocumentReference clienteRef = clientes().document(nifCif);
-            DocumentSnapshot doc = clienteRef.get().get();
-            if (!doc.exists()) return;
-            String casillaActual = doc.getString("casilla505Actual");
-
-            Map<String,Object> updates = new HashMap<>();
-            updates.put("casilla505anterior", casillaActual);
-            updates.put("casilla505Actual", null);
-
-            clienteRef.update(updates).get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public List<ClienteApp> findByFilters(Map<String, Object> filtros) {
         try {

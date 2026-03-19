@@ -24,9 +24,7 @@ public class ClienteAppService {
         this.repo = repo;
     }
 
-    // =========================
     // CREAR CLIENTE
-    // =========================
     public void crearCliente(ClienteApp cliente) {
         if (repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente ya existe");
@@ -34,9 +32,7 @@ public class ClienteAppService {
         repo.save(cliente);
     }
 
-    // =========================
     // OBTENER CLIENTE
-    // =========================
     public ClienteApp obtenerCliente(String nifCif) {
         ClienteApp cliente = repo.findById(nifCif);
         if (cliente == null) {
@@ -45,16 +41,12 @@ public class ClienteAppService {
         return cliente;
     }
 
-    // =========================
     // OBTENER TODOS
-    // =========================
     public List<ClienteApp> obtenerTodos() {
         return repo.findAll();
     }
 
-    // =========================
     // ACTUALIZAR CLIENTE
-    // =========================
     public void actualizarCliente(ClienteApp cliente) {
         if (!repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente no existe");
@@ -62,9 +54,7 @@ public class ClienteAppService {
         repo.update(cliente);
     }
 
-    // =========================
     // ELIMINAR CLIENTE
-    // =========================
     public void eliminarCliente(String nifCif) {
         if (!repo.existsById(nifCif)) {
             throw new RuntimeException("El cliente no existe");
@@ -80,9 +70,7 @@ public class ClienteAppService {
 
         return repo.findByFilters(filtrosNoNulos);
     }
-    // =========================
     // BUSCAR POR NOMBRE PARCIAL
-    // =========================
     public List<ClienteApp> buscarPorNombre(String nombre) {
         return repo.findByNombreContaining(nombre);
     }
@@ -108,9 +96,7 @@ public class ClienteAppService {
                     .collection("ClienteAppHistorico")
                     .document();
 
-            // =========================
             // HISTÓRICO
-            // =========================
 
             ClienteAppHistorico historico = ClienteAppHistorico.builder()
                     .nifCif(cliente.getNifCif())
@@ -134,9 +120,9 @@ public class ClienteAppService {
 
             batch.set(historicoRef, historico);
 
-            // =========================
+
             // UPDATE CLIENTE
-            // =========================
+
             Map<String, Object> updates = new HashMap<>();
 
             // movimiento casilla
