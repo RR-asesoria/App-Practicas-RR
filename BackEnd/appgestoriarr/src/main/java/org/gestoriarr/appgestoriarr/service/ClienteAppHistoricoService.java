@@ -3,7 +3,6 @@ package org.gestoriarr.appgestoriarr.service;
 
 import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppHistoricoRepo;
-import org.gestoriarr.appgestoriarr.repository.FiltroCliente;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
