@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_03_2026_12_03_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_03_2026_12_03__Changes_.xml" beforeDir="false" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Edito botones de guardado en varias pestañas">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_03_2026_12_16_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_03_2026_12_16__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/campaniaActual.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/campaniaActual.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +109,9 @@
       <workItem from="1773220197223" duration="5889000" />
       <workItem from="1773307896128" duration="1415000" />
       <workItem from="1773652217897" duration="6507000" />
-      <workItem from="1773738589533" duration="2755000" />
+      <workItem from="1773738589533" duration="3439000" />
+      <workItem from="1773766272475" duration="1461000" />
+      <workItem from="1774258678766" duration="5624000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
       <option name="closed" value="true" />
@@ -366,7 +369,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773658267788</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Edito botones de guardado en varias pestañas">
+      <option name="closed" value="true" />
+      <created>1773741450232</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1773741450232</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -384,7 +395,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, con su css" />
     <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
     <MESSAGE value="edito css" />
     <MESSAGE value="subo el index.html" />
@@ -409,6 +419,7 @@
     <MESSAGE value="Modifico Style.css" />
     <MESSAGE value="edito funcion para que se puedan subir Excels" />
     <MESSAGE value="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS" />
-    <option name="LAST_COMMIT_MESSAGE" value="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS" />
+    <MESSAGE value="Edito botones de guardado en varias pestañas" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edito botones de guardado en varias pestañas" />
   </component>
 </project>
