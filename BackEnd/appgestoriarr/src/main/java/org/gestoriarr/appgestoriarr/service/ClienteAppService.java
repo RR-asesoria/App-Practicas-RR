@@ -101,6 +101,8 @@ public class ClienteAppService {
             ClienteAppHistorico historico = ClienteAppHistorico.builder()
                     .nifCif(cliente.getNifCif())
                     .nombre(cliente.getNombre())
+                    .telefono(cliente.getTelefono())
+                    .correoElectronico(cliente.getCorreoElectronico())
                     .fechaNacimiento(new java.sql.Date(cliente.getFechaNacimiento().getTime()))
                     .referencia(cliente.getReferencia())
                     .numerosCC(cliente.getNumerosCC())

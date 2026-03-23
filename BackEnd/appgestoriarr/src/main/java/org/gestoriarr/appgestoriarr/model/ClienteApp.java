@@ -17,6 +17,8 @@ public class ClienteApp {
 
     private String nombre;
     private String nifCif;
+    private String telefono;
+    private String correoElectronico;
     private Date fechaNacimiento;
     private String referencia;
     private String casilla505anterior;
