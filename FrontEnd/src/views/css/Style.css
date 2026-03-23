@@ -374,6 +374,111 @@ body.campaniaActual-page {
     padding: 20px !important;
 }
 
+/* CSS Menú de clientes */
+body.menuClientesBody {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/* Div Principal */
+.menuClientes {
+    background-color: #ffffff;
+    width: 400px;
+    height: 390px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+    position: relative;
+}
+
+.back-button-menuClientes{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    font-size:20px;
+    color:#555;
+
+    text-decoration:none;
+
+    transition:0.2s;
+
+}
+
+.back-button-menuClientes:hover{
+
+    color:#4a6cf7;
+    transform:translateX(-3px);
+
+}
+
+.menuClientes-header {
+    text-align: center;
+    margin-bottom: 32px;
+    margin-top: 20px;
+}
+
+.menuClientes-header i {
+    font-size: 38px;
+    color: #2d3436;
+}
+
+.menuClientes-header h2 {
+    font-size: 25px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    letter-spacing: 0.5px;
+}
+
+.menuClientes-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+/* Botones de navegación */
+.menuClientes-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 12px;
+    background:#f7f8fa;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2f3640;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.menuClientes-btn:hover {
+    border-color: #00a8ff;
+    color: #00a8ff;
+    background: #f0f9ff;
+}
+
+.menuClientes-btn i {
+    font-size: 14px;
+    color: #7f8fa6;
+}
+
+.menuClientes-btn:hover i {
+    color: #00a8ff;
+}
+
+
+
 /*Css Usuarios*/
 
 body.usuariosBody {
