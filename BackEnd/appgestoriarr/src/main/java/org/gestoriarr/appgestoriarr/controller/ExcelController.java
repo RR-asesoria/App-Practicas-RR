@@ -39,13 +39,15 @@ public class ExcelController {
 
         try {
             ExcelParserService.ResultadoParseo resultado = parserService.parsear(file);
+
             List<String> yaExistian = new ArrayList<>();
+            int creados = 0;
 
             for (ClienteApp cliente : resultado.clientes()) {
                 try {
                     clienteService.crearCliente(cliente);
+                    creados++;
                 } catch (RuntimeException e) {
-                    // Si ya existe, actualizamos con los nuevos datos del Excel
                     try {
                         clienteService.actualizarCliente(cliente);
                         yaExistian.add(cliente.getNifCif());
@@ -56,7 +58,8 @@ public class ExcelController {
             }
 
             return ResponseEntity.ok(ExcelImportResponseDTO.builder()
-                    .importados(resultado.clientes().size() - yaExistian.size())
+                    .creados(creados)
+                    .actualizados(yaExistian.size())
                     .filasSinNif(resultado.filasSinNif())
                     .yaExistian(yaExistian)
                     .error(null)
@@ -66,7 +69,8 @@ public class ExcelController {
             t.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     ExcelImportResponseDTO.builder()
-                            .importados(0)
+                            .creados(0)
+                            .actualizados(0)
                             .filasSinNif(List.of())
                             .yaExistian(List.of())
                             .error(t.getClass().getSimpleName() + ": " + t.getMessage())

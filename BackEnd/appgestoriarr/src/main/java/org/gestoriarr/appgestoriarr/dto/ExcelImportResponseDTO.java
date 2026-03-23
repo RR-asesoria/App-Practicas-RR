@@ -7,7 +7,8 @@ import java.util.List;
 @Data
 @Builder
 public class ExcelImportResponseDTO {
-    private int importados;
+    private int creados;
+    private int actualizados;
     private List<Integer> filasSinNif;
     private List<String> yaExistian;
     private String error;
