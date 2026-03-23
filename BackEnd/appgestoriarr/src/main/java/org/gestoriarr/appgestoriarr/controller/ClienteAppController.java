@@ -158,5 +158,19 @@ public class ClienteAppController {
         return ResponseEntity.ok("Cierre de ejercicio realizado correctamente");
     }
 
+    @Operation(summary = "Eliminar todos los clientes", description = "Elimina todos los clientes de la base de datos. Solo para testing.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Todos los clientes eliminados correctamente"),
+            @ApiResponse(responseCode = "500", description = "Error al eliminar", content = @Content)
+    })
+    @DeleteMapping("/todos")
+    public ResponseEntity<String> eliminarTodos() {
+        try {
+            clienteService.eliminarTodos();
+            return ResponseEntity.ok("Todos los clientes eliminados correctamente");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 }

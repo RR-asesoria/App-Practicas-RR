@@ -168,7 +168,10 @@ public class ClienteAppService {
         }
     }
 
-
+    public void eliminarTodos() {
+        List<ClienteApp> clientes = repo.findAll();
+        clientes.forEach(c -> repo.deleteById(c.getNifCif()));
+    }
 
 
 }

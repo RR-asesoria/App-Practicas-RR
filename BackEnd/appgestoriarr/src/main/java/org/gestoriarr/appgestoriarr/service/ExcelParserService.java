@@ -4,19 +4,33 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.model.enums.*;
+import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class ExcelParserService {
 
-    public List<ClienteApp> parsear(MultipartFile file) throws IOException {
+    public record ResultadoParseo(List<ClienteApp> clientes, List<Integer> filasSinNif) {}
+
+    private final ClienteAppRepo repo;
+
+    public ExcelParserService(ClienteAppRepo repo) {
+        this.repo = repo;
+    }
+
+    // ── Método principal ──────────────────────────────────────────────────────
+
+    public ResultadoParseo parsear(MultipartFile file) throws IOException {
         List<ClienteApp> clientes = new ArrayList<>();
+        List<Integer> filasSinNif = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
@@ -25,39 +39,21 @@ public class ExcelParserService {
                 Row row = sheet.getRow(i);
                 if (row == null) continue;
 
-                // Columnas del Excel:
-                // 0  Nombre Comercial  → ignorar
-                // 1  Nombre            → nombre
-                // 2  NIF/CIF           → nifCif
-                // 3  Teléfono          → telefono (lógica combinada)
-                // 4  Móvil             → telefono (lógica combinada)
-                // 5  Correo            → ignorar
-                // 6  Tipo Cliente      → tipoCliente
-                // 7  Fecha Nacimiento  → fechaNacimiento
-                // 8  Código Postal     → ignorar
-                // 9  Dirección         → ignorar
-                // 10 Fecha Alta        → ignorar
-                // 11 Fecha Baja        → ignorar
-                // 12 IBAN              → últimos 5 dígitos → numerosCC
-                // 13 País              → ignorar
-                // 14 Población y Prov  → ignorar
+                String nifCif = getString(row, 2);
 
-                String telefono = resolverTelefono(
-                        getString(row, 3),
-                        getString(row, 4)
-                );
-
-                String iban = getString(row, 12);
-                String numerosCC = extraerUltimos5(iban);
+                if (nifCif == null || nifCif.isBlank()) {
+                    filasSinNif.add(i + 1);
+                    nifCif = generarNifPorDefecto();
+                }
 
                 ClienteApp cliente = ClienteApp.builder()
                         .nombre(getString(row, 1))
-                        .nifCif(getString(row, 2))
-                        .telefono(telefono)
-                        .tipoCliente(getEnum(row, 6, TipoCliente.class))
+                        .nifCif(nifCif)
+                        .telefono(resolverTelefono(getString(row, 3), getString(row, 4)))
+                        .correoElectronico(getString(row, 5))
+                        .tipoCliente(parseTipoCliente(row, 6))
                         .fechaNacimiento(getDate(row, 7))
-                        .numerosCC(numerosCC)
-                        // Resto de campos con valores por defecto
+                        .numerosCC(extraerUltimos5(getString(row, 12)))
                         .datosFiscalesDescargados(false)
                         .importe("0")
                         .tipoFacturado(TipoFacturado.FACTURADONO)
@@ -72,12 +68,33 @@ public class ExcelParserService {
                 clientes.add(cliente);
             }
         }
-        return clientes;
+
+        // Deduplicar: si hay NIFs repetidos, quedarse con el último
+        Map<String, ClienteApp> mapaDeduplicado = new LinkedHashMap<>();
+        for (ClienteApp cliente : clientes) {
+            mapaDeduplicado.put(cliente.getNifCif(), cliente);
+        }
+        List<ClienteApp> clientesDeduplicados = new ArrayList<>(mapaDeduplicado.values());
+
+        return new ResultadoParseo(clientesDeduplicados, filasSinNif);
     }
 
-    // Si telefono y movil son iguales → coge uno solo
-    // Si solo hay uno → coge ese
-    // Si hay los dos distintos → los une con " / "
+    // ── Lógica de negocio ─────────────────────────────────────────────────────
+
+    private int contadorSinNif = -1; // -1 = no inicializado
+
+    private String generarNifPorDefecto() {
+        if (contadorSinNif == -1) {
+            // Primera vez: consulta Firebase para saber cuántos SIN-NIF hay ya
+            contadorSinNif = (int) repo.findAll().stream()
+                    .filter(c -> c.getNifCif() != null && c.getNifCif().startsWith("SIN-NIF-"))
+                    .count();
+        }
+        contadorSinNif++;
+        String nif = "SIN-NIF-" + String.format("%03d", contadorSinNif);
+        return nif;
+    }
+
     private String resolverTelefono(String telefono, String movil) {
         boolean hayTelefono = telefono != null && !telefono.isBlank();
         boolean hayMovil    = movil    != null && !movil.isBlank();
@@ -90,7 +107,6 @@ public class ExcelParserService {
         return telefono + " / " + movil;
     }
 
-    // Extrae los últimos 5 caracteres del IBAN ignorando espacios
     private String extraerUltimos5(String iban) {
         if (iban == null || iban.isBlank()) return null;
         String limpio = iban.replaceAll("\\s+", "");
@@ -98,7 +114,19 @@ public class ExcelParserService {
         return limpio.substring(limpio.length() - 5);
     }
 
+    private TipoCliente parseTipoCliente(Row row, int col) {
+        String valor = getString(row, col);
+        if (valor == null) return null;
 
+        return switch (valor.trim().toUpperCase()) {
+            case "RENTA"              -> TipoCliente.AUTONOMO;
+            case "RENTA PARTICULARES" -> TipoCliente.PARTICULARES;
+            case "NORESIDENTE"        -> TipoCliente.NORESIDENTE;
+            default                   -> null;
+        };
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
 
     private String getString(Row row, int col) {
         Cell cell = row.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
@@ -114,7 +142,24 @@ public class ExcelParserService {
     private Date getDate(Row row, int col) {
         Cell cell = row.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
         if (cell == null) return null;
-        return DateUtil.isCellDateFormatted(cell) ? cell.getDateCellValue() : null;
+
+        if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
+            // Forzar UTC para evitar el desfase de zona horaria
+            LocalDate localDate = cell.getLocalDateTimeCellValue().toLocalDate();
+            return Date.from(localDate.atStartOfDay(ZoneOffset.UTC).toInstant());
+        }
+
+        if (cell.getCellType() == CellType.STRING) {
+            String valor = cell.getStringCellValue().trim();
+            try {
+                LocalDate localDate = LocalDate.parse(valor, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                return Date.from(localDate.atStartOfDay(ZoneOffset.UTC).toInstant());
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     private <T extends Enum<T>> T getEnum(Row row, int col, Class<T> enumClass) {

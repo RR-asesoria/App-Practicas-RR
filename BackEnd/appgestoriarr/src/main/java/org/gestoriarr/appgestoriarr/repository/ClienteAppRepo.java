@@ -150,7 +150,31 @@ public class ClienteAppRepo {
             throw new RuntimeException("Error buscando clientes", e);
         }
     }
+    public void deleteAll() {
+        try {
+            List<ClienteApp> todos = findAll();
+            WriteBatch batch = db.batch();
+            int contador = 0;
 
+            for (ClienteApp cliente : todos) {
+                batch.delete(clientes().document(cliente.getNifCif()));
+                contador++;
+
+                if (contador >= 500) {
+                    batch.commit().get();
+                    batch = db.batch();
+                    contador = 0;
+                }
+            }
+
+            if (contador > 0) {
+                batch.commit().get();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 
