@@ -1,10 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="../css/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="consultarTablas-page">
+
+<div class="consultas consultas-tamanio">
+    <div class="consultas-header">
+
+        <a href="menu.html" class="back-button-tablas">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <i class="fa-solid fa-circle-user"></i>
+        <h2>Buscador de Clientes</h2>
+    </div>
+
+    <div class="consultas-menu-horizontal">
+        <div class="consultas-item">
+            <label>Campaña</label>
+            <select class="consultas-input">
+                <option>2026</option>
+                <option>2025</option>
+                <option>2024</option>
+                <option>2023</option>
+            </select>
+        </div>
+
+        <div class="consultas-item">
+            <label>Nombre</label>
+            <input type="text" class="consultas-input" placeholder="Nombre">
+        </div>
+
+        <div class="consultas-item">
+            <label>Apellido</label>
+            <input type="text" class="consultas-input" placeholder="Apellido">
+        </div>
+
+        <div class="consultas-item">
+            <label>DNI / NIE</label>
+            <input type="text" class="consultas-input" placeholder="DNI / NIE">
+        </div>
+
+        <button class="consultas-aceptar">BUSCAR</button>
+    </div>
+
+    <div class="consultas-tabla-container">
+        <table class="consultas-tabla">
+            <thead>
+            <tr>
+                <th>Cliente/DNI</th>
+                <th>Año</th>
+                <th>Fecha Creación</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Juan Pérez / 12345678A</td>
+                <td>2026</td>
+                <td>12/03/2026</td>
+                <td>Activo</td>
+                <td class="acciones">
+
+                    <a href="editarCliente.html" class="btn-editar">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
+
+                    <a href="#" class="btn-eliminar" onclick="return confirm('¿Seguro que quieres eliminar este cliente?')">
+                        <i class="fa-solid fa-trash"></i> Eliminar
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../js/Script.js"></script>
+
 
 </body>
 </html>
