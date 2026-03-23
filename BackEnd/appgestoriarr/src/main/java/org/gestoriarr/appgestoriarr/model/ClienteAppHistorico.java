@@ -19,6 +19,8 @@ public class ClienteAppHistorico {
     private String nifCif;
     private String nombre;
     private Date fechaNacimiento;
+    private String telefono;
+    private String correoElectronico;
     private String referencia;
     private String numerosCC;
     private boolean datosFiscalesDescargados;
