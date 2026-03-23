@@ -41,6 +41,19 @@ public class ClienteAppHistoricoRepo {
         }
     }
 
+    public void delete() {
+        try {
+            QuerySnapshot querySnapshot = historicos().get().get();
+
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                document.getReference().delete().get();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean existsById(String nifCif) {
         try {
             DocumentSnapshot doc = historicos().document(nifCif).get().get();

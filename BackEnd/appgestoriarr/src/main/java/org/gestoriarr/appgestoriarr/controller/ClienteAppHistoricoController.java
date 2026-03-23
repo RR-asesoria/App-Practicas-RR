@@ -66,6 +66,21 @@ public class ClienteAppHistoricoController {
         }
     }
 
+    @Operation(summary = "Elimina todos los clientes del historico", description = "Elimina todos los clientes del historico")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Clientes eliminados correctamente del historico"),
+            @ApiResponse(responseCode = "404", description = "Error", content = @Content)
+    })
+    @DeleteMapping("/eliminartodos")
+    public ResponseEntity<String> eliminarTodosClientes() {
+        try {
+            clienteHistoricoService.eliminarTodosClientes();
+             return ResponseEntity.ok("Clientes eliminados correctamente");
+        } catch (RuntimeException e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
     @Operation(summary = "Buscar clientes", description = "Busca clientes en el historico según filtros exactos seleccionados")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClienteAppHistorico.class)))),

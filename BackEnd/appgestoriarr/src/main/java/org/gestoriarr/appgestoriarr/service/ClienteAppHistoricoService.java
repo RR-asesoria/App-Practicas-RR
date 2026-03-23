@@ -36,6 +36,10 @@ public class ClienteAppHistoricoService {
         repo.deleteById(nifCif);
     }
 
+    public void eliminarTodosClientes() {
+        repo.delete();
+    }
+
     public List<ClienteAppHistorico> buscarPorFiltros(Map<String, Object> filtros) {
         Map<String, Object> filtrosNoNulos = filtros.entrySet().stream()
                 .filter(e -> e.getValue() != null)
