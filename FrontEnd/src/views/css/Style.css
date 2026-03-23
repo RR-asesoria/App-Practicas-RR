@@ -241,6 +241,244 @@ body.consultarTablas-page {
 
 
 
+
+body.campaniaActual-page {
+    margin-left: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/* La tarjeta base renombrada */
+.campaniaActual {
+    background-color: #ffffff;
+    padding: 18px 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+    box-sizing: border-box; /* Importante para que el padding no rompa el ancho */
+    position: relative;
+}
+
+/* Ancho del buscador */
+.consultasActuales-tamanio {
+    width: 1450px;
+    height: 650px;
+}
+
+.consultasActuales-header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.consultasActuales-header i {
+    font-size: 28px;
+    color: #2d3436;
+}
+
+.consultasActuales-header h2 {
+    font-size: 25px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    text-transform: uppercase;
+}
+
+/* Alineación horizontal */
+.consultasActuales-menu-horizontal {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.consultasActuales-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #7f8fa6;
+}
+
+.consultasActuales-item label {
+    font-size: 20px;
+    font-weight: bold;
+    color: #7f8fa6;
+    text-transform: uppercase;
+}
+
+/* Inputs */
+.consultasActuales-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    color: #7f8fa6;
+}
+
+/* Botón Aceptar/Buscar */
+.consultasActuales-aceptar {
+    padding: 10px 18px;
+    background-color: #00a8ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.consultasActuales-aceptar:hover {
+    background-color: #0097e6;
+}
+
+/* Tabla de consultas */
+.consultasActuales-tabla-container {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.consultasActuales-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    table-layout: fixed;
+}
+
+
+.consultasActuales-tabla th {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    color: #2d3436;
+}
+
+.consultasActuales-tabla td {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.tablaActual-vacia {
+    text-align: center;
+    color: #ccc;
+    padding: 20px !important;
+}
+
+/* CSS Menú de clientes */
+body.menuClientesBody {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/* Div Principal */
+.menuClientes {
+    background-color: #ffffff;
+    width: 400px;
+    height: 390px;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #e1e4e8;
+    position: relative;
+}
+
+.back-button-menuClientes{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    font-size:20px;
+    color:#555;
+
+    text-decoration:none;
+
+    transition:0.2s;
+
+}
+
+.back-button-menuClientes:hover{
+
+    color:#4a6cf7;
+    transform:translateX(-3px);
+
+}
+
+.menuClientes-header {
+    text-align: center;
+    margin-bottom: 32px;
+    margin-top: 20px;
+}
+
+.menuClientes-header i {
+    font-size: 38px;
+    color: #2d3436;
+}
+
+.menuClientes-header h2 {
+    font-size: 25px;
+    margin: 4px 0 0 0;
+    color: #2d3436;
+    letter-spacing: 0.5px;
+}
+
+.menuClientes-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+/* Botones de navegación */
+.menuClientes-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 12px;
+    background:#f7f8fa;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2f3640;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.menuClientes-btn:hover {
+    border-color: #00a8ff;
+    color: #00a8ff;
+    background: #f0f9ff;
+}
+
+.menuClientes-btn i {
+    font-size: 14px;
+    color: #7f8fa6;
+}
+
+.menuClientes-btn:hover i {
+    color: #00a8ff;
+}
+
+
+
 /*Css Usuarios*/
 
 body.usuariosBody {
@@ -1060,6 +1298,16 @@ body.agregarCliente-page{
 .btn-eliminar:hover {
     background-color: #c0392b;
 }
+.btn-verDatos {
+    background-color: #40CAFF;
+    color: white;
+}
+
+.btn-verDatos:hover {
+    background-color: #37A9D4;
+}
+
+
 
 .consultas-tabla td {
     text-align: center;
