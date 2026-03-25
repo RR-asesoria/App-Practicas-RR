@@ -19,7 +19,7 @@ public class ClienteAppHistoricoService {
     }
 
     public ClienteAppHistorico obtenerCliente(String nifCif) {
-        ClienteAppHistorico clienteAppHistorico = repo.findById(nifCif);
+        ClienteAppHistorico clienteAppHistorico = repo.findByNifCif(nifCif);
         if (clienteAppHistorico == null) {
             throw new RuntimeException("El cliente no existe");
         }
