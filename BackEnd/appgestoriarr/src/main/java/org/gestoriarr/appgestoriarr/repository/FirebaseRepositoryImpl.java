@@ -34,7 +34,7 @@ public abstract class FirebaseRepositoryImpl<T extends Identificable> implements
 				.get()
 				.get();
 		
-		return doc.exists()?Optional.of(doc.toObject(entityClass)): Optional.empty();
+		return doc.exists()?Optional.ofNullable(doc.toObject(entityClass)): Optional.empty();
 	}
 
 	@Override
