@@ -1,9 +1,10 @@
 package org.gestoriarr.appgestoriarr.repository;
 
 import org.gestoriarr.appgestoriarr.model.Usuario;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public class UsuarioRepo extends FirebaseRepositoryImpl<Usuario> {
 
     protected UsuarioRepo() {

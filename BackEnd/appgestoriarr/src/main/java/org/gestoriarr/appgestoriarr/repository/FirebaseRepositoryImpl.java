@@ -12,7 +12,6 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.SetOptions;
 
-@Repository
 public abstract class FirebaseRepositoryImpl<T extends Identificable> implements FirebaseRepository<T> {
 	
 	@Autowired
