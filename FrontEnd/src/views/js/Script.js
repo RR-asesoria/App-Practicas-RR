@@ -90,7 +90,7 @@ class App {
 
             alert("Cliente guardado correctamente");
 
-            window.location.href = "../html/campaniaActual.html.html";
+            window.location.href = "../html/campaniaActual.html";
 
         });
 
