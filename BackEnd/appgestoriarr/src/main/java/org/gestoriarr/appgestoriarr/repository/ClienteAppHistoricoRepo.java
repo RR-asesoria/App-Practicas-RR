@@ -41,6 +41,27 @@ public class ClienteAppHistoricoRepo {
         }
     }
 
+    public void deleteByNifCif(String nifCif) {
+        try {
+            Query query = historicos().whereEqualTo("nifCif", nifCif);
+            QuerySnapshot result = query.get().get();
+
+            if (result.isEmpty()) {
+                System.out.println("❌ No se encontró ningún cliente con nifCif: " + nifCif);
+                return;
+            }
+
+            for (DocumentSnapshot document : result.getDocuments()) {
+                document.getReference().delete().get();
+            }
+
+            System.out.println("✅ Cliente(s) eliminado(s) con nifCif: " + nifCif);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void delete() {
         try {
             QuerySnapshot querySnapshot = historicos().get().get();
@@ -63,11 +84,15 @@ public class ClienteAppHistoricoRepo {
         }
     }
 
-    public ClienteAppHistorico findById(String nifCif) {
+    public ClienteAppHistorico findByNifCif(String nifCif) {
         try {
-            DocumentSnapshot doc = historicos().document(nifCif).get().get();
-            if (!doc.exists()) return null;
-            return doc.toObject(ClienteAppHistorico.class);
+            Query query = historicos().whereEqualTo("nifCif", nifCif);
+            QuerySnapshot result = query.get().get();
+
+            if (result.isEmpty()) return null;
+
+            return result.getDocuments().get(0).toObject(ClienteAppHistorico.class);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
