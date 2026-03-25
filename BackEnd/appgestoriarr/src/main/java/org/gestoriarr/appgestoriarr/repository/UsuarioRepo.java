@@ -1,16 +1,19 @@
 package org.gestoriarr.appgestoriarr.repository;
 
-public class UsuarioRepo {
+import org.gestoriarr.appgestoriarr.model.Usuario;
 
-    //TODO CRUD
+import java.util.List;
 
-    //crearUsuario
+public class UsuarioRepo extends FirebaseRepositoryImpl<Usuario> {
 
-    //borrarUsuario
+    protected UsuarioRepo() {
+        super(Usuario.class, "usuarios");
+    }
 
-    //actualizarUsuario
-
-    //BorrarUsuario
+    public Usuario findByEmail(String email) throws Exception{
+        List<Usuario> usuarios = findByField("email", email);
+        return usuarios.isEmpty() ? null : usuarios.getFirst();
+    }
 
 
 
