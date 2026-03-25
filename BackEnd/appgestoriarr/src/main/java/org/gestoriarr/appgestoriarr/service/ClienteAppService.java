@@ -103,7 +103,9 @@ public class ClienteAppService {
                     .nombre(cliente.getNombre())
                     .telefono(cliente.getTelefono())
                     .correoElectronico(cliente.getCorreoElectronico())
-                    .fechaNacimiento(new java.sql.Date(cliente.getFechaNacimiento().getTime()))
+                    .fechaNacimiento(cliente.getFechaNacimiento() != null
+                            ? new java.sql.Date(cliente.getFechaNacimiento().getTime())
+                            : null)
                     .referencia(cliente.getReferencia())
                     .numerosCC(cliente.getNumerosCC())
                     .datosFiscalesDescargados(cliente.isDatosFiscalesDescargados())
