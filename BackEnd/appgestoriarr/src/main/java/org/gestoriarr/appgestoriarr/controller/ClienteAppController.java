@@ -139,6 +139,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
     })
     @GetMapping("/buscar/nombre")
+    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteApp> buscarPorNombre(
             @Parameter(description = "Texto del nombre a buscar", required = true) @RequestParam String nombre) {
         return clienteService.buscarPorNombre(nombre);
