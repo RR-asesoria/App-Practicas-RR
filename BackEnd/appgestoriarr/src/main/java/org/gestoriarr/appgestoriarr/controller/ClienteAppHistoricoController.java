@@ -32,6 +32,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Cliente no Encontrado en el historico", content = @Content)
     })
     @GetMapping("/{nifCif}")
+    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<ClienteAppHistorico> obtenerCliente(@PathVariable String nifCif) {
         try {
             ClienteAppHistorico clienteAppHistorico = clienteHistoricoService.obtenerCliente(nifCif);
@@ -47,10 +48,12 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Historico de clientes no encontrado", content = @Content)
     })
     @GetMapping
+    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> obtenerClientes() {
         return clienteHistoricoService.obtenerTodosClientes();
     }
 
+    //TESTING
     @Operation(summary = "Eliminar cliente historico", description = "Elimina un cliente del historico por su NIF/CIF")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente del historico"),
@@ -66,6 +69,8 @@ public class ClienteAppHistoricoController {
         }
     }
 
+
+    //TESTING
     @Operation(summary = "Elimina todos los clientes del historico", description = "Elimina todos los clientes del historico")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Clientes eliminados correctamente del historico"),
@@ -87,6 +92,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404",description = "Clientes no encontrados", content = @Content)
     })
     @PostMapping("/buscar")
+    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> buscarPorFiltros(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Filtros de búsqueda exacta por atributos (tipoCliente, nifCif, estadoCliente...)",
@@ -102,6 +108,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteAppHistorico.class)))
     })
     @GetMapping("/buscar/nombre")
+    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> buscarPorNombre(@Parameter(description = "Nombre a buscar", required = true)@RequestParam String nombre) {
         return clienteHistoricoService.buscarPorNombre(nombre);
     }

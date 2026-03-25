@@ -34,6 +34,7 @@ public class ExcelController {
             @ApiResponse(responseCode = "500", description = "Error al procesar el archivo", content = @Content)
     })
     @PostMapping(value = "/importar", consumes = "multipart/form-data")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExcelImportResponseDTO> importar(
             @RequestParam("file") MultipartFile file) {
 
