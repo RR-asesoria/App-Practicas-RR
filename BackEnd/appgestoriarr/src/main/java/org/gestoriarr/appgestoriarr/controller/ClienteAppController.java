@@ -33,7 +33,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "201", description = "Cliente creado correctamente"),
             @ApiResponse(responseCode = "409", description = "El cliente ya existe", content = @Content)
     })
-    @PostMapping
+    @PostMapping("/crearcliente")
     //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<String> crearCliente(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -56,7 +56,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Cliente encontrado", content = @Content(schema = @Schema(implementation = ClienteApp.class))),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
-    @GetMapping("/{nifCif}")
+    @GetMapping("/obtenerpornif/{nifCif}")
     //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<ClienteApp> obtenerCliente(
             @Parameter(description = "NIF/CIF del cliente", required = true) @PathVariable String nifCif) {
@@ -73,7 +73,7 @@ public class ClienteAppController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de clientes", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
     })
-    @GetMapping
+    @GetMapping("/obtenerTodos")
     //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteApp> obtenerTodos() {
         return clienteService.obtenerTodos();
@@ -85,7 +85,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Cliente actualizado correctamente"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
-    @PutMapping("/{nifCif}")
+    @PutMapping("/actualizarcliente/{nifCif}")
     //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<String> actualizarCliente(
             @Parameter(description = "NIF/CIF del cliente a actualizar", required = true) @PathVariable String nifCif,
@@ -110,7 +110,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
-    @DeleteMapping("/{nifCif}")
+    @DeleteMapping("/eliminarcliente/{nifCif}")
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> eliminarCliente(
             @Parameter(description = "NIF/CIF del cliente a eliminar", required = true) @PathVariable String nifCif) {
