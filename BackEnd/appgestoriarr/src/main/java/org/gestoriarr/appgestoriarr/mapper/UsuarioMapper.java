@@ -5,6 +5,7 @@ import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioRespuestaDTO;
 import org.gestoriarr.appgestoriarr.model.Usuario;
+import org.gestoriarr.appgestoriarr.model.enums.Rol;
 
 public class UsuarioMapper {
 	
@@ -21,8 +22,8 @@ public class UsuarioMapper {
 		
 		return new Usuario(uid,
 				dto.getCorreo(), 
-				dto.getNombre(), 
-				dto.getRole() 
+				dto.getNombre(),
+				Rol.USERBASE
 				);
 		
 	}

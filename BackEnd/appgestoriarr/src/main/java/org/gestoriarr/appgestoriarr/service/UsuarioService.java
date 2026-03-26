@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.firebase.auth.UserRecord;
+import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
+import org.gestoriarr.appgestoriarr.mapper.UsuarioMapper;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
@@ -23,8 +26,21 @@ public class UsuarioService {
 	}
 	
 
-    public void guardarUsuario(Usuario usuario) throws Exception{
-    	repository.save(usuario);
+    public void guardarUsuario(UsuarioCreacionDTO dto) throws Exception{
+
+		UserRecord userRecord = FirebaseAuth.getInstance()
+				.createUser(new UserRecord.CreateRequest()
+						.setEmail(dto.getCorreo())
+						.setPassword(dto.getPsw())
+				);
+
+		Usuario usuario = UsuarioMapper
+				.toEntity(userRecord.getUid(),dto);
+
+
+
+
+		repository.save(usuario);
     }
    
     

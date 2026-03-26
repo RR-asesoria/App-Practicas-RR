@@ -28,9 +28,4 @@ public class UsuarioCreacionDTO {
 	@NotBlank
 	@Size(min = 2, max = 50)
 	private String nombre;
-	
-	@NotNull
-	private Rol role;
-	
-	
 }
