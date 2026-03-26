@@ -59,18 +59,4 @@ public class UsuarioService {
     public void eliminarUsuario(String uid) {
     	repository.deleteById(uid);
     }
-    
-    
-    public void asignarRol(String uid, String rol)throws FirebaseAuthException {
-		
-		Map<String, Object> claims = new HashMap<>();
-		claims.put("role", rol);
-		
-		FirebaseAuth.getInstance().setCustomUserClaims(uid, claims);
-		
-	}
-    
-    
-    
-    
 }
