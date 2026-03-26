@@ -18,7 +18,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping
+    @GetMapping("/conexion")
     public ResponseEntity<String> conexionApiCliente(){
         return ResponseEntity.ok("Conexión con API");
     }
