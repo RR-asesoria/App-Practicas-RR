@@ -23,7 +23,7 @@ public class UsuarioMapper {
 		return new Usuario(uid,
 				dto.getCorreo(), 
 				dto.getNombre(),
-				Rol.USERBASE
+				Rol.ADMIN
 				);
 		
 	}
