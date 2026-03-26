@@ -70,7 +70,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 				
 				String uid = decodedToken.getUid();
 				
-				Usuario usuario = service.obtenerUsuario(uid);
+				Usuario usuario = service.encontrarPorId(uid);
 				
 				List<GrantedAuthority> authiAuthorities = 
 						List.of(new SimpleGrantedAuthority("ROLE_"+usuario.getRole()));

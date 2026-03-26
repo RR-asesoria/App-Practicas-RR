@@ -3,6 +3,7 @@ package org.gestoriarr.appgestoriarr.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.firebase.auth.UserRecord;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
@@ -26,7 +27,7 @@ public class UsuarioService {
 	}
 	
 
-    public void guardarUsuario(UsuarioCreacionDTO dto) throws Exception{
+    public void crearUsuario(UsuarioCreacionDTO dto) throws Exception{
 
 		UserRecord userRecord = FirebaseAuth.getInstance()
 				.createUser(new UserRecord.CreateRequest()
@@ -37,16 +38,16 @@ public class UsuarioService {
 		Usuario usuario = UsuarioMapper
 				.toEntity(userRecord.getUid(),dto);
 
-
-
-
 		repository.save(usuario);
     }
-   
+
+	public Optional<Usuario> encontrarPorNombre(String nombre) throws Exception {
+		return repository.findByName(nombre);
+	}
     
-    public Usuario obtenerUsuario(String uid) throws Exception   {
+    public Usuario encontrarPorId(String uid) throws Exception   {
     	
-    	return repository.findById(uid).get();
+    	return repository.findById(uid).orElseThrow();
     }
 
     public List<Usuario> obtenerTodos() throws Exception{

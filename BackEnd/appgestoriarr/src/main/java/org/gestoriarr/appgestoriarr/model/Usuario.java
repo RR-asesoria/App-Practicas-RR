@@ -1,5 +1,6 @@
 package org.gestoriarr.appgestoriarr.model;
 
+import com.google.firebase.database.Exclude;
 import lombok.*;
 import org.gestoriarr.appgestoriarr.model.enums.Rol;
 import org.gestoriarr.appgestoriarr.repository.Identificable;
@@ -21,6 +22,7 @@ public class Usuario implements Identificable {
 
     private Rol role;
 
+    @Exclude
     @Override
     public String getId() {
         // TODO Auto-generated method stub
