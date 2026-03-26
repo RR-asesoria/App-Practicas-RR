@@ -25,9 +25,9 @@ public class UsuarioService {
 	public UsuarioService(UsuarioRepo repo){
 		this.repository=repo;
 	}
-	
 
-    public void crearUsuario(UsuarioCreacionDTO dto) throws Exception{
+
+	public void crearUsuario(UsuarioCreacionDTO dto) throws Exception{
 
 		UserRecord userRecord = FirebaseAuth.getInstance()
 				.createUser(new UserRecord.CreateRequest()
@@ -39,7 +39,8 @@ public class UsuarioService {
 				.toEntity(userRecord.getUid(),dto);
 
 		repository.save(usuario);
-    }
+
+	}
 
 	public Optional<Usuario> encontrarPorNombre(String nombre) throws Exception {
 		return repository.findByName(nombre);

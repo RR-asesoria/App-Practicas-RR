@@ -24,16 +24,10 @@ public class AdminController {
     }
 
     @PostMapping("/usuario")
-    public ResponseEntity<String> crearUsuario(UsuarioCreacionDTO dto){
-
-        try {
+    public ResponseEntity<String> crearUsuario(UsuarioCreacionDTO dto) throws Exception {
 
             service.crearUsuario(dto);
             return ResponseEntity.ok("Usuario creado.");
-
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
-        }
 
     }
 
