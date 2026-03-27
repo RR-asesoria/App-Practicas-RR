@@ -34,3 +34,4 @@ build/
 
 ##key de Firebase
 src/main/resources/keyfirebase.json
+*firebase*.json
