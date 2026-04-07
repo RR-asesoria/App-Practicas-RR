@@ -28,26 +28,34 @@ public class AdminService {
 	}
 
 	//CREATE
-	public void crearUsuario(UsuarioCreacionDTO dto) throws Exception{
+	public void crearUsuario(UsuarioCreacionDTO dto) throws FirebaseAuthException {
 
-		if (repository.findByName(dto.getNombre()).isPresent()){
-			throw new IllegalStateException("El nombre de usuario debe ser único");
+		Usuario usuario = new Usuario();
+
+		try {
+
+			if (repository.findByName(dto.getNombre()).isPresent()){
+				throw new IllegalStateException("El nombre de usuario debe ser único");
+			}
+
+			if (repository.findByEmail(dto.getCorreo()).isPresent()){
+				throw new IllegalStateException("El email ingresado ya existe");
+			}
+
+			UserRecord userRecord = FirebaseAuth.getInstance()
+					.createUser(new UserRecord.CreateRequest()
+							.setEmail(dto.getCorreo())
+							.setPassword(dto.getPsw())
+					);
+
+			usuario = UsuarioMapper
+					.toEntity(userRecord.getUid(),dto);
+
+			repository.save(usuario);
+
+		}catch (Exception e){
+			FirebaseAuth.getInstance().deleteUser(usuario.getUid());
 		}
-
-		if (repository.findByEmail(dto.getCorreo()) != null){
-			throw new IllegalStateException("El email ingresado ya existe");
-		}
-
-		UserRecord userRecord = FirebaseAuth.getInstance()
-				.createUser(new UserRecord.CreateRequest()
-						.setEmail(dto.getCorreo())
-						.setPassword(dto.getPsw())
-				);
-
-		Usuario usuario = UsuarioMapper
-				.toEntity(userRecord.getUid(),dto);
-
-		repository.save(usuario);
 
 	}
 
