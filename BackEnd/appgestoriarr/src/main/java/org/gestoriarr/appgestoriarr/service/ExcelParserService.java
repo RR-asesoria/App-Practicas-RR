@@ -65,6 +65,13 @@ public class ExcelParserService {
                         .estadoCliente(EstadoCliente.CONTACTADONO)
                         .build();
 
+                // Conservar nifAnterior y nifHistorico de Firebase si el cliente ya existe
+                ClienteApp existente = repo.findById(nifCif);
+                if (existente != null) {
+                    cliente.setNifAnterior(existente.getNifAnterior());
+                    cliente.setNifHistorico(existente.getNifHistorico());
+                }
+
                 clientes.add(cliente);
             }
         }

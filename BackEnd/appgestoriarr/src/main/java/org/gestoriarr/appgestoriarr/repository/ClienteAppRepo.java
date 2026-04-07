@@ -188,10 +188,12 @@ public class ClienteAppRepo {
             ClienteApp cliente = findById(nifViejo);
             if (cliente == null) throw new RuntimeException("Cliente no encontrado: " + nifViejo);
 
+            // Inicializar lista si es null
             if (cliente.getNifHistorico() == null) {
                 cliente.setNifHistorico(new ArrayList<>());
             }
 
+            // Añadir nifViejo al historial si no está ya
             if (!cliente.getNifHistorico().contains(nifViejo)) {
                 cliente.getNifHistorico().add(nifViejo);
             }
@@ -199,24 +201,30 @@ public class ClienteAppRepo {
             cliente.setNifAnterior(nifViejo);
             cliente.setNifCif(nifNuevo);
 
-            clientes().document(nifNuevo).set(cliente).get();
-            clientes().document(nifViejo).delete().get();
+            WriteBatch batch = db.batch();
 
+            batch.set(clientes().document(nifNuevo), cliente);
+            batch.delete(clientes().document(nifViejo));
+
+            // Actualizar históricos vinculados al nif viejo
             QuerySnapshot historicos = db.collection("ClienteAppHistorico")
                     .whereEqualTo("nifCif", nifViejo)
                     .get().get();
 
-            WriteBatch batch = db.batch();
             for (DocumentSnapshot doc : historicos.getDocuments()) {
+                List<String> historial = (List<String>) doc.get("nifHistorico");
+                if (historial == null) historial = new ArrayList<>();
+                if (!historial.contains(nifViejo)) historial.add(nifViejo);
+
                 batch.update(doc.getReference(), Map.of(
                         "nifAnterior", nifViejo,
-                        "nifCif", nifNuevo
+                        "nifCif", nifNuevo,
+                        "nifHistorico", historial
                 ));
             }
 
-            if (!historicos.isEmpty()) {
-                batch.commit().get();
-            }
+            // Siempre hacer commit — el cliente nuevo y el delete siempre deben ejecutarse
+            batch.commit().get();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
