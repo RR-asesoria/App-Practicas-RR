@@ -31,7 +31,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Cliente Encontrado en el historico", content = @Content(schema = @Schema(implementation = ClienteAppHistorico.class))),
             @ApiResponse(responseCode = "404", description = "Cliente no Encontrado en el historico", content = @Content)
     })
-    @GetMapping("/{nifCif}")
+    @GetMapping("/buscarcliente/{nifCif}")
     //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<ClienteAppHistorico> obtenerCliente(@PathVariable String nifCif) {
         try {
@@ -59,7 +59,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente del historico"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
-    @DeleteMapping("/{nifCif}")
+    @DeleteMapping("/borrarcliente/{nifCif}")
     public ResponseEntity<String> eliminarCliente(@Parameter(description = "NIF/CIF del cliente a eliminar", required = true) @PathVariable String nifCif) {
         try {
             clienteHistoricoService.eliminarCliente(nifCif);
