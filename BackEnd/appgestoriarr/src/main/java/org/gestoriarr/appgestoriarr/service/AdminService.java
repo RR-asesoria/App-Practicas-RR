@@ -57,7 +57,7 @@ public class AdminService {
 	}
 
 	public Optional<Usuario> encontrarPorEmail(String email) throws Exception{
-		return Optional.of(repository.findByEmail(email));
+		return repository.findByEmail(email);
 	}
 
 	public Optional<Usuario> encontrarPorNombre(String nombre) throws Exception {
