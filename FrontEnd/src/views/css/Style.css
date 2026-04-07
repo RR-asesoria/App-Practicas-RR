@@ -911,8 +911,6 @@ body.eliminarBody {
 
 }
 
-
-
 .app{
     width:420px;
     background:var(--color-card);
@@ -923,6 +921,34 @@ body.eliminarBody {
 
 }
 
+/* ===== HEADER LOGOUT ===== */
+
+.logout{
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f7f8fa;
+    color: red;
+    border: 1px solid;
+    border-color: red;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;  /* espacio sobre el botón */
+    justify-content: flex-start; /* alinear texto e icono a la izquierda */
+    width: fit-content;
+}
+
+.logout-btn:hover {
+    background-color: #e74c3c;
+    color: white;
+}
 
 
 /* ===== HEADER ===== */

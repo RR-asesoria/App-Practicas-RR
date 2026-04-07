@@ -43,6 +43,16 @@ class App {
 
     /* ===== MENU PRINCIPAL ===== */
 
+    /* Logout */
+
+    function logout(){
+        localStorage.clear(); // o token/session si usáis backend
+        window.location.href = "login.html";
+    }
+
+    /* Se termina el logout */
+
+
     initMenuPrincipal(){
 
         const resetButton = document.getElementById("resetButton");
@@ -251,5 +261,3 @@ document.addEventListener("DOMContentLoaded", () => {
     new App();
 
 });
-
-
