@@ -11,7 +11,9 @@ import org.gestoriarr.appgestoriarr.model.enums.Rol;
 @Getter
 @AllArgsConstructor
 public class UsuarioRespuestaDTO {
-	
+
+	String uid;
+
 	private String correo;
 	
 	private String nombre;

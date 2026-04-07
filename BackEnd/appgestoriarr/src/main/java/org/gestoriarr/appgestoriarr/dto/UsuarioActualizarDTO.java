@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,8 @@ public class UsuarioActualizarDTO {
 	
 	@Email(message = "Formato de email incorrecto.")
 	private String correo;
-	
+
+	@NotBlank
 	@Size(min = 2, max = 50)
 	private String nombre;
 
