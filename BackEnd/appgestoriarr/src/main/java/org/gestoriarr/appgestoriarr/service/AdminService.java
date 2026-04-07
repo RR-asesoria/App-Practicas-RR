@@ -87,7 +87,7 @@ public class AdminService {
 
 	}
 
-	public void cambiarPassword(String uid, CambioPasswordDTO dto) throws FirebaseAuthException {
+	public void cambiarPassword(String uid, CambioPasswordDTO dto) throws Exception {
 
 		UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(uid)
 				.setPassword(dto.getPasswordNueva());

@@ -12,9 +12,6 @@ import org.gestoriarr.appgestoriarr.validation.ValidPassword;
 public class CambioPasswordDTO {
 
 	@NotBlank
-	private String passwordActual;
-
-	@NotBlank
 	@ValidPassword
 	private String passwordNueva;
 	
