@@ -3,6 +3,7 @@ package org.gestoriarr.appgestoriarr.exception;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +21,7 @@ public class GlobalExceptionHandler {
 		List<String> errors = ex.getBindingResult()
 				.getFieldErrors()
 				.stream()
-				.map(error -> error.getDefaultMessage())
+				.map(DefaultMessageSourceResolvable::getDefaultMessage)
 				.toList();
 		
 		return ResponseEntity.badRequest().body(
