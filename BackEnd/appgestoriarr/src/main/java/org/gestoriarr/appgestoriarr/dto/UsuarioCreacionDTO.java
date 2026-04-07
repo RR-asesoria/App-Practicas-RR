@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.gestoriarr.appgestoriarr.model.enums.Rol;
+import org.gestoriarr.appgestoriarr.validation.ValidPassword;
 
 @Getter
 @AllArgsConstructor
@@ -19,10 +20,7 @@ public class UsuarioCreacionDTO {
 	private String correo;
 	
 	@NotBlank
-	@Pattern(
-			regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$",
-	        message = "La contraseña debe tener mayúsculas, minúsculas, número y símbolo"	
-			)
+	@ValidPassword
 	private String psw;
 	
 	@NotBlank

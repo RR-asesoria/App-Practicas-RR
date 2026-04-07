@@ -5,17 +5,18 @@ import jakarta.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.gestoriarr.appgestoriarr.validation.ValidPassword;
 
 @Getter
 @AllArgsConstructor
 public class CambioPasswordDTO {
-	
-	@NotBlank(message = "Contraseña obligatoria.")
-	@Pattern(
-			regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$",
-	        message = "La contraseña debe tener mayúsculas, minúsculas, número y símbolo"	
-			)
-	private String password;
+
+	@NotBlank
+	private String passwordActual;
+
+	@NotBlank
+	@ValidPassword
+	private String passwordNueva;
 	
 	
 }
