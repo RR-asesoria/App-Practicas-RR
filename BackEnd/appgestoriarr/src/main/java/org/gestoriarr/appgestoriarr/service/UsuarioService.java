@@ -6,11 +6,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import com.google.firebase.auth.UserRecord;
+import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
 import org.gestoriarr.appgestoriarr.mapper.UsuarioMapper;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +28,7 @@ public class UsuarioService {
 		this.repository=repo;
 	}
 
-
+	//CREATE
 	public void crearUsuario(UsuarioCreacionDTO dto) throws Exception{
 
 		UserRecord userRecord = FirebaseAuth.getInstance()
@@ -42,21 +44,35 @@ public class UsuarioService {
 
 	}
 
+	//READ
+	public Usuario encontrarPorId(String uid) throws Exception   {
+		return repository.findById(uid).orElseThrow();
+	}
+
+	public Optional<Usuario> encontrarPorEmail(String email) throws Exception{
+		return Optional.of(repository.findByEmail(email));
+	}
+
 	public Optional<Usuario> encontrarPorNombre(String nombre) throws Exception {
 		return repository.findByName(nombre);
 	}
-    
-    public Usuario encontrarPorId(String uid) throws Exception   {
-    	
-    	return repository.findById(uid).orElseThrow();
-    }
 
     public List<Usuario> obtenerTodos() throws Exception{
-		
     	return repository.findAll();
-    	
 	}
-    
+
+	//UPDATE
+	public boolean actualizar(String uid, UsuarioActualizarDTO dto) throws Exception {
+
+		Usuario usuario = encontrarPorId(uid);
+
+		repository.save(UsuarioMapper.updateFromDTO(usuario, dto));
+
+		return true;
+
+	}
+
+	//DELETE
     public void eliminarUsuario(String uid) {
     	repository.deleteById(uid);
     }
