@@ -23,7 +23,7 @@ public class UsuarioMapper {
 		return new Usuario(uid,
 				dto.getCorreo(),
 				dto.getNombre(),
-				Rol.ADMIN
+				Rol.USERBASE
 		);
 
 	}
@@ -36,10 +36,6 @@ public class UsuarioMapper {
 
 		if(dto.getNombre()!=null) {
 			usuario.setNombre(dto.getNombre());
-		}
-
-		if(dto.getRole()!=null) {
-			usuario.setRole(dto.getRole());
 		}
 
 		return usuario;

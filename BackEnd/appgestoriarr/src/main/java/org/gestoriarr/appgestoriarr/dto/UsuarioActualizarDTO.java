@@ -17,6 +17,5 @@ public class UsuarioActualizarDTO {
 	
 	@Size(min = 2, max = 50)
 	private String nombre;
-	
-	private Rol role;
+
 }
