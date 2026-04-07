@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -25,8 +24,6 @@ public class ExcelParserService {
     public ExcelParserService(ClienteAppRepo repo) {
         this.repo = repo;
     }
-
-
 
     public ResultadoParseo parsear(MultipartFile file) throws IOException {
         List<ClienteApp> clientes = new ArrayList<>();
@@ -43,7 +40,13 @@ public class ExcelParserService {
 
                 if (nifCif == null || nifCif.isBlank()) {
                     filasSinNif.add(i + 1);
-                    nifCif = generarNifPorDefecto();
+
+                    // Generar NIF estable basado en nombre + teléfono
+                    String nombre = getString(row, 1);
+                    String telefono = resolverTelefono(getString(row, 3), getString(row, 4));
+
+                    int hash = Math.abs(Objects.hash(nombre, telefono)) % 1_000_000;
+                    nifCif = "SIN-NIF-" + String.format("%06d", hash);
                 }
 
                 ClienteApp cliente = ClienteApp.builder()
@@ -86,21 +89,7 @@ public class ExcelParserService {
         return new ResultadoParseo(clientesDeduplicados, filasSinNif);
     }
 
-    // ── Lógica de negocio ─────────────────────────────────────────────────────
-
-    private int contadorSinNif = -1; // -1 = no inicializado
-
-    private String generarNifPorDefecto() {
-        if (contadorSinNif == -1) {
-            // Primera vez: consulta Firebase para saber cuántos SIN-NIF hay ya
-            contadorSinNif = (int) repo.findAll().stream()
-                    .filter(c -> c.getNifCif() != null && c.getNifCif().startsWith("SIN-NIF-"))
-                    .count();
-        }
-        contadorSinNif++;
-        String nif = "SIN-NIF-" + String.format("%03d", contadorSinNif);
-        return nif;
-    }
+    // ── Helpers ───────────────────────────────────────────────────────────────
 
     private String resolverTelefono(String telefono, String movil) {
         boolean hayTelefono = telefono != null && !telefono.isBlank();
@@ -133,8 +122,6 @@ public class ExcelParserService {
         };
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
     private String getString(Row row, int col) {
         Cell cell = row.getCell(col, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
         if (cell == null) return null;
@@ -151,7 +138,6 @@ public class ExcelParserService {
         if (cell == null) return null;
 
         if (cell.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell)) {
-            // Forzar UTC para evitar el desfase de zona horaria
             LocalDate localDate = cell.getLocalDateTimeCellValue().toLocalDate();
             return Date.from(localDate.atStartOfDay(ZoneOffset.UTC).toInstant());
         }

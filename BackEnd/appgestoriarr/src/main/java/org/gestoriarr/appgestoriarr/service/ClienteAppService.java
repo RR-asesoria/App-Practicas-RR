@@ -6,7 +6,6 @@ import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.gestoriarr.appgestoriarr.model.enums.*;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -24,7 +23,7 @@ public class ClienteAppService {
         this.repo = repo;
     }
 
-    // CREAR CLIENTE
+    // ── CREAR CLIENTE ─────────────────────────────────────────────────────────
     public void crearCliente(ClienteApp cliente) {
         if (repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente ya existe");
@@ -32,7 +31,7 @@ public class ClienteAppService {
         repo.save(cliente);
     }
 
-    // OBTENER CLIENTE
+    // ── OBTENER CLIENTE ──────────────────────────────────────────────────────
     public ClienteApp obtenerCliente(String nifCif) {
         ClienteApp cliente = repo.findById(nifCif);
         if (cliente == null) {
@@ -41,12 +40,17 @@ public class ClienteAppService {
         return cliente;
     }
 
-    // OBTENER TODOS
+    // ── OBTENER CLIENTE (NO LANZA EXCEPCIÓN, devuelve null si no existe) ───
+    public ClienteApp obtenerPorNif(String nifCif) {
+        return repo.findById(nifCif);
+    }
+
+    // ── OBTENER TODOS ───────────────────────────────────────────────────────
     public List<ClienteApp> obtenerTodos() {
         return repo.findAll();
     }
 
-    // ACTUALIZAR CLIENTE
+    // ── ACTUALIZAR CLIENTE ──────────────────────────────────────────────────
     public void actualizarCliente(ClienteApp cliente) {
         if (!repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente no existe");
@@ -54,7 +58,7 @@ public class ClienteAppService {
         repo.update(cliente);
     }
 
-    // ELIMINAR CLIENTE
+    // ── ELIMINAR CLIENTE ───────────────────────────────────────────────────
     public void eliminarCliente(String nifCif) {
         if (!repo.existsById(nifCif)) {
             throw new RuntimeException("El cliente no existe");
@@ -62,41 +66,35 @@ public class ClienteAppService {
         repo.deleteById(nifCif);
     }
 
+    // ── BUSCAR POR FILTROS ─────────────────────────────────────────────────
     public List<ClienteApp> buscarPorFiltros(Map<String, Object> filtros) {
-        // Limpiamos filtros nulos para que no rompa Firestore
         Map<String, Object> filtrosNoNulos = filtros.entrySet().stream()
                 .filter(e -> e.getValue() != null)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         return repo.findByFilters(filtrosNoNulos);
     }
-    // BUSCAR POR NOMBRE PARCIAL
+
+    // ── BUSCAR POR NOMBRE PARCIAL ──────────────────────────────────────────
     public List<ClienteApp> buscarPorNombre(String nombre) {
         return repo.findByNombreContaining(nombre);
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    // ── CIERRE DE EJERCICIO ────────────────────────────────────────────────
     public void cierreEjercicio() {
-
         List<ClienteApp> clientes = repo.findAll();
         int anioActual = Calendar.getInstance().get(Calendar.YEAR);
-
         WriteBatch batch = repo.getDb().batch();
         int contador = 0;
 
         for (ClienteApp cliente : clientes) {
-
-            // Referencia cliente
             DocumentReference clienteRef = repo.getDb()
                     .collection("ClienteApp")
                     .document(cliente.getNifCif());
 
-            // Referencia histórico
             DocumentReference historicoRef = repo.getDb()
                     .collection("ClienteAppHistorico")
                     .document();
-
-            // HISTÓRICO
 
             ClienteAppHistorico historico = ClienteAppHistorico.builder()
                     .nifCif(cliente.getNifCif())
@@ -125,16 +123,9 @@ public class ClienteAppService {
 
             batch.set(historicoRef, historico);
 
-
-            // UPDATE CLIENTE
-
             Map<String, Object> updates = new HashMap<>();
-
-            // movimiento casilla
             updates.put("casilla505anterior", cliente.getCasilla505Actual());
             updates.put("casilla505Actual", null);
-
-            // defaults
             updates.put("datosFiscalesDescargados", false);
             updates.put("importe", "0");
             updates.put("tipoFacturado", TipoFacturado.FACTURADONO);
@@ -147,9 +138,8 @@ public class ClienteAppService {
 
             batch.update(clienteRef, updates);
 
-            contador+= 2;
+            contador += 2;
 
-            // límite Firestore
             if (contador >= 500) {
                 try {
                     batch.commit().get();
@@ -161,7 +151,6 @@ public class ClienteAppService {
             }
         }
 
-        // Commit final
         if (contador > 0) {
             try {
                 batch.commit().get();
@@ -176,7 +165,7 @@ public class ClienteAppService {
         clientes.forEach(c -> repo.deleteById(c.getNifCif()));
     }
 
-    //cambiar dni
+    // ── CAMBIAR NIF ────────────────────────────────────────────────────────
     public void cambiarNif(String nifViejo, String nifNuevo) {
         if (!repo.existsById(nifViejo)) {
             throw new RuntimeException("El cliente con NIF " + nifViejo + " no existe");
@@ -187,11 +176,11 @@ public class ClienteAppService {
         repo.cambiarNif(nifViejo, nifNuevo);
     }
 
+    // ── ACTUALIZAR DATOS BÁSICOS ───────────────────────────────────────────
     public void actualizarDatosBasicos(ClienteApp cliente) {
         if (!repo.existsById(cliente.getNifCif())) {
             throw new RuntimeException("El cliente no existe");
         }
         repo.actualizarDatosBasicos(cliente);
     }
-
 }
