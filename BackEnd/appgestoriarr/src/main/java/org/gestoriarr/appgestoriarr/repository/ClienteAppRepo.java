@@ -182,4 +182,36 @@ public class ClienteAppRepo {
         return db;
     }
 
+    //cambiar dni
+    public void cambiarNif(String nifViejo, String nifNuevo) {
+        try {
+            // 1. Migrar cliente activo
+            ClienteApp cliente = findById(nifViejo);
+            if (cliente == null) throw new RuntimeException("Cliente no encontrado: " + nifViejo);
+            cliente.setNifCif(nifNuevo);
+            cliente.setNifAnterior(nifViejo);
+            clientes().document(nifNuevo).set(cliente).get();
+            clientes().document(nifViejo).delete().get();
+
+            // 2. Actualizar históricos: guardar nifAnterior y actualizar nifCif
+            QuerySnapshot historicos = db.collection("ClienteAppHistorico")
+                    .whereEqualTo("nifCif", nifViejo)
+                    .get().get();
+
+            WriteBatch batch = db.batch();
+            for (DocumentSnapshot doc : historicos.getDocuments()) {
+                batch.update(doc.getReference(), Map.of(
+                        "nifAnterior", nifViejo,
+                        "nifCif", nifNuevo
+                ));
+            }
+            if (!historicos.isEmpty()) {
+                batch.commit().get();
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

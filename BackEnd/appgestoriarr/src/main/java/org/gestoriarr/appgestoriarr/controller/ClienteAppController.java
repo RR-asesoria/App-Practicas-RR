@@ -165,6 +165,29 @@ public class ClienteAppController {
         return ResponseEntity.ok("Cierre de ejercicio realizado correctamente");
     }
 
+    //cambio de dni
+    @Operation(summary = "Cambiar NIF/CIF de un cliente", description = "Migra todos los datos de un cliente a un nuevo NIF/CIF")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "NIF cambiado correctamente"),
+            @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content),
+            @ApiResponse(responseCode = "409", description = "El nuevo NIF ya existe", content = @Content)
+    })
+    //@PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/cambiar-nif")
+    public ResponseEntity<String> cambiarNif(
+            @RequestParam String nifViejo,
+            @RequestParam String nifNuevo) {
+        try {
+            clienteService.cambiarNif(nifViejo, nifNuevo);
+            return ResponseEntity.ok("NIF cambiado correctamente de " + nifViejo + " a " + nifNuevo);
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("no existe")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            }
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
 
     //TESTING
     @Operation(summary = "Eliminar todos los clientes", description = "Elimina todos los clientes de la base de datos. Solo para testing.")

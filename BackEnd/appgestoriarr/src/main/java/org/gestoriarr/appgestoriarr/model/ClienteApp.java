@@ -34,5 +34,6 @@ public class ClienteApp {
     private TipoCliente tipoCliente;
     private EstadoCliente estadoCliente;
     private String casilla505Actual;
+    private String nifAnterior;
 
 }

@@ -120,6 +120,7 @@ public class ClienteAppService {
                     .estadoCliente(cliente.getEstadoCliente())
                     .casilla505Actual(cliente.getCasilla505Actual())
                     .anioFiscal(String.valueOf(anioActual))
+                    .nifAnterior(cliente.getNifAnterior())
                     .build();
 
             batch.set(historicoRef, historico);
@@ -175,5 +176,15 @@ public class ClienteAppService {
         clientes.forEach(c -> repo.deleteById(c.getNifCif()));
     }
 
+    //cambiar dni
+    public void cambiarNif(String nifViejo, String nifNuevo) {
+        if (!repo.existsById(nifViejo)) {
+            throw new RuntimeException("El cliente con NIF " + nifViejo + " no existe");
+        }
+        if (repo.existsById(nifNuevo)) {
+            throw new RuntimeException("Ya existe un cliente con NIF " + nifNuevo);
+        }
+        repo.cambiarNif(nifViejo, nifNuevo);
+    }
 
 }
