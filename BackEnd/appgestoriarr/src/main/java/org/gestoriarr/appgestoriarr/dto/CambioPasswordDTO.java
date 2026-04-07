@@ -10,7 +10,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CambioPasswordDTO {
 	
-	
 	@NotBlank(message = "Contraseña obligatoria.")
 	@Pattern(
 			regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&]).{8,}$",

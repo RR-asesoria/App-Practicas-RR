@@ -12,6 +12,7 @@ public class UsuarioMapper {
 	public static UsuarioRespuestaDTO toDTO(Usuario usuario) {
 
 		return new UsuarioRespuestaDTO(
+				usuario.getId(),
 				usuario.getCorreo(),
 				usuario.getNombre(),
 				usuario.getRole()
