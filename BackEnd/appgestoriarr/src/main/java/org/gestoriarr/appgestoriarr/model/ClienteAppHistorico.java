@@ -17,6 +17,7 @@ import java.util.Date;
 public class ClienteAppHistorico {
 
     private String nifCif;
+    private String nifAnterior;
     private String nombre;
     private Date fechaNacimiento;
     private String telefono;
