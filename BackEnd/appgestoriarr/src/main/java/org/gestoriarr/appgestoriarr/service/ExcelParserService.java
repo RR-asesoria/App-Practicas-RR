@@ -26,7 +26,7 @@ public class ExcelParserService {
         this.repo = repo;
     }
 
-    // ── Método principal ──────────────────────────────────────────────────────
+
 
     public ResultadoParseo parsear(MultipartFile file) throws IOException {
         List<ClienteApp> clientes = new ArrayList<>();

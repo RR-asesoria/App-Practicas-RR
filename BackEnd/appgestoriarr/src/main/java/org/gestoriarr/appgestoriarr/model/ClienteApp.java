@@ -5,6 +5,7 @@ import org.gestoriarr.appgestoriarr.model.enums.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -35,5 +36,6 @@ public class ClienteApp {
     private EstadoCliente estadoCliente;
     private String casilla505Actual;
     private String nifAnterior;
+    private List<String> nifHistorico;
 
 }
