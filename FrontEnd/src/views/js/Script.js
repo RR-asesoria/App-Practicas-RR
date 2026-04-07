@@ -65,36 +65,64 @@ class App {
 
     /* ===== AGREGAR CLIENTE ===== */
 
-    initAgregarCliente(){
+initAgregarCliente(){
 
-        const form = document.querySelector(".cliente-form");
+    const form = document.querySelector(".cliente-form");
 
-        if(!form) return;
+    if(!form) return;
 
-        form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", (e) => {
 
-            e.preventDefault();
+        e.preventDefault();
 
-            const inputs = form.querySelectorAll("input");
+        let cliente = {
+            nombre: document.getElementById("nombre").value,
+            nifCif: document.getElementById("nifCif").value,
+            fechaNacimiento: document.getElementById("fechaNacimiento").value,
+            referencia: document.getElementById("referencia").value,
+            casilla505anterior: document.getElementById("casilla505anterior").value,
+            numerosCC: document.getElementById("numerosCC").value,
+            datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value,
+            importe: document.getElementById("importe").value,
+            facturado: document.getElementById("facturado").value,
+            recogidaDatos: document.getElementById("recogidaDatos").value,
+            excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value,
+            borrador: document.getElementById("borrador").value,
+            presentada: document.getElementById("presentada").value,
+            cobrado: document.getElementById("cobrado").value,
+            tipoCliente: document.getElementById("tipoCliente").value,
+            estadoCliente: document.getElementById("estadoCliente").value,
+            casilla505Actual: document.getElementById("casilla505Actual").value
+        };
 
-            let cliente = {};
+        console.log("Cliente a enviar:", cliente);
 
-            inputs.forEach(input => {
-
-                const label = input.previousElementSibling.textContent;
-                cliente[label] = input.value;
-
-            });
-
-            console.log(cliente);
-
+        fetch("http://localhost:8080/clientes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(cliente)
+        })
+        .then(response => {
+            if(!response.ok){
+                throw new Error("Error al guardar cliente");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Respuesta:", data);
             alert("Cliente guardado correctamente");
-
             window.location.href = "../html/campaniaActual.html";
-
+        })
+        .catch(error => {
+            console.error(error);
+            alert("Error al guardar cliente");
         });
 
-    }
+    });
+
+}
 
     /* ===== CONSULTAR TABLAS ===== */
 

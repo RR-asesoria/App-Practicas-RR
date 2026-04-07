@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Edito botones de guardado en varias pestañas">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_03_2026_12_16_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_03_2026_12_16__Changes_.xml" beforeDir="false" />
+    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Edito campaniaActual.html y elimino eliminarCliente.html">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/css/Style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/campaniaActual.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/campaniaActual.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/editarCliente.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/editarCliente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,15 +24,18 @@
     &quot;assignee&quot;: &quot;nahuel250&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/RR-asesoria/App-Practicas-RR.git",
-    "accountId": "f59ac6d0-8454-4b48-a90d-a27a3cee0d00"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/RR-asesoria/App-Practicas-RR.git&quot;,
+    &quot;accountId&quot;: &quot;f59ac6d0-8454-4b48-a90d-a27a3cee0d00&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="AISelfReview" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
@@ -64,6 +66,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
@@ -85,7 +88,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -112,7 +114,10 @@
       <workItem from="1773652217897" duration="6507000" />
       <workItem from="1773738589533" duration="3439000" />
       <workItem from="1773766272475" duration="1461000" />
-      <workItem from="1774258678766" duration="5624000" />
+      <workItem from="1774258678766" duration="7520000" />
+      <workItem from="1774434310328" duration="5398000" />
+      <workItem from="1774515775738" duration="747000" />
+      <workItem from="1775549708513" duration="125000" />
       <workItem from="1774609522725" duration="692000" />
     </task>
     <task id="LOCAL-00001" summary="probando">
@@ -379,7 +384,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773741450232</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Edito campaniaActual.html y elimino eliminarCliente.html">
+      <option name="closed" value="true" />
+      <created>1774265155827</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1774265155827</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -397,7 +410,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Subo htmls de consultarTablas.html, usuarios.html e index.html, otra vez" />
     <MESSAGE value="edito css" />
     <MESSAGE value="subo el index.html" />
     <MESSAGE value="subo el consultarTablas.html" />
@@ -422,6 +434,11 @@
     <MESSAGE value="edito funcion para que se puedan subir Excels" />
     <MESSAGE value="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS" />
     <MESSAGE value="Edito botones de guardado en varias pestañas" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edito botones de guardado en varias pestañas" />
+    <MESSAGE value="Edito campaniaActual.html y elimino eliminarCliente.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edito campaniaActual.html y elimino eliminarCliente.html" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
