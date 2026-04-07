@@ -187,4 +187,11 @@ public class ClienteAppService {
         repo.cambiarNif(nifViejo, nifNuevo);
     }
 
+    public void actualizarDatosBasicos(ClienteApp cliente) {
+        if (!repo.existsById(cliente.getNifCif())) {
+            throw new RuntimeException("El cliente no existe");
+        }
+        repo.actualizarDatosBasicos(cliente);
+    }
+
 }

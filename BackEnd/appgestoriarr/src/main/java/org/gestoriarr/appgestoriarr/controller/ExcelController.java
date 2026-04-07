@@ -48,9 +48,10 @@ public class ExcelController {
                 try {
                     clienteService.crearCliente(cliente);
                     creados++;
+                    System.out.println(cliente);
                 } catch (RuntimeException e) {
                     try {
-                        clienteService.actualizarCliente(cliente);
+                        clienteService.actualizarDatosBasicos(cliente); // solo campos del excel
                         yaExistian.add(cliente.getNifCif());
                     } catch (RuntimeException ex) {
                         yaExistian.add("ERROR-" + cliente.getNifCif());

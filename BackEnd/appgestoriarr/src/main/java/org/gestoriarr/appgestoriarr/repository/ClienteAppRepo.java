@@ -230,5 +230,21 @@ public class ClienteAppRepo {
             throw new RuntimeException(e);
         }
     }
+    public void actualizarDatosBasicos(ClienteApp cliente) {
+        try {
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("nombre", cliente.getNombre());
+            updates.put("telefono", cliente.getTelefono());
+            updates.put("correoElectronico", cliente.getCorreoElectronico());
+            updates.put("fechaNacimiento", cliente.getFechaNacimiento());
+            updates.put("tipoCliente", cliente.getTipoCliente());
+            updates.put("numerosCC", cliente.getNumerosCC());
 
+            clientes().document(cliente.getNifCif())
+                    .update(updates)
+                    .get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
