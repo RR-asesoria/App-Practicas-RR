@@ -11,6 +11,7 @@ import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.gestoriarr.appgestoriarr.service.ClienteAppHistoricoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Cliente no Encontrado en el historico", content = @Content)
     })
     @GetMapping("/buscarcliente/{nifCif}")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<ClienteAppHistorico> obtenerCliente(@PathVariable String nifCif) {
         try {
             ClienteAppHistorico clienteAppHistorico = clienteHistoricoService.obtenerCliente(nifCif);
@@ -48,7 +49,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404", description = "Historico de clientes no encontrado", content = @Content)
     })
     @GetMapping
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> obtenerClientes() {
         return clienteHistoricoService.obtenerTodosClientes();
     }
@@ -59,6 +60,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente del historico"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @DeleteMapping("/borrarcliente/{nifCif}")
     public ResponseEntity<String> eliminarCliente(@Parameter(description = "NIF/CIF del cliente a eliminar", required = true) @PathVariable String nifCif) {
         try {
@@ -76,6 +78,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Clientes eliminados correctamente del historico"),
             @ApiResponse(responseCode = "404", description = "Error", content = @Content)
     })
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @DeleteMapping("/eliminartodos")
     public ResponseEntity<String> eliminarTodosClientes() {
         try {
@@ -92,7 +95,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "404",description = "Clientes no encontrados", content = @Content)
     })
     @PostMapping("/buscar")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> buscarPorFiltros(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Filtros de búsqueda exacta por atributos (tipoCliente, nifCif, estadoCliente...)",
@@ -108,7 +111,7 @@ public class ClienteAppHistoricoController {
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteAppHistorico.class)))
     })
     @GetMapping("/buscar/nombre")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteAppHistorico> buscarPorNombre(@Parameter(description = "Nombre a buscar", required = true)@RequestParam String nombre) {
         return clienteHistoricoService.buscarPorNombre(nombre);
     }

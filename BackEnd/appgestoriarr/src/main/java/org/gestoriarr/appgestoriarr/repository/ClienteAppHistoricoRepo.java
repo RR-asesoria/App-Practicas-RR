@@ -47,7 +47,7 @@ public class ClienteAppHistoricoRepo {
             QuerySnapshot result = query.get().get();
 
             if (result.isEmpty()) {
-                System.out.println("❌ No se encontró ningún cliente con nifCif: " + nifCif);
+                System.out.println("No se encontró ningún cliente con nifCif: " + nifCif);
                 return;
             }
 
@@ -55,7 +55,7 @@ public class ClienteAppHistoricoRepo {
                 document.getReference().delete().get();
             }
 
-            System.out.println("✅ Cliente(s) eliminado(s) con nifCif: " + nifCif);
+            System.out.println("Cliente(s) eliminado(s) con nifCif: " + nifCif);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

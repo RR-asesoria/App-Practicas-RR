@@ -10,6 +10,7 @@ import org.gestoriarr.appgestoriarr.service.ClienteAppService;
 import org.gestoriarr.appgestoriarr.service.ExcelParserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +35,7 @@ public class ExcelController {
             @ApiResponse(responseCode = "500", description = "Error al procesar el archivo", content = @Content)
     })
     @PostMapping(value = "/importar", consumes = "multipart/form-data")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ExcelImportResponseDTO> importar(
             @RequestParam("file") MultipartFile file) {
 
