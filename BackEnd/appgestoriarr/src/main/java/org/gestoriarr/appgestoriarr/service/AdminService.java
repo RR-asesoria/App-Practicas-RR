@@ -30,7 +30,8 @@ public class AdminService {
 	//CREATE
 	public void crearUsuario(UsuarioCreacionDTO dto) throws FirebaseAuthException {
 
-		Usuario usuario = new Usuario();
+		UserRecord userRecord = null;
+		Usuario usuario;
 
 		try {
 
@@ -42,7 +43,7 @@ public class AdminService {
 				throw new IllegalStateException("El email ingresado ya existe");
 			}
 
-			UserRecord userRecord = FirebaseAuth.getInstance()
+			userRecord = FirebaseAuth.getInstance()
 					.createUser(new UserRecord.CreateRequest()
 							.setEmail(dto.getCorreo())
 							.setPassword(dto.getPsw())
@@ -54,7 +55,13 @@ public class AdminService {
 			repository.save(usuario);
 
 		}catch (Exception e){
-			FirebaseAuth.getInstance().deleteUser(usuario.getUid());
+
+			if (userRecord!=null){
+				FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
+			}
+
+			throw new RuntimeException("No pudo crearse el usuario", e);
+
 		}
 
 	}
