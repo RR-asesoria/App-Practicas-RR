@@ -1,6 +1,6 @@
 package org.gestoriarr.appgestoriarr.model;
 
-import com.google.cloud.firestore.annotation.DocumentId;
+
 import com.google.firebase.database.Exclude;
 import lombok.*;
 import org.gestoriarr.appgestoriarr.model.enums.Rol;
@@ -15,7 +15,6 @@ import org.gestoriarr.appgestoriarr.repository.Identificable;
 @EqualsAndHashCode
 
 public class Usuario implements Identificable {
-    @DocumentId
     private String uid;
 
     private String correo;
