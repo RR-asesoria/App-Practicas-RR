@@ -39,13 +39,13 @@ public class UserController {
     }
 
     //READ
-    @GetMapping("/buscarporid/{uid}")
+    @GetMapping("/id/{uid}")
     public ResponseEntity<UsuarioRespuestaDTO>encontrarPorId(@PathVariable String uid){
 
         try {
 
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
+                    .status(HttpStatus.OK)
                     .body(service.encontrarPorId(uid));
 
         } catch (Exception e) {
@@ -58,12 +58,12 @@ public class UserController {
 
     }
 
-    @GetMapping("/buscarporid/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email){
         try {
 
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
+                    .status(HttpStatus.OK)
                     .body(service.encontrarPorEmail(email));
 
         } catch (Exception e) {
@@ -74,12 +74,12 @@ public class UserController {
         }
     }
 
-    @GetMapping("/buscarporid/{nombre}")
+    @GetMapping("/nombre/{nombre}")
     public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre){
         try {
 
             return ResponseEntity
-                    .status(HttpStatus.FOUND)
+                    .status(HttpStatus.OK)
                     .body(service.encontrarPorNombre(nombre));
 
         } catch (Exception e) {
@@ -150,7 +150,7 @@ public class UserController {
 
     //DELETE
     @DeleteMapping("/eliminarusuario/{uid}")
-    public ResponseEntity<String> eliminarUsuario(String uid){
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid){
 
         try {
 
