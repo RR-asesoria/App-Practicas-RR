@@ -15,7 +15,7 @@ public class UsuarioRepo extends FirebaseRepositoryImpl<Usuario> {
 
     public Optional<Usuario> findByEmail(String email) throws Exception{
         List<Usuario> usuarios = findByField("email", email);
-        return usuarios.isEmpty() ? null : Optional.ofNullable(usuarios.getFirst());
+        return usuarios.isEmpty() ? Optional.empty() : Optional.of(usuarios.getFirst());
     }
 
     public Optional<Usuario> findByName(String name) throws Exception {

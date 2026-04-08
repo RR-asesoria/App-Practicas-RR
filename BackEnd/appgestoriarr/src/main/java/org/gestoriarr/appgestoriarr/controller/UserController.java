@@ -2,7 +2,6 @@ package org.gestoriarr.appgestoriarr.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
@@ -12,7 +11,6 @@ import org.gestoriarr.appgestoriarr.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,17 +24,9 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
-    public ResponseEntity<String> admin(Authentication auth, HttpServletRequest request) {
-
-        if (auth==null){
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Zona ADMIN");
-        }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<String> admin() {
+        return ResponseEntity.ok("Zona ADMIN");
     }
-
 
     //CREATE
     @PreAuthorize("hasRole('ADMIN')")
@@ -53,138 +43,75 @@ public class UserController {
     //READ
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{uid}")
-    public ResponseEntity<UsuarioRespuestaDTO>encontrarPorId(@PathVariable String uid){
-
+    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorId(@PathVariable String uid) {
         try {
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorId(uid));
-
+            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorId(uid));
         } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
-
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email){
+    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email) {
         try {
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorEmail(email));
-
+            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorEmail(email));
         } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre){
+    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre) {
         try {
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorNombre(nombre));
-
+            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorNombre(nombre));
         } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/todoslosusuarios")
-    public  ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos(){
-
+    public ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos() {
         try {
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.obtenerTodos());
-
+            return ResponseEntity.status(HttpStatus.OK).body(service.obtenerTodos());
         } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .build();
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-
-
     }
 
     //UPDATE
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/actualizarusuario/{uid}")
-    public ResponseEntity<String> actualizar(@PathVariable String uid, @RequestBody UsuarioActualizarDTO dto){
-
+    public ResponseEntity<String> actualizar(@PathVariable String uid, @Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.actualizar(uid, dto));
-
+            return ResponseEntity.status(HttpStatus.OK).body(service.actualizar(uid, dto));
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-
     }
 
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/actualizarpassword/{uid}")
-    public ResponseEntity<String> cambiarPassword(@PathVariable String uid,@RequestBody CambioPasswordDTO dto){
-
+    public ResponseEntity<String> cambiarPassword(@PathVariable String uid, @Valid @RequestBody CambioPasswordDTO dto) {
         try {
-
             service.cambiarPassword(uid, dto);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Contraseña actualizada");
-
+            return ResponseEntity.status(HttpStatus.OK).body("Contraseña actualizada");
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-
     }
 
     //DELETE
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminarusuario/{uid}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid){
-
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
         try {
-
             service.eliminarUsuario(uid);
-
-            return ResponseEntity
-                    .status(HttpStatus.NO_CONTENT)
-                    .body("Usuario eliminado");
-
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-
     }
 }
