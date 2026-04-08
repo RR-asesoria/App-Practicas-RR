@@ -34,7 +34,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "409", description = "El cliente ya existe", content = @Content)
     })
     @PostMapping("/crearcliente")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<String> crearCliente(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Datos del cliente a crear",
@@ -57,7 +57,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
     @GetMapping("/obtenerpornif/{nifCif}")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<ClienteApp> obtenerCliente(
             @Parameter(description = "NIF/CIF del cliente", required = true) @PathVariable String nifCif) {
         try {
@@ -74,7 +74,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Lista de clientes", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
     })
     @GetMapping("/obtenerTodos")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteApp> obtenerTodos() {
         return clienteService.obtenerTodos();
     }
@@ -86,7 +86,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
     @PutMapping("/actualizarcliente/{nifCif}")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public ResponseEntity<String> actualizarCliente(
             @Parameter(description = "NIF/CIF del cliente a actualizar", required = true) @PathVariable String nifCif,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
@@ -111,7 +111,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
     })
     @DeleteMapping("/eliminarcliente/{nifCif}")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> eliminarCliente(
             @Parameter(description = "NIF/CIF del cliente a eliminar", required = true) @PathVariable String nifCif) {
         try {
@@ -128,7 +128,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(array = @ArraySchema(schema = @Schema(implementation = ClienteApp.class))))
     })
     @PostMapping("/buscarporfiltros")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteApp> buscarPorFiltros(
             @io.swagger.v3.oas.annotations.parameters.RequestBody(
                     description = "Filtros de búsqueda exacta por atributos (tipoCliente, nifCif, estadoCliente...)",
@@ -145,7 +145,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Clientes encontrados", content = @Content(schema = @Schema(implementation = ClienteApp.class)))
     })
     @GetMapping("/buscar/nombre")
-    //@PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     public List<ClienteApp> buscarPorNombre(
             @Parameter(description = "Texto del nombre a buscar", required = true) @RequestParam String nombre) {
         return clienteService.buscarPorNombre(nombre);
@@ -154,7 +154,7 @@ public class ClienteAppController {
 
     //cerrar el ejercicio y pasar la casilla505 junto el año fiscal
     @PostMapping("/cierre-ejercicio")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Cierre de ejercicio", description = "Mueve todos los clientes a histórico y actualiza casilla505")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cierre realizado correctamente"),
@@ -172,7 +172,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content),
             @ApiResponse(responseCode = "409", description = "El nuevo NIF ya existe", content = @Content)
     })
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/cambiar-nif")
     public ResponseEntity<String> cambiarNif(
             @RequestParam String nifViejo,
@@ -195,6 +195,7 @@ public class ClienteAppController {
             @ApiResponse(responseCode = "200", description = "Todos los clientes eliminados correctamente"),
             @ApiResponse(responseCode = "500", description = "Error al eliminar", content = @Content)
     })
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @DeleteMapping("/todos")
     public ResponseEntity<String> eliminarTodos() {
         try {
