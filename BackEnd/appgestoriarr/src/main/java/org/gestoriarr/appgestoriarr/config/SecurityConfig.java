@@ -32,8 +32,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/clientes/excel/ADMIN/**").hasRole("ADMIN")
                         .requestMatchers("/api/clientes/excel/USERBASE/**").authenticated()
 
-                        .requestMatchers("/api/user/ADMIN/**").hasRole("ADMIN")
-                        .requestMatchers("/api/user/USERBASE/**").authenticated()
+                        .requestMatchers("/user/ADMIN/**").hasRole("ADMIN")
+                        .requestMatchers("/user/USERBASE/**").authenticated()
                         .anyRequest().permitAll()
                 );
 
