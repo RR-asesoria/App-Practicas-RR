@@ -1,8 +1,12 @@
-package com.firebaselogin.pruebafirebaselogin.config;
+package org.gestoriarr.appgestoriarr.config;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
+import org.gestoriarr.appgestoriarr.model.Usuario;
+import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
+import org.gestoriarr.appgestoriarr.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,8 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.firebaselogin.pruebafirebaselogin.model.Usuario;
-import com.firebaselogin.pruebafirebaselogin.service.UsuarioService;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -28,6 +31,8 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	@Autowired
+	private UsuarioRepo repository;
 	
 	
 	@Override
@@ -54,11 +59,15 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 				String uid = decodedToken.getUid();
 				
 				if(SecurityContextHolder.getContext().getAuthentication() == null) {
-					
-					Usuario usuario = usuarioService.obtenerUsuarioInterno(uid);
-					
+
+					Optional<Usuario> usuario = repository.findById(uid);
+
+					if (usuario.isEmpty()){
+						throw new RuntimeException("El usuario no fue encontrado");
+					}
+
 					List<GrantedAuthority> authiAuthorities = 
-							List.of(new SimpleGrantedAuthority("ROLE_"+usuario.getRole()));
+							List.of(new SimpleGrantedAuthority("ROLE_"+usuario.get().getRole()));
 					
 					
 					UsernamePasswordAuthenticationToken authentication = 
