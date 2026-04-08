@@ -10,6 +10,7 @@ import org.gestoriarr.appgestoriarr.dto.UsuarioRespuestaDTO;
 import org.gestoriarr.appgestoriarr.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,16 +23,22 @@ public class UserController {
 
     private final UsuarioService service;
 
-    @GetMapping("/ADMIN/test")
-    public String admin(Authentication auth, HttpServletRequest request) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/test")
+    public ResponseEntity<String> admin(Authentication auth, HttpServletRequest request) {
 
-        String uid = auth.getName();
+        if (auth==null){
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Zona ADMIN");
+        }
 
-        return "Zona ADMIN";
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 
     //CREATE
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crearusuario")
     public ResponseEntity<String> crearUsuario(@RequestBody UsuarioCreacionDTO dto){
 
@@ -50,6 +57,7 @@ public class UserController {
     }
 
     //READ
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{uid}")
     public ResponseEntity<UsuarioRespuestaDTO>encontrarPorId(@PathVariable String uid){
 
@@ -69,6 +77,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email){
         try {
@@ -85,6 +94,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre){
         try {
@@ -101,7 +111,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("ADMIN/todoslosusuarios")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/todoslosusuarios")
     public  ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos(){
 
         try {
@@ -121,6 +132,7 @@ public class UserController {
     }
 
     //UPDATE
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/actualizarusuario/{uid}")
     public ResponseEntity<String> actualizar(@PathVariable String uid, @RequestBody UsuarioActualizarDTO dto){
 
@@ -139,6 +151,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/actualizarpassword/{uid}")
     public ResponseEntity<String> cambiarPassword(@PathVariable String uid,@RequestBody CambioPasswordDTO dto){
 
@@ -160,6 +173,7 @@ public class UserController {
     }
 
     //DELETE
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminarusuario/{uid}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable String uid){
 
