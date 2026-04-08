@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.controller;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
@@ -40,20 +41,13 @@ public class UserController {
     //CREATE
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crearusuario")
-    public ResponseEntity<String> crearUsuario(@RequestBody UsuarioCreacionDTO dto){
-
+    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) {
         try {
             service.crearUsuario(dto);
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body("Usuario creado");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado");
         } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-
     }
 
     //READ
