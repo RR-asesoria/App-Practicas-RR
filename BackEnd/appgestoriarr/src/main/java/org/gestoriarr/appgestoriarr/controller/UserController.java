@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.controller;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
@@ -9,6 +10,7 @@ import org.gestoriarr.appgestoriarr.dto.UsuarioRespuestaDTO;
 import org.gestoriarr.appgestoriarr.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,15 @@ import java.util.List;
 public class UserController {
 
     private final UsuarioService service;
+
+    @GetMapping("/ADMIN/test")
+    public String admin(Authentication auth, HttpServletRequest request) {
+
+        String uid = auth.getName();
+
+        return "Zona ADMIN";
+    }
+
 
     //CREATE
     @PostMapping("/crearusuario")
@@ -90,7 +101,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/todoslosusuarios")
+    @GetMapping("ADMIN/todoslosusuarios")
     public  ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos(){
 
         try {
