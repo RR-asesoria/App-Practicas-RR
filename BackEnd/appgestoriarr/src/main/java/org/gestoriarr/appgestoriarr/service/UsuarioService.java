@@ -12,18 +12,17 @@ import org.gestoriarr.appgestoriarr.mapper.UsuarioMapper;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 
 @Service
-public class AdminService {
+public class UsuarioService {
 
 	private final UsuarioRepo repository;
 	
-	public AdminService(UsuarioRepo repo){
+	public UsuarioService(UsuarioRepo repo){
 		this.repository=repo;
 	}
 
