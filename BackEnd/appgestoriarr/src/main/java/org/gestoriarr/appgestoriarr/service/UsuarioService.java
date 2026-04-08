@@ -78,16 +78,34 @@ public class UsuarioService {
 		return UsuarioMapper.toDTO(usuario.get());
 	}
 
-	public Optional<Usuario> encontrarPorEmail(String email) throws Exception{
-		return repository.findByEmail(email);
+	public UsuarioRespuestaDTO encontrarPorEmail(String email) throws Exception{
+
+		Optional<Usuario> usuario = repository.findByEmail(email);
+
+		if (usuario.isEmpty()){
+			throw new RuntimeException("El usuario no fue encontrado");
+		}
+
+		return UsuarioMapper.toDTO(usuario.get());
 	}
 
-	public Optional<Usuario> encontrarPorNombre(String nombre) throws Exception {
-		return repository.findByName(nombre);
+	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) throws Exception {
+		Optional<Usuario> usuario = repository.findByName(nombre);
+
+		if (usuario.isEmpty()){
+			throw new RuntimeException("El usuario no fue encontrado");
+		}
+
+		return UsuarioMapper.toDTO(usuario.get());
 	}
 
-    public List<Usuario> obtenerTodos() throws Exception{
-    	return repository.findAll();
+    public List<UsuarioRespuestaDTO> obtenerTodos() throws Exception{
+
+		List<Usuario> usuarios = repository.findAll();
+
+		return usuarios.stream()
+				.map(UsuarioMapper::toDTO)
+				.toList();
 	}
 
 	//UPDATE
