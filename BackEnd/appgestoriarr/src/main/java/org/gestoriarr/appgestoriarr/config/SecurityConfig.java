@@ -24,21 +24,17 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/clientesHistorico/ADMIN/**").hasRole("ADMIN")
-                        .requestMatchers("/api/clientesHistorico/USERBASE/**").authenticated()
-
-                        .requestMatchers("/api/clientes/ADMIN/**").hasRole("ADMIN")
-                        .requestMatchers("/api/clientes/USERBASE/**").authenticated()
-
-                        .requestMatchers("/api/clientes/excel/ADMIN/**").hasRole("ADMIN")
-                        .requestMatchers("/api/clientes/excel/USERBASE/**").authenticated()
-
-                        .requestMatchers("/user/ADMIN/**").hasRole("ADMIN")
-                        .requestMatchers("/user/USERBASE/**").authenticated()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 );
 
         return http.build();
     }
-
 }
