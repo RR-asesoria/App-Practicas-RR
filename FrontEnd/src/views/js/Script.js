@@ -1,4 +1,4 @@
-/ ===== FIREBASE CONFIG =====
+// ===== FIREBASE CONFIG =====
 // Asegúrate de tener en el HTML antes de este script:
 // <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 // <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
