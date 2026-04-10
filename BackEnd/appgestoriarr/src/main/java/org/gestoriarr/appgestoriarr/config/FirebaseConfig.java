@@ -19,7 +19,7 @@ public class FirebaseConfig {
         try {
             // Inicializar Firebase solo si no hay apps
             if (FirebaseApp.getApps().isEmpty()) {
-                ClassPathResource resource = new ClassPathResource("firebase-key.json");
+                ClassPathResource resource = new ClassPathResource("keyfirebase.json");
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(resource.getInputStream()))
                         .build();
