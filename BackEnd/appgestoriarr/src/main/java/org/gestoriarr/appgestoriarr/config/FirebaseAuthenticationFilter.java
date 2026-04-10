@@ -54,7 +54,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 			
 		try {
 				
-				FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token,true);
+				FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token,false);
 				
 				String uid = decodedToken.getUid();
 				
@@ -87,6 +87,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 		} 
 		catch (Exception e) {
 				// TODO Auto-generated catch block
+			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			response.getWriter().write("Usuario no autorizado");
 			return;
