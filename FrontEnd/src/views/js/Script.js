@@ -82,6 +82,22 @@ class App {
                 alert("Usuario o contraseña incorrectos");
             }
         });
+
+        const toggle = document.getElementById("togglePassword");
+        const input = document.getElementById("password");
+
+        if (toggle && input) {
+            toggle.addEventListener("click", () => {
+
+                const isPassword = input.type === "password";
+
+                input.type = isPassword ? "text" : "password";
+
+                toggle.classList.toggle("fa-eye");
+                toggle.classList.toggle("fa-eye-slash");
+            });
+        }
+
     }
 
     // ===== MENU PRINCIPAL =====
