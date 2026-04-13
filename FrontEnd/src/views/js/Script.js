@@ -1,8 +1,4 @@
 // ===== FIREBASE CONFIG =====
-// Asegúrate de tener en el HTML antes de este script:
-// <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-// <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-
 const firebaseConfig = {
     apiKey: "AIzaSyDKSKYSKcO6Gw0IkXEskYMFeYQBEohqAFk",
     authDomain: "appgestoriarr-a5638.firebaseapp.com",
@@ -29,6 +25,42 @@ function logout() {
     firebase.auth().signOut();
     localStorage.clear();
     window.location.href = "../html/index.html";
+}
+
+// ===== CARGAR CLIENTES =====
+async function cargarClientes() {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token); // ← ver si hay token
+
+    try {
+        const response = await fetchConToken('http://localhost:8080/api/clientes');
+        console.log('Status:', response.status); // ← ver el código de respuesta
+        if (!response.ok) throw new Error("Error al obtener clientes");
+        const clientes = await response.json();
+
+        const tabla = document.getElementById('tablaClientes');
+        if (!tabla) return;
+        tabla.innerHTML = '';
+
+        clientes.forEach(cliente => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${cliente.nombre ?? ''}</td>
+                <td>${cliente.nifCif ?? ''}</td>
+                <td>${cliente.telefono ?? ''}</td>
+                <td>${cliente.correoElectronico ?? ''}</td>
+                <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
+                <td>${cliente.tipoCliente ?? ''}</td>
+                <td>${cliente.estadoCliente ?? ''}</td>
+                <td>${cliente.importe ?? ''}</td>
+                <td>${cliente.cobrado ?? ''}</td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } catch (error) {
+        console.error("Error al cargar clientes:", error);
+        alert("Error al cargar los clientes");
+    }
 }
 
 // ===== APP =====
@@ -145,8 +177,6 @@ class App {
                 casilla505Actual: document.getElementById("casilla505Actual").value
             };
 
-            console.log("Cliente a enviar:", cliente);
-
             try {
                 const response = await fetchConToken("http://localhost:8080/api/clientes", {
                     method: "POST",
@@ -166,12 +196,7 @@ class App {
 
     // ===== CONSULTAR TABLAS =====
     initConsultarTablas() {
-        const botonBuscar = document.querySelector(".consultas-aceptar");
-        if (!botonBuscar) return;
-
-        botonBuscar.addEventListener("click", () => {
-            alert("Función de búsqueda en desarrollo");
-        });
+        cargarClientes();
     }
 
     // ===== AGREGAR USUARIO =====
