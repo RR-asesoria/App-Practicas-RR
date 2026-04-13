@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="../css/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 </head>
 
@@ -13,7 +14,12 @@
     <h2>Acceso</h2>
 
     <input type="text" class="login-usuario" placeholder="Usuario">
-    <input type="password" class="login-password" placeholder="Contraseña">
+
+    <div class="login-password-container">
+        <input type="password" class="login-password" id="password" placeholder="Contraseña">
+
+        <i class="fa-solid fa-eye" id="togglePassword"></i>
+    </div>
 
 
     <button class="login-aceptar">Login</button>

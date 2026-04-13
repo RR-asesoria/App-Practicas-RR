@@ -81,6 +81,40 @@ body.login-page{
     background:#3c5ce0;
 }
 
+.login-password-container {
+    width: 85%;
+    margin: 6px auto;
+    position: relative;
+}
+
+.login-password-container input {
+    width: 100%;
+    margin: 0;              /* CLAVE: anula el login input global */
+    display: block;
+    padding: 10px;
+    padding-right: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+
+/* ICONO OJO */
+.login-password-container i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+}
+
+.login-password-container i:hover {
+    color: #4a6cf7;
+}
+
 
 
 /*Css ConsultarTablas*/
