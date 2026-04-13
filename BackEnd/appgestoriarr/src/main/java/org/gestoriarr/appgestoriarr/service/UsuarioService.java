@@ -58,7 +58,7 @@ public class UsuarioService {
 			if (userRecord != null) {
 				FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
 			}
-			e.printStackTrace();
+
 			throw new RuntimeException("No pudo crearse el usuario", e);
 		}
 

@@ -16,7 +16,7 @@ public class UsuarioActualizarDTO {
 	@Email(message = "Formato de email incorrecto.")
 	private String correo;
 
-	@NotBlank
+
 	@Size(min = 2, max = 50)
 	private String nombre;
 

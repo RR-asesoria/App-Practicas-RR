@@ -1,5 +1,6 @@
 package org.gestoriarr.appgestoriarr.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -83,9 +84,15 @@ public class UserController {
 
     //UPDATE
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
-    @PutMapping("/actualizarusuario/{uid}")
-    public ResponseEntity<String> actualizar(@PathVariable String uid, @Valid @RequestBody UsuarioActualizarDTO dto) {
+    @PutMapping("/actualizarusuario")
+    public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
+
+            String uid = (String) SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
             return ResponseEntity.status(HttpStatus.OK).body(service.actualizar(uid, dto));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -93,9 +100,15 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
-    @PutMapping("/actualizarpassword/{uid}")
-    public ResponseEntity<String> cambiarPassword(@PathVariable String uid, @Valid @RequestBody CambioPasswordDTO dto) {
+    @PutMapping("/actualizarpassword")
+    public ResponseEntity<String> cambiarPassword(@Valid @RequestBody CambioPasswordDTO dto) {
         try {
+
+            String uid = (String) SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
             service.cambiarPassword(uid, dto);
             return ResponseEntity.status(HttpStatus.OK).body("Contraseña actualizada");
         } catch (Exception e) {
