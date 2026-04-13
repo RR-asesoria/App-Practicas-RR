@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -27,81 +26,66 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
-	
+public class FirebaseAuthenticationFilter extends OncePerRequestFilter {
+
 	@Autowired
 	private UsuarioService usuarioService;
 	@Autowired
 	private UsuarioRepo repository;
-	
-	
+
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, 
-									HttpServletResponse response, 
+	protected void doFilterInternal(HttpServletRequest request,
+									HttpServletResponse response,
 									FilterChain filterChain)
 			throws ServletException, IOException {
-		
+
 		String header = request.getHeader("Authorization");
-	
-		
-		if(header == null || !header.startsWith("Bearer ")) {
+
+		if (header == null || !header.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
-		
-			
+
 		String token = header.substring(7);
-			
+
 		try {
-				
-				FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token,false);
-				
-				String uid = decodedToken.getUid();
-				request.setAttribute("uid", uid);
-				if(SecurityContextHolder.getContext().getAuthentication() == null) {
+			FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(token, false);
+			System.out.println("Token válido para uid: " + decodedToken.getUid());
 
-					Optional<Usuario> usuario = repository.findById(uid);
+			String uid = decodedToken.getUid();
+			request.setAttribute("uid", uid);
 
-					if (usuario.isEmpty()){
-						throw new RuntimeException("El usuario no fue encontrado");
-					}
+			if (SecurityContextHolder.getContext().getAuthentication() == null) {
 
-					List<GrantedAuthority> authiAuthorities = 
-							List.of(new SimpleGrantedAuthority("ROLE_"+usuario.get().getRole()));
-					
-					
-					UsernamePasswordAuthenticationToken authentication = 
-							new UsernamePasswordAuthenticationToken(uid, null, authiAuthorities);
-					
-					authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-					
-					SecurityContextHolder.getContext().setAuthentication(authentication);
-					
+				Optional<Usuario> usuario = repository.findById(uid);
+
+				if (usuario.isEmpty()) {
+					throw new RuntimeException("El usuario no fue encontrado");
 				}
-				
-		}catch (FirebaseAuthException a) {
-			// TODO Auto-generated catch block
+
+				List<GrantedAuthority> authiAuthorities =
+						List.of(new SimpleGrantedAuthority("ROLE_" + usuario.get().getRole()));
+
+				UsernamePasswordAuthenticationToken authentication =
+						new UsernamePasswordAuthenticationToken(uid, null, authiAuthorities);
+
+				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
+
+		} catch (FirebaseAuthException a) {
+			System.out.println("Token inválido - FirebaseAuthException: " + a.getMessage());
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().write("Usuario no autorizado");
 			return;
-		} 
-		catch (Exception e) {
-				// TODO Auto-generated catch block
+		} catch (Exception e) {
+			System.out.println("Error en autenticación - Exception: " + e.getMessage());
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			response.getWriter().write("Usuario no autorizado");
 			return;
-			}
-			
-			filterChain.doFilter(request, response);
-			
-		};
-		
-		
-		
-		
+		}
+
+		filterChain.doFilter(request, response);
 	}
-
-	
-	
-
-
+}
