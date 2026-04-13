@@ -4,9 +4,9 @@
 // <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
 
 const firebaseConfig = {
-    apiKey: "VUESTRA_API_KEY",
-    authDomain: "VUESTRO_AUTH_DOMAIN",
-    projectId: "VUESTRO_PROJECT_ID"
+    apiKey: "AIzaSyDKSKYSKcO6Gw0IkXEskYMFeYQBEohqAFk",
+    authDomain: "appgestoriarr-a5638.firebaseapp.com",
+    projectId: "appgestoriarr-a5638"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -39,7 +39,7 @@ class App {
     }
 
     init() {
-        if (this.body.classList.contains("index-page")) {
+        if (this.body.classList.contains("login-page")) {
             this.initLogin();
         }
         if (this.body.classList.contains("password-page")) {
@@ -68,7 +68,7 @@ class App {
         if (!botonLogin) return;
 
         botonLogin.addEventListener("click", async () => {
-            const email = document.querySelector(".login-email")?.value;
+            const email = document.querySelector(".login-usuario")?.value;
             const password = document.querySelector(".login-password")?.value;
 
             try {

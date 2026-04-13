@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="../css/Style.css">
+
 </head>
 
 <body class="login-page">
@@ -11,16 +12,15 @@
 <div class="login">
     <h2>Acceso</h2>
 
-    <input type="text" placeholder="Usuario">
-    <input type="password" placeholder="Contraseña">
+    <input type="text" class="login-usuario" placeholder="Usuario">
+    <input type="password" class="login-password" placeholder="Contraseña">
 
 
-    <button class="login-aceptar" onclick="window.location.href='../html/menu.html'">
-        Login
-    </button>
+    <button class="login-aceptar">Login</button>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
 <script src="../js/Script.js"></script>
-
 </body>
 </html>
