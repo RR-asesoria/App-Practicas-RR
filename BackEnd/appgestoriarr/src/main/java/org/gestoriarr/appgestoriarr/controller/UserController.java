@@ -93,12 +93,77 @@ public class UserController {
                     .getAuthentication()
                     .getPrincipal();
 
-            return ResponseEntity.status(HttpStatus.OK).body(service.actualizar(uid, dto));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(service.actualizar(uid, dto));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{uid}/password")
+    public ResponseEntity<String> adminCambiarPassword(
+            @PathVariable String uid,
+            @Valid @RequestBody CambioPasswordDTO dto) {
+
+        try {
+
+            service.cambiarPassword(uid, dto);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Contraseña actualizada por admin");
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+
+    }
+
+    @PreAuthorize("hasRole('USERBASE') or hasRole('ADMIN')")
+    @PutMapping("/users/me/password")
+    public ResponseEntity<String> cambiarMiPassword(
+            @Valid @RequestBody CambioPasswordDTO dto) {
+
+        try {
+            String uid = (String) SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getPrincipal();
+
+            service.cambiarPassword(uid, dto);
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Contraseña actualizada");
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+
+    }
+
+    //DELETE
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/eliminarusuario/{uid}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
+        try {
+            service.eliminarUsuario(uid);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+}
 
+
+/*
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/actualizarpassword")
     public ResponseEntity<String> cambiarPassword(@Valid @RequestBody CambioPasswordDTO dto) {
@@ -115,16 +180,4 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
-
-    //DELETE
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/eliminarusuario/{uid}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
-        try {
-            service.eliminarUsuario(uid);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-}
+    */
