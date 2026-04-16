@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
@@ -88,9 +89,9 @@ public class UserController {
     public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
 
-            String uid = (String) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
+            String uid = (String) Objects.requireNonNull(SecurityContextHolder
+                            .getContext()
+                            .getAuthentication())
                     .getPrincipal();
 
             return ResponseEntity.status(HttpStatus.OK)
@@ -130,9 +131,9 @@ public class UserController {
             @Valid @RequestBody CambioPasswordDTO dto) {
 
         try {
-            String uid = (String) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
+            String uid = (String) Objects.requireNonNull(SecurityContextHolder
+                            .getContext()
+                            .getAuthentication())
                     .getPrincipal();
 
             service.cambiarPassword(uid, dto);
@@ -161,23 +162,3 @@ public class UserController {
         }
     }
 }
-
-
-/*
-    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
-    @PutMapping("/actualizarpassword")
-    public ResponseEntity<String> cambiarPassword(@Valid @RequestBody CambioPasswordDTO dto) {
-        try {
-
-            String uid = (String) SecurityContextHolder
-                    .getContext()
-                    .getAuthentication()
-                    .getPrincipal();
-
-            service.cambiarPassword(uid, dto);
-            return ResponseEntity.status(HttpStatus.OK).body("Contraseña actualizada");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-    */
