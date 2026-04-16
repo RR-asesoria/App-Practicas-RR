@@ -79,6 +79,10 @@ public class UsuarioService {
 
 	public UsuarioRespuestaDTO encontrarPorEmail(String email) throws Exception{
 
+		if (email!=null){
+			System.out.println("El email llega bien: " + email);
+		}
+
 		Optional<Usuario> usuario = repository.findByEmail(email);
 
 		if (usuario.isEmpty()){
