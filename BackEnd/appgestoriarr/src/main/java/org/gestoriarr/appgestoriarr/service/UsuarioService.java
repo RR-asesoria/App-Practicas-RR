@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
+import lombok.AllArgsConstructor;
 import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
@@ -19,13 +20,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 @Service
+@AllArgsConstructor
 public class UsuarioService {
 
 	private final UsuarioRepo repository;
-	
-	public UsuarioService(UsuarioRepo repo){
-		this.repository=repo;
-	}
 
 	//CREATE
 	public void crearUsuario(UsuarioCreacionDTO dto) throws FirebaseAuthException {
@@ -64,7 +62,6 @@ public class UsuarioService {
 
 	}
 
-
 	//READ
 	public UsuarioRespuestaDTO encontrarPorId(String uid) throws Exception   {
 
@@ -78,10 +75,6 @@ public class UsuarioService {
 	}
 
 	public UsuarioRespuestaDTO encontrarPorEmail(String email) throws Exception{
-
-		if (email!=null){
-			System.out.println("El email llega bien: " + email);
-		}
 
 		Optional<Usuario> usuario = repository.findByEmail(email);
 
@@ -162,8 +155,6 @@ public class UsuarioService {
 	public void cambiarPasswordAdmin(String correo, CambioPasswordDTO dto) throws Exception {
 
 		Optional<Usuario> usuario = repository.findByEmail(correo);
-
-		System.out.println(usuario.get().getId());
 
 		if (usuario.isEmpty()){
 			throw new RuntimeException("El usuario no fue encontrado");
