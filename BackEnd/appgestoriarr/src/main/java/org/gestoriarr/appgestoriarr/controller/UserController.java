@@ -49,7 +49,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorId(uid));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -59,7 +59,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorEmail(email));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -69,7 +69,7 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorNombre(nombre));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -79,13 +79,55 @@ public class UserController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(service.obtenerTodos());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
         }
     }
 
     //UPDATE
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{correo}/actualizarusuario")
+    public ResponseEntity<String> AdminActualizarUsuario(
+            @PathVariable String correo,
+            @Valid @RequestBody UsuarioActualizarDTO dto) {
+
+        try {
+
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(service.AdminActualizarUsuario(correo, dto));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{correo}/password")
+    public ResponseEntity<String> adminCambiarPassword(
+            @PathVariable String correo,
+            @Valid @RequestBody CambioPasswordDTO dto) {
+
+        try {
+
+            service.cambiarPasswordAdmin(correo, dto);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Contraseña actualizada por admin");
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+
+    }
+
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
-    @PutMapping("/actualizarusuario")
+    @PutMapping("/users/actualizarusuario")
     public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
 
@@ -103,28 +145,6 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/users/{uid}/password")
-    public ResponseEntity<String> adminCambiarPassword(
-            @PathVariable String uid,
-            @Valid @RequestBody CambioPasswordDTO dto) {
-
-        try {
-
-            service.cambiarPassword(uid, dto);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Contraseña actualizada por admin");
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-
-    }
-
     @PreAuthorize("hasRole('USERBASE') or hasRole('ADMIN')")
     @PutMapping("/users/me/password")
     public ResponseEntity<String> cambiarMiPassword(
@@ -136,7 +156,7 @@ public class UserController {
                             .getAuthentication())
                     .getPrincipal();
 
-            service.cambiarPassword(uid, dto);
+            service.cambiarPasswordUser(uid, dto);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Contraseña actualizada");
@@ -158,7 +178,9 @@ public class UserController {
             service.eliminarUsuario(uid);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
     }
 }

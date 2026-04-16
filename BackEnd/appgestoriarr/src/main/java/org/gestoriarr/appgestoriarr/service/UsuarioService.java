@@ -112,6 +112,71 @@ public class UsuarioService {
 	}
 
 	//UPDATE
+
+	public String AdminActualizarUsuario(String correo, UsuarioActualizarDTO dto) throws Exception {
+
+		Optional<Usuario> usuarioOriginal = Optional.empty();
+
+		Usuario usuarioActualizacion;
+
+		UserRecord.UpdateRequest request = null;
+
+		try {
+
+			usuarioOriginal = repository.findByEmail(correo);
+
+			if (usuarioOriginal.isEmpty()){
+				throw new RuntimeException("El usuario no fue encontrado");
+			}
+
+			usuarioActualizacion =
+			UsuarioMapper.updateFromDTO(usuarioOriginal.get(), dto);
+
+			request = new UserRecord.UpdateRequest(usuarioOriginal.get().getUid());
+
+			if (dto.getCorreo()!=null){
+				request.setEmail(dto.getCorreo());
+			}
+
+			FirebaseAuth.getInstance().updateUser(request);
+			repository.save(usuarioActualizacion);
+
+			return "Usuario actualizado.";
+
+		} catch (Exception e) {
+
+			if (usuarioOriginal.isPresent()){
+				repository.save(usuarioOriginal.get());
+				if (request != null) {
+					request.setEmail(usuarioOriginal.get().getCorreo());
+				} else {
+					throw new AssertionError();
+				}
+			}
+
+			throw new RuntimeException("El usuario no pudo ser actualizado. ", e);
+		}
+
+	}
+
+	public void cambiarPasswordAdmin(String correo, CambioPasswordDTO dto) throws Exception {
+
+		Optional<Usuario> usuario = repository.findByEmail(correo);
+
+		System.out.println(usuario.get().getId());
+
+		if (usuario.isEmpty()){
+			throw new RuntimeException("El usuario no fue encontrado");
+		}
+
+		UserRecord.UpdateRequest request = new UserRecord
+				.UpdateRequest(usuario.get().getUid())
+				.setPassword(dto.getPasswordNueva());
+
+		FirebaseAuth.getInstance().updateUser(request);
+
+	}
+
 	public String actualizar(String uid, UsuarioActualizarDTO dto) throws Exception {
 
 		Optional<Usuario> usuarioOriginal = Optional.empty();
@@ -158,9 +223,11 @@ public class UsuarioService {
 
 	}
 
-	public void cambiarPassword(String uid, CambioPasswordDTO dto) throws Exception {
 
-		UserRecord.UpdateRequest request = new UserRecord.UpdateRequest(uid)
+	public void cambiarPasswordUser(String uid, CambioPasswordDTO dto) throws Exception {
+
+		UserRecord.UpdateRequest request = new UserRecord
+				.UpdateRequest(uid)
 				.setPassword(dto.getPasswordNueva());
 
 		FirebaseAuth.getInstance().updateUser(request);
