@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import lombok.AllArgsConstructor;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
 import org.gestoriarr.appgestoriarr.service.UsuarioService;
@@ -27,12 +28,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
+@AllArgsConstructor
 public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
-	
-	@Autowired
-	private UsuarioService usuarioService;
-	@Autowired
-	private UsuarioRepo repository;
+
+	private final UsuarioService usuarioService;
+	private final UsuarioRepo repository;
 	
 	
 	@Override
