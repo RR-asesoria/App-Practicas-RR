@@ -1,5 +1,6 @@
 package org.gestoriarr.appgestoriarr.controller;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -7,14 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
-import org.gestoriarr.appgestoriarr.dto.UsuarioRespuestaDTO;
 import org.gestoriarr.appgestoriarr.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -24,6 +23,7 @@ public class UserController {
 
     private final UsuarioService service;
 
+    //TEST
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
     public ResponseEntity<String> admin() {
@@ -36,56 +36,125 @@ public class UserController {
     public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) {
         try {
             service.crearUsuario(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body("Usuario creado");
+
+        } catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }
+        catch (FirebaseAuthException e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
     }
 
     //READ
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{uid}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorId(@PathVariable String uid) {
+    public ResponseEntity<?> encontrarPorId(@PathVariable String uid) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorId(uid));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorId(uid)
+                    );
+        }catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage()
+                    );
         }
+
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email) {
+    public ResponseEntity<?> encontrarPorEmail(@PathVariable String email) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorEmail(email));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorEmail(email)
+                    );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre) {
+    public ResponseEntity<?> encontrarPorNombre(@PathVariable String nombre) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorNombre(nombre));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorNombre(nombre)
+                    );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/todoslosusuarios")
-    public ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos() {
+    public ResponseEntity<?> obtenerTodos() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.obtenerTodos());
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.obtenerTodos());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
     }
 
     //UPDATE
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{correo}/actualizarusuario")
+    public ResponseEntity<String> AdminActualizarUsuario(
+            @PathVariable String correo,
+            @Valid @RequestBody UsuarioActualizarDTO dto) {
+
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(service.AdminActualizarUsuario(correo, dto));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/admin/users/{correo}/password")
+    public ResponseEntity<String> adminCambiarPassword(
+            @PathVariable String correo,
+            @Valid @RequestBody CambioPasswordDTO dto) {
+
+        try {
+
+            service.cambiarPasswordAdmin(correo, dto);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body("Contraseña actualizada por admin");
+
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
+
+    }
+
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
-    @PutMapping("/actualizarusuario")
+    @PutMapping("/users/actualizarusuario")
     public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
 
@@ -103,28 +172,6 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/users/{uid}/password")
-    public ResponseEntity<String> adminCambiarPassword(
-            @PathVariable String uid,
-            @Valid @RequestBody CambioPasswordDTO dto) {
-
-        try {
-
-            service.cambiarPassword(uid, dto);
-
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body("Contraseña actualizada por admin");
-
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-
-    }
-
     @PreAuthorize("hasRole('USERBASE') or hasRole('ADMIN')")
     @PutMapping("/users/me/password")
     public ResponseEntity<String> cambiarMiPassword(
@@ -136,7 +183,7 @@ public class UserController {
                             .getAuthentication())
                     .getPrincipal();
 
-            service.cambiarPassword(uid, dto);
+            service.cambiarPasswordUser(uid, dto);
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Contraseña actualizada");
@@ -158,7 +205,9 @@ public class UserController {
             service.eliminarUsuario(uid);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
     }
 }
