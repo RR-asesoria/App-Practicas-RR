@@ -1,5 +1,6 @@
 package org.gestoriarr.appgestoriarr.controller;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -38,7 +39,13 @@ public class UserController {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body("Usuario creado");
-        } catch (Exception e) {
+
+        } catch (IllegalStateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(e.getMessage());
+        }
+        catch (FirebaseAuthException e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(e.getMessage());
