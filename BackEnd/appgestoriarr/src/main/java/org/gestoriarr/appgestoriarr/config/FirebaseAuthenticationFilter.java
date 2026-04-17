@@ -7,8 +7,7 @@ import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
-import org.gestoriarr.appgestoriarr.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,14 +30,13 @@ import jakarta.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 
-	private final UsuarioService usuarioService;
 	private final UsuarioRepo repository;
 	
 	
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, 
-									HttpServletResponse response, 
-									FilterChain filterChain)
+	protected void doFilterInternal(HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain)
 			throws ServletException, IOException {
 		
 		String header = request.getHeader("Authorization");
@@ -94,7 +92,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 			
 			filterChain.doFilter(request, response);
 			
-		};
+		}
 		
 		
 		
