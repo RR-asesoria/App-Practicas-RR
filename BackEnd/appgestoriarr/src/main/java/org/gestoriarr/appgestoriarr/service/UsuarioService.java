@@ -63,37 +63,48 @@ public class UsuarioService {
 	}
 
 	//READ
-	public UsuarioRespuestaDTO encontrarPorId(String uid) throws Exception   {
+	public UsuarioRespuestaDTO encontrarPorId(String uid){
 
-		Optional<Usuario> usuario = repository.findById(uid);
-
-		if (usuario.isEmpty()){
-			throw new RuntimeException("El usuario no fue encontrado");
+		try {
+			Optional<Usuario> usuario = repository.findById(uid);
+			if (usuario.isEmpty()){
+				throw new RuntimeException("El usuario no fue encontrado");
+			}
+			return UsuarioMapper.toDTO(usuario.get());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
-		return UsuarioMapper.toDTO(usuario.get());
 	}
 
-	public UsuarioRespuestaDTO encontrarPorEmail(String email) throws Exception{
+	public UsuarioRespuestaDTO encontrarPorEmail(String email){
 
-		Optional<Usuario> usuario = repository.findByEmail(email);
+		try {
+			Optional<Usuario> usuario = repository.findByEmail(email);
+			if (usuario.isEmpty()){
+				throw new RuntimeException("El usuario no fue encontrado");
+			}
+			return UsuarioMapper.toDTO(usuario.get());
+		} catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-		if (usuario.isEmpty()){
-			throw new RuntimeException("El usuario no fue encontrado");
-		}
+	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) {
 
-		return UsuarioMapper.toDTO(usuario.get());
-	}
+		try {
+			Optional<Usuario> usuario = repository.findByName(nombre);
 
-	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) throws Exception {
-		Optional<Usuario> usuario = repository.findByName(nombre);
+			if (usuario.isEmpty()){
+				throw new RuntimeException("El usuario no fue encontrado");
+			}
+			return UsuarioMapper.toDTO(usuario.get());
+		} catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		if (usuario.isEmpty()){
-			throw new RuntimeException("El usuario no fue encontrado");
-		}
 
-		return UsuarioMapper.toDTO(usuario.get());
-	}
+    }
 
     public List<UsuarioRespuestaDTO> obtenerTodos() throws Exception{
 

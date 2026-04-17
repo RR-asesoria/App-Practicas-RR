@@ -24,6 +24,7 @@ public class UserController {
 
     private final UsuarioService service;
 
+    //TEST
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/test")
     public ResponseEntity<String> admin() {
@@ -36,57 +37,79 @@ public class UserController {
     public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) {
         try {
             service.crearUsuario(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuario creado");
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body("Usuario creado");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
     }
 
     //READ
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{uid}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorId(@PathVariable String uid) {
+    public ResponseEntity<?> encontrarPorId(@PathVariable String uid) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorId(uid));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorId(uid)
+                    );
+        }catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage()
+                    );
         }
+
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorEmail(@PathVariable String email) {
+    public ResponseEntity<?> encontrarPorEmail(@PathVariable String email) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorEmail(email));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorEmail(email)
+                    );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/nombre/{nombre}")
-    public ResponseEntity<UsuarioRespuestaDTO> encontrarPorNombre(@PathVariable String nombre) {
+    public ResponseEntity<?> encontrarPorNombre(@PathVariable String nombre) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.encontrarPorNombre(nombre));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.encontrarPorNombre(nombre)
+                    );
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/todoslosusuarios")
-    public ResponseEntity<List<UsuarioRespuestaDTO>> obtenerTodos() {
+    public ResponseEntity<?> obtenerTodos() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(service.obtenerTodos());
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(service.obtenerTodos());
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
+                    .body(e.getMessage());
         }
     }
 
     //UPDATE
-
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/users/{correo}/actualizarusuario")
     public ResponseEntity<String> AdminActualizarUsuario(
@@ -94,7 +117,6 @@ public class UserController {
             @Valid @RequestBody UsuarioActualizarDTO dto) {
 
         try {
-
             return ResponseEntity.status(HttpStatus.OK)
                     .body(service.AdminActualizarUsuario(correo, dto));
         } catch (Exception e) {

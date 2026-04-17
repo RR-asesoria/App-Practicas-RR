@@ -87,7 +87,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 		} 
 		catch (Exception e) {
 				// TODO Auto-generated catch block
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			response.getWriter().write("Usuario no autorizado");
 			return;
 			}
