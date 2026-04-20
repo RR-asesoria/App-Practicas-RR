@@ -55,7 +55,7 @@ public class ClienteAppHistoricoController {
     }
 
     //TESTING
-    @Operation(summary = "Eliminar cliente historico", description = "Elimina un cliente del historico por su NIF/CIF")
+    @Operation(summary = "Eliminar cliente historico (Testing)", description = "Elimina un cliente del historico por su NIF/CIF")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Cliente eliminado correctamente del historico"),
             @ApiResponse(responseCode = "404", description = "Cliente no encontrado", content = @Content)
