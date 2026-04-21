@@ -96,41 +96,49 @@ class App {
     }
 
     // ===== LOGIN =====
-    initLogin() {
-        const botonLogin = document.querySelector(".login-aceptar");
-        if (!botonLogin) return;
+initLogin() {
+    const botonLogin = document.querySelector(".login-aceptar");
+    if (!botonLogin) return;
 
-        botonLogin.addEventListener("click", async () => {
-            const email = document.querySelector(".login-usuario")?.value;
-            const password = document.querySelector(".login-password")?.value;
+    // Función reutilizable para el login
+    const handleLogin = async () => {
+        const email = document.querySelector(".login-usuario")?.value;
+        const password = document.querySelector(".login-password")?.value;
 
-            try {
-                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-                const token = await userCredential.user.getIdToken();
-                localStorage.setItem('token', token);
-                window.location.href = "../html/menu.html";
-            } catch (error) {
-                console.error("Error al iniciar sesión:", error);
-                alert("Usuario o contraseña incorrectos");
-            }
-        });
-
-        const toggle = document.getElementById("togglePassword");
-        const input = document.getElementById("password");
-
-        if (toggle && input) {
-            toggle.addEventListener("click", () => {
-
-                const isPassword = input.type === "password";
-
-                input.type = isPassword ? "text" : "password";
-
-                toggle.classList.toggle("fa-eye");
-                toggle.classList.toggle("fa-eye-slash");
-            });
+        try {
+            const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+            const token = await userCredential.user.getIdToken();
+            localStorage.setItem('token', token);
+            window.location.href = "../html/menu.html";
+        } catch (error) {
+            console.error("Error al iniciar sesión:", error);
+            alert("Usuario o contraseña incorrectos");
         }
+    };
 
+    botonLogin.addEventListener("click", handleLogin);
+
+    // ← NUEVO: disparar login al pulsar Enter en cualquiera de los dos inputs
+    document.querySelector(".login-usuario")?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+    });
+    document.querySelector(".login-password")?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleLogin();
+    });
+
+    // Toggle contraseña (sin cambios)
+    const toggle = document.getElementById("togglePassword");
+    const input = document.getElementById("password");
+
+    if (toggle && input) {
+        toggle.addEventListener("click", () => {
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            toggle.classList.toggle("fa-eye");
+            toggle.classList.toggle("fa-eye-slash");
+        });
     }
+}
 
     // ===== MENU PRINCIPAL =====
     initMenuPrincipal() {
