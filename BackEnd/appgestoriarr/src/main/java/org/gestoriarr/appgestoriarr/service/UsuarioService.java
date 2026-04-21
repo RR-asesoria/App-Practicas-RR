@@ -78,18 +78,9 @@ public class UsuarioService {
 				.orElseThrow(() -> new IllegalArgumentException("User not found"));
 	}
 
-	public UsuarioRespuestaDTO encontrarPorId(String uid){
-
-		try {
-			Optional<Usuario> usuario = repository.findById(uid);
-			if (usuario.isEmpty()){
-				throw new RuntimeException("El usuario no fue encontrado");
-			}
-			return UsuarioMapper.toDTO(usuario.get());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
+	public UsuarioRespuestaDTO encontrarPorId(String uid) throws Exception {
+		Usuario usuario = encontrarPorIdInterno(uid);
+		return UsuarioMapper.toDTO(usuario);
 	}
 
 	public UsuarioRespuestaDTO encontrarPorEmail(String email){

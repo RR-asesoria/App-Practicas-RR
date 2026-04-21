@@ -1,5 +1,6 @@
 package org.gestoriarr.appgestoriarr.controller;
 
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,11 +62,20 @@ public class UserController {
                     .status(HttpStatus.OK)
                     .body(service.encontrarPorId(uid)
                     );
-        }catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage()
-                    );
+        } catch (Exception e) {
+            if (e instanceof IllegalArgumentException){
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(e.getMessage());
+            }else if (e instanceof FirebaseException){
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }else {
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }
         }
 
     }
