@@ -5,72 +5,131 @@
     <link rel="stylesheet" href="../css/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="consultarTablas-page">
+<body class="historicoTablas-page">
 
 <div class="consultas consultas-tamanio">
     <div class="consultas-header">
-
         <a href="menuClientes.html" class="back-button-tablas">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-
         <i class="fa-solid fa-circle-user"></i>
         <h2>Historial de Clientes</h2>
     </div>
 
+    <!-- Filtros básicos -->
     <div class="consultas-menu-horizontal">
         <div class="consultas-item">
             <label>Campaña</label>
-            <select class="consultas-input">
-                <option>2025</option>
-                <option>2024</option>
-                <option>2023</option>
+            <select class="consultas-input" id="filtroCampania">
+                <option value="">Todos los años</option>
             </select>
         </div>
-
         <div class="consultas-item">
             <label>Nombre</label>
             <input type="text" class="consultas-input" placeholder="Nombre">
         </div>
-
-        <div class="consultas-item">
-            <label>Apellido</label>
-            <input type="text" class="consultas-input" placeholder="Apellido">
-        </div>
-
         <div class="consultas-item">
             <label>DNI / NIE</label>
             <input type="text" class="consultas-input" placeholder="DNI / NIE">
         </div>
-
         <button class="consultas-aceptar">BUSCAR</button>
+        <button type="button" id="btnFiltrosAvanzados" class="consultas-avanzados">Filtros avanzados ▼</button>
+    </div>
+
+    <!-- Filtros avanzados -->
+    <div id="panelFiltrosAvanzados" style="display:none" class="consultas-menu-horizontal">
+        <div class="consultas-item">
+            <label>Tipo Cliente</label>
+            <select class="consultas-input" id="filtroTipoCliente">
+                <option value="">Cualquiera</option>
+                <option value="AUTONOMO">Autónomo</option>
+                <option value="PARTICULARES">Particulares</option>
+                <option value="NORESIDENTE">No Residente</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Estado Cliente</label>
+            <select class="consultas-input" id="filtroEstadoCliente">
+                <option value="">Cualquiera</option>
+                <option value="CONTACTADONO">No Contactado</option>
+                <option value="CONTACTADOSI">Contactado</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Tipo Facturado</label>
+            <select class="consultas-input" id="filtroTipoFacturado">
+                <option value="">Cualquiera</option>
+                <option value="FACTURADONO">No Facturado</option>
+                <option value="FACTURADOSI">Facturado</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Recogida Datos</label>
+            <select class="consultas-input" id="filtroRecogidaDatos">
+                <option value="">Cualquiera</option>
+                <option value="FACTURARELLENANO">No Rellenada</option>
+                <option value="FACTURARELLENASI">Rellenada</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Borrador</label>
+            <select class="consultas-input" id="filtroBorrador">
+                <option value="">Cualquiera</option>
+                <option value="BORRADORCREADONO">No Creado</option>
+                <option value="BORRADORCREADOSI">Creado</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Presentada</label>
+            <select class="consultas-input" id="filtroPresentada">
+                <option value="">Cualquiera</option>
+                <option value="CONFIRMADOPRESENTARNO">No Presentada</option>
+                <option value="CONFIRMADOPRESENTARSI">Presentada</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Cobrado</label>
+            <select class="consultas-input" id="filtroCobrado">
+                <option value="">Cualquiera</option>
+                <option value="NO">No</option>
+                <option value="SI">Sí</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Datos Fiscales</label>
+            <select class="consultas-input" id="filtroDatosFiscales">
+                <option value="">Cualquiera</option>
+                <option value="true">Descargados</option>
+                <option value="false">No Descargados</option>
+            </select>
+        </div>
+        <div class="consultas-item">
+            <label>Excel Elaboración</label>
+            <select class="consultas-input" id="filtroExcelElaboracion">
+                <option value="">Cualquiera</option>
+                <option value="true">Sí</option>
+                <option value="false">No</option>
+            </select>
+        </div>
     </div>
 
     <div class="consultas-tabla-container">
         <table class="consultas-tabla">
             <thead>
             <tr>
-                <th>Cliente/DNI</th>
-                <th>Año</th>
-                <th>Fecha Creación</th>
+                <th>Nombre</th>
+                <th>NIF/CIF</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Año Fiscal</th>
+                <th>Tipo Cliente</th>
                 <th>Estado</th>
+                <th>Importe</th>
+                <th>Cobrado</th>
                 <th>Acciones</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>Juan Pérez / 12345678A</td>
-                <td>2025</td>
-                <td>12/03/2025</td>
-                <td>Activo</td>
-                <td class="acciones">
-
-                    <a href="verDatosClientes.html" class="btn-editar">
-                        <i class="fa-solid fa-eye"></i> Ver datos
-                    </a>
-
-                </td>
-            </tr>
+            <tbody id="tablaHistorico">
             </tbody>
         </table>
     </div>
@@ -82,7 +141,6 @@
 
 <!-- 2º Tu script -->
 <script src="../js/Script.js"></script>
-
 
 </body>
 </html>

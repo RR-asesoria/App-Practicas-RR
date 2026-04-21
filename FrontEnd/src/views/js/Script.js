@@ -96,6 +96,101 @@ async function cargarClientes() {
         alert("Error al cargar los clientes");
     }
 }
+async function cargarHistorico() {
+    try {
+        const anioSeleccionado = document.getElementById('filtroCampania')?.value;
+        const nombreFiltro = document.querySelector('.consultas-input[placeholder="Nombre"]')?.value;
+        const dniFiltro = document.querySelector('.consultas-input[placeholder="DNI / NIE"]')?.value;
+        const tipoCliente = document.getElementById('filtroTipoCliente')?.value;
+        const estadoCliente = document.getElementById('filtroEstadoCliente')?.value;
+        const tipoFacturado = document.getElementById('filtroTipoFacturado')?.value;
+        const recogidaDatos = document.getElementById('filtroRecogidaDatos')?.value;
+        const borrador = document.getElementById('filtroBorrador')?.value;
+        const presentada = document.getElementById('filtroPresentada')?.value;
+        const cobrado = document.getElementById('filtroCobrado')?.value;
+        const datosFiscales = document.getElementById('filtroDatosFiscales')?.value;
+        const excelElaboracion = document.getElementById('filtroExcelElaboracion')?.value;
+
+        const filtros = {};
+        if (anioSeleccionado) filtros.anioFiscal = anioSeleccionado;
+        if (nombreFiltro) filtros.nombre = nombreFiltro;
+        if (dniFiltro) filtros.nifCif = dniFiltro;
+        if (tipoCliente) filtros.tipoCliente = tipoCliente;
+        if (estadoCliente) filtros.estadoCliente = estadoCliente;
+        if (tipoFacturado) filtros.tipoFacturado = tipoFacturado;
+        if (recogidaDatos) filtros.recogidaDatos = recogidaDatos;
+        if (borrador) filtros.borrador = borrador;
+        if (presentada) filtros.presentada = presentada;
+        if (cobrado) filtros.cobrado = cobrado;
+        if (datosFiscales) filtros.datosFiscalesDescargados = datosFiscales === 'true';
+        if (excelElaboracion) filtros.excelDatosElaboracion = excelElaboracion === 'true';
+
+        let clientes;
+
+        if (Object.keys(filtros).length > 0) {
+            const response = await fetchConToken('http://localhost:8080/api/clientesHistorico/buscar', {
+                method: 'POST',
+                body: JSON.stringify(filtros)
+            });
+            if (!response.ok) throw new Error("Error al obtener histórico");
+            clientes = await response.json();
+        } else {
+            const response = await fetchConToken('http://localhost:8080/api/clientesHistorico');
+            if (!response.ok) throw new Error("Error al obtener histórico");
+            clientes = await response.json();
+        }
+
+        const tabla = document.getElementById('tablaHistorico');
+        if (!tabla) return;
+        tabla.innerHTML = '';
+
+        clientes.forEach(cliente => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${cliente.nombre ?? ''}</td>
+                <td>${cliente.nifCif ?? ''}</td>
+                <td>${cliente.telefono ?? ''}</td>
+                <td>${cliente.correoElectronico ?? ''}</td>
+                <td>${cliente.anioFiscal ?? ''}</td>
+                <td>${cliente.tipoCliente ?? ''}</td>
+                <td>${cliente.estadoCliente ?? ''}</td>
+                <td>${cliente.importe ?? ''}</td>
+                <td>${cliente.cobrado ?? ''}</td>
+                <td>
+                    <a href="verDatosClientes.html" class="btn-editar">
+                        <i class="fa-solid fa-eye"></i> Ver datos
+                    </a>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } catch (error) {
+        console.error("Error al cargar histórico:", error);
+        alert("Error al cargar el histórico");
+    }
+}
+
+async function inicializarSelectAnios() {
+    try {
+        const response = await fetchConToken('http://localhost:8080/api/clientesHistorico');
+        if (!response.ok) return;
+        const todos = await response.json();
+
+        const selectAnio = document.getElementById('filtroCampania');
+        if (!selectAnio) return;
+
+        const aniosUnicos = [...new Set(todos.map(c => c.anioFiscal).filter(a => a))].sort().reverse();
+        selectAnio.innerHTML = '<option value="">Todos los años</option>';
+        aniosUnicos.forEach(anio => {
+            const option = document.createElement('option');
+            option.value = anio;
+            option.textContent = anio;
+            selectAnio.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar años:", error);
+    }
+}
 
 // ===== APP =====
 class App {
@@ -126,6 +221,9 @@ class App {
         }
         if (this.body.classList.contains("consultarTablas-page")) {
             this.initConsultarTablas();
+        }
+        if (this.body.classList.contains("historicoTablas-page")) {
+            this.initHistorico();
         }
     }
 
@@ -170,6 +268,25 @@ class App {
             });
         }
     }
+    //HISTORICOS
+initHistorico() {
+    inicializarSelectAnios().then(() => cargarHistorico());
+
+    const botonBuscar = document.querySelector(".consultas-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarHistorico());
+    }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
+    const panel = document.getElementById('panelFiltrosAvanzados');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== MENU PRINCIPAL =====
     initMenuPrincipal() {
@@ -300,19 +417,42 @@ class App {
     }
 
     // ===== ELIMINAR USUARIO =====
-    initEliminarUsuario() {
-        const botonAceptar = document.querySelector(".eliminar-aceptar");
-        if (!botonAceptar) return;
+ initEliminarUsuario() {
+     const botonAceptar = document.querySelector(".eliminar-aceptar");
+     if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const usuario = document.querySelector(".eliminarUsuarios-inp").value;
+     botonAceptar.addEventListener("click", async () => {
+         const correo = document.getElementById("correoEliminar").value;
 
-            console.log("Usuario eliminado:", usuario);
+         if (!confirm(`¿Seguro que quieres eliminar el usuario ${correo}?`)) return;
 
-            alert("Usuario eliminado correctamente");
-            window.location.href = "../html/menu.html";
-        });
-    }
+         try {
+             // 1. Buscar uid por email
+             const responseUsuario = await fetchConToken(
+                 `http://localhost:8080/user/email/${encodeURIComponent(correo)}`
+             );
+
+             if (!responseUsuario.ok) throw new Error("Usuario no encontrado");
+
+             const usuario = await responseUsuario.json();
+
+             // 2. Eliminar por uid
+             const responseEliminar = await fetchConToken(
+                 `http://localhost:8080/user/eliminarusuario/${usuario.uid}`, {
+                 method: "DELETE"
+             });
+
+             if (!responseEliminar.ok) throw new Error("Error al eliminar usuario");
+
+             alert("Usuario eliminado correctamente");
+             window.location.href = "../html/menu.html";
+
+         } catch (error) {
+             console.error(error);
+             alert("Error: " + error.message);
+         }
+     });
+ }
 
     // ===== FUNCIONES =====
     resetFiscalYear() {
