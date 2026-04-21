@@ -165,25 +165,27 @@ initLogin() {
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            let cliente = {
-                nombre: document.getElementById("nombre").value,
-                nifCif: document.getElementById("nifCif").value,
-                fechaNacimiento: document.getElementById("fechaNacimiento").value,
-                referencia: document.getElementById("referencia").value,
-                casilla505anterior: document.getElementById("casilla505anterior").value,
-                numerosCC: document.getElementById("numerosCC").value,
-                datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value,
-                importe: document.getElementById("importe").value,
-                tipoFacturado: document.getElementById("facturado").value,
-                recogidaDatos: document.getElementById("recogidaDatos").value,
-                excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value,
-                borrador: document.getElementById("borrador").value,
-                presentada: document.getElementById("presentada").value,
-                cobrado: document.getElementById("cobrado").value,
-                tipoCliente: document.getElementById("tipoCliente").value,
-                estadoCliente: document.getElementById("estadoCliente").value,
-                casilla505Actual: document.getElementById("casilla505Actual").value
-            };
+         let cliente = {
+             nombre: document.getElementById("nombre").value || null,
+             nifCif: document.getElementById("nifCif").value || null,
+             telefono: document.getElementById("telefono").value || null,
+             correoElectronico: document.getElementById("correoElectronico").value || null,
+             fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
+             referencia: document.getElementById("referencia").value || null,
+             casilla505anterior: document.getElementById("casilla505anterior").value || null,
+             numerosCC: document.getElementById("numerosCC").value || null,
+             datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value === "true",
+             importe: document.getElementById("importe").value || "0",
+             tipoFacturado: document.getElementById("tipoFacturado").value || null,
+             recogidaDatos: document.getElementById("recogidaDatos").value || null,
+             excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value === "true",
+             borrador: document.getElementById("borrador").value || null,
+             presentada: document.getElementById("presentada").value || null,
+             cobrado: document.getElementById("cobrado").value || "NO",
+             tipoCliente: document.getElementById("tipoCliente").value || null,
+             estadoCliente: document.getElementById("estadoCliente").value || null,
+             casilla505Actual: document.getElementById("casilla505Actual").value || null
+         };
 
             try {
            const response = await fetchConToken("http://localhost:8080/api/clientes/crearcliente", {
@@ -208,40 +210,63 @@ initLogin() {
     }
 
     // ===== AGREGAR USUARIO =====
-    initAgregarUsuario() {
-        const botonAceptar = document.querySelector(".agregar-aceptar");
-        if (!botonAceptar) return;
+   initAgregarUsuario() {
+       const botonAceptar = document.querySelector(".agregar-aceptar");
+       if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const inputs = document.querySelectorAll(".agregarUsuarios-inp");
-            const usuario = inputs[0].value;
-            const password = inputs[1].value;
+       botonAceptar.addEventListener("click", async () => {
+           const nombre = document.getElementById("nuevoNombre").value;
+           const correo = document.getElementById("nuevoCorreo").value;
+           const password = document.getElementById("nuevaPassword").value;
 
-            console.log("Nuevo usuario:", usuario);
-            console.log("Password:", password);
+           try {
+               const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
+                   method: "POST",
+                   body: JSON.stringify({
+                       nombre: nombre,
+                       correo: correo,
+                       psw: password
+                   })
+               });
 
-            alert("Usuario agregado correctamente");
-            window.location.href = "../html/menu.html";
-        });
-    }
+               if (!response.ok) throw new Error("Error al crear usuario");
+
+               alert("Usuario agregado correctamente");
+               window.location.href = "../html/menu.html";
+           } catch (error) {
+               console.error(error);
+               alert("Error al agregar usuario");
+           }
+       });
+   }
 
     // ===== CAMBIAR CONTRASEÑA =====
-    initCambiarPassword() {
-        const botonAceptar = document.querySelector(".password-aceptar");
-        if (!botonAceptar) return;
+initCambiarPassword() {
+    const botonAceptar = document.querySelector(".password-aceptar");
+    if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const inputs = document.querySelectorAll(".passwordUsuarios-inp");
-            const usuario = inputs[0].value;
-            const nuevaPassword = inputs[1].value;
+    botonAceptar.addEventListener("click", async () => {
+        const correo = document.getElementById("correoUsuario").value;
+        const nuevaPassword = document.getElementById("nuevaContrasena").value;
 
-            console.log("Usuario:", usuario);
-            console.log("Nueva contraseña:", nuevaPassword);
+        try {
+            const response = await fetchConToken(
+                `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
+                method: "PUT",
+                body: JSON.stringify({ passwordNueva: nuevaPassword })
+            });
+
+            if (!response.ok) throw new Error("Error al cambiar contraseña");
 
             alert("Contraseña cambiada correctamente");
             window.location.href = "../html/menu.html";
-        });
-    }
+
+        } catch (error) {
+            console.error(error);
+            alert("Error al cambiar contraseña: " + error.message);
+        }
+    });
+}
 
     // ===== ELIMINAR USUARIO =====
     initEliminarUsuario() {
