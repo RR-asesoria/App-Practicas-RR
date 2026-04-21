@@ -63,6 +63,21 @@ public class UsuarioService {
 	}
 
 	//READ
+	public Usuario encontrarPorIdInterno(String uid) throws Exception {
+		return repository.findById(uid)
+				.orElseThrow(()-> new IllegalArgumentException("User not found"));
+	}
+
+	public Usuario encontrarPorEmailInterno(String email) throws Exception {
+		return repository.findByEmail(email)
+				.orElseThrow(() -> new IllegalArgumentException("User not found"));
+	}
+
+	public Usuario encontrarPorNombreInterno(String nombre) throws Exception {
+		return repository.findByName(nombre)
+				.orElseThrow(() -> new IllegalArgumentException("User not found"));
+	}
+
 	public UsuarioRespuestaDTO encontrarPorId(String uid){
 
 		try {
@@ -243,4 +258,12 @@ public class UsuarioService {
 
 		repository.deleteById(uid);
     }
+
+	public void eliminarUsuarioPorEmail(String email) throws Exception {
+		Usuario usuario = encontrarPorEmailInterno(email);
+		FirebaseAuth.getInstance().deleteUser(usuario.getUid());
+		repository.deleteById(usuario.getId());
+	}
+
+
 }
