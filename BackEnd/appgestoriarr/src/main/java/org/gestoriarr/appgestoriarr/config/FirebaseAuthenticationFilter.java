@@ -61,7 +61,7 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 					Optional<Usuario> usuario = repository.findById(uid);
 
 					if (usuario.isEmpty()){
-						throw new RuntimeException("El usuario no fue encontrado");
+						throw new IllegalArgumentException("User not found");
 					}
 
 					List<GrantedAuthority> authiAuthorities = 
@@ -77,18 +77,20 @@ public class FirebaseAuthenticationFilter extends OncePerRequestFilter{
 					
 				}
 				
-		}catch (FirebaseAuthException a) {
-			// TODO Auto-generated catch block
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-			response.getWriter().write("Usuario no autorizado");
-			return;
-		} 
-		catch (Exception e) {
-				// TODO Auto-generated catch block
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			response.getWriter().write("Usuario no autorizado");
-			return;
+		} catch (Exception e) {
+
+			if (e instanceof FirebaseAuthException){
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				response.getWriter().write("Invalid token");
+				return;
+			} else if (e instanceof IllegalArgumentException) {
+				response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				response.getWriter().write(e.getMessage());
+			} else {
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				response.getWriter().write("Invalid token");
 			}
+		}
 			
 			filterChain.doFilter(request, response);
 			

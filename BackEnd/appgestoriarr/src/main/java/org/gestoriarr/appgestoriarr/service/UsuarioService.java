@@ -63,47 +63,34 @@ public class UsuarioService {
 	}
 
 	//READ
-	public UsuarioRespuestaDTO encontrarPorId(String uid){
-
-		try {
-			Optional<Usuario> usuario = repository.findById(uid);
-			if (usuario.isEmpty()){
-				throw new RuntimeException("El usuario no fue encontrado");
-			}
-			return UsuarioMapper.toDTO(usuario.get());
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-
+	public Usuario encontrarPorIdInterno(String uid) throws Exception {
+		return repository.findById(uid)
+				.orElseThrow(()-> new IllegalArgumentException("User not found"));
 	}
 
-	public UsuarioRespuestaDTO encontrarPorEmail(String email){
+	public Usuario encontrarPorEmailInterno(String email) throws Exception {
+		return repository.findByEmail(email)
+				.orElseThrow(() -> new IllegalArgumentException("User not found"));
+	}
 
-		try {
-			Optional<Usuario> usuario = repository.findByEmail(email);
-			if (usuario.isEmpty()){
-				throw new RuntimeException("El usuario no fue encontrado");
-			}
-			return UsuarioMapper.toDTO(usuario.get());
-		} catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+	public Usuario encontrarPorNombreInterno(String nombre) throws Exception {
+		return repository.findByName(nombre)
+				.orElseThrow(() -> new IllegalArgumentException("User not found"));
+	}
+
+	public UsuarioRespuestaDTO encontrarPorId(String uid) throws Exception {
+		Usuario usuario = encontrarPorIdInterno(uid);
+		return UsuarioMapper.toDTO(usuario);
+	}
+
+	public UsuarioRespuestaDTO encontrarPorEmail(String email) throws Exception {
+		Usuario usuario = encontrarPorEmailInterno(email);
+		return UsuarioMapper.toDTO(usuario);
     }
 
-	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) {
-
-		try {
-			Optional<Usuario> usuario = repository.findByName(nombre);
-
-			if (usuario.isEmpty()){
-				throw new RuntimeException("El usuario no fue encontrado");
-			}
-			return UsuarioMapper.toDTO(usuario.get());
-		} catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-
+	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) throws Exception {
+		Usuario usuario = encontrarPorNombreInterno(nombre);
+		return UsuarioMapper.toDTO(usuario);
     }
 
     public List<UsuarioRespuestaDTO> obtenerTodos() throws Exception{
@@ -243,4 +230,12 @@ public class UsuarioService {
 
 		repository.deleteById(uid);
     }
+
+	public void eliminarUsuarioPorEmail(String email) throws Exception {
+		Usuario usuario = encontrarPorEmailInterno(email);
+		FirebaseAuth.getInstance().deleteUser(usuario.getUid());
+		repository.deleteById(usuario.getId());
+	}
+
+
 }

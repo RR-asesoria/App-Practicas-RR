@@ -286,6 +286,16 @@ body.campaniaActual-page {
     height: 100vh;
 }
 
+body.consultarTablas-page{
+    margin-left: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 
 /* La tarjeta base renombrada */
 .campaniaActual {
@@ -300,8 +310,8 @@ body.campaniaActual-page {
 
 /* Ancho del buscador */
 .consultasActuales-tamanio {
-    width: 1450px;
-    height: 650px;
+    width: 1750px;
+    height: 800px;
 }
 
 .consultasActuales-header {
@@ -374,33 +384,68 @@ body.campaniaActual-page {
     background-color: #0097e6;
 }
 
-/* Tabla de consultas */
+/* ===== CAMBIOS TABLA BUSCADOR DE CLIENTES ===== */
+
+/* Scroll vertical con cabecera fija */
 .consultasActuales-tabla-container {
     border: 1px solid #eee;
     border-radius: 6px;
-    overflow: hidden;
+    overflow-y: auto;
+    max-height: 460px;
 }
 
+/* Tabla auto para que las columnas se adapten al contenido */
 .consultasActuales-tabla {
     width: 100%;
     border-collapse: collapse;
-    font-size: 16px;
-    table-layout: fixed;
+    font-size: 14px;
+    table-layout: auto;
 }
 
+/* Cabecera fija al hacer scroll */
+.consultasActuales-tabla thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 
+/* Cabecera con color */
 .consultasActuales-tabla th {
-    background-color: #f8f9fa;
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    color: #2d3436;
+    background-color: #4a6cf7;
+    color: #ffffff;
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 2px solid #3c5ce0;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
 }
 
+/* Celdas con más aire */
 .consultasActuales-tabla td {
     padding: 10px;
     border-bottom: 1px solid #f1f1f1;
+    color: #2d3436;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
+/* Filas alternas */
+.consultasActuales-tabla tbody tr:nth-child(even) {
+    background-color: #f8f9ff;
+}
+
+/* Hover en fila */
+.consultasActuales-tabla tbody tr:hover {
+    background-color: #eef1fd;
+    transition: background-color 0.15s;
+}
+
+/* ===== FIN CAMBIOS TABLA ===== */
 
 .tablaActual-vacia {
     text-align: center;
@@ -1341,14 +1386,35 @@ body.agregarCliente-page{
     font-size: 14px;
 }
 
+/* ===== BOTONES ACCIONES TABLA ===== */
+
+.acciones-td {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 6px;
+}
+
 .btn-editar {
     background-color: #3498db;
     color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
 }
 
 .btn-eliminar {
     background-color: #e74c3c;
     color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
 }
 
 .btn-editar:hover {
@@ -1358,6 +1424,7 @@ body.agregarCliente-page{
 .btn-eliminar:hover {
     background-color: #c0392b;
 }
+
 .btn-verDatos {
     background-color: #40CAFF;
     color: white;

@@ -1,113 +1,121 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Agregar un cliente nuevo</title>
-
   <link rel="stylesheet" href="../css/Style.css">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
-
 <body class="agregarCliente-page">
-
 <main class="agregarClienteApp">
-
   <header class="app__header">
-
     <a href="menu.html" class="back-button">
       <i class="fa-solid fa-arrow-left"></i>
     </a>
-
     <h1 class="app__title">
       <i class="fa-solid fa-user-plus"></i>
       Agregar Cliente Nuevo
     </h1>
-
   </header>
-
   <section class="form-card">
-
     <form class="cliente-form">
 
-      <label>nombre</label>
+      <label>Nombre</label>
       <input id="nombre" type="text">
 
-      <label>nifCif</label>
+      <label>NIF/CIF</label>
       <input id="nifCif" type="text">
 
-      <label>fechaNacimiento</label>
+      <label>Teléfono</label>
+      <input id="telefono" type="text">
+
+      <label>Correo Electrónico</label>
+      <input id="correoElectronico" type="email">
+
+      <label>Fecha Nacimiento</label>
       <input id="fechaNacimiento" type="date">
 
-      <label>referencia</label>
+      <label>Referencia</label>
       <input id="referencia" type="text">
 
-      <label>casilla505anterior</label>
+      <label>Casilla 505 Anterior</label>
       <input id="casilla505anterior" type="text">
 
-      <label>numerosCC</label>
+      <label>Números CC (últimos 5 IBAN)</label>
       <input id="numerosCC" type="text">
 
-      <label>datosFiscalesDescargados</label>
-      <input id="datosFiscalesDescargados" type="text">
-
-      <label>importe</label>
-      <input id="importe" type="number">
-
-      <label>facturado</label>
-      <select id="facturado">
-        <option value="">Selecciona una opción</option>
-        <option value="SI">SI</option>
-        <option value="NO">NO</option>
+      <label>Datos Fiscales Descargados</label>
+      <select id="datosFiscalesDescargados">
+        <option value="false">No</option>
+        <option value="true">Sí</option>
       </select>
 
-      <label>recogidaDatos</label>
-      <input id="recogidaDatos" type="text">
+      <label>Importe</label>
+      <input id="importe" type="text">
 
-      <label>excelDatosElaboracion</label>
-      <input id="excelDatosElaboracion" type="text">
+      <label>Tipo Facturado</label>
+      <select id="tipoFacturado">
+        <option value="FACTURADONO">No Facturado</option>
+        <option value="FACTURADOSI">Facturado</option>
+      </select>
 
-      <label>borrador</label>
-      <input id="borrador" type="text">
+      <label>Recogida Datos</label>
+      <select id="recogidaDatos">
+        <option value="FACTURARELLENANO">No Rellenada</option>
+        <option value="FACTURARELLENASI">Rellenada</option>
+      </select>
 
-      <label>presentada</label>
-      <input id="presentada" type="text">
+      <label>Excel Datos Elaboración</label>
+      <select id="excelDatosElaboracion">
+        <option value="false">No</option>
+        <option value="true">Sí</option>
+      </select>
 
-      <label>cobrado</label>
+      <label>Borrador</label>
+      <select id="borrador">
+        <option value="BORRADORCREADONO">No Creado</option>
+        <option value="BORRADORCREADOSI">Creado</option>
+      </select>
+
+      <label>Presentada</label>
+      <select id="presentada">
+        <option value="CONFIRMADOPRESENTARNO">No Presentada</option>
+        <option value="CONFIRMADOPRESENTARSI">Presentada</option>
+      </select>
+
+      <label>Cobrado</label>
       <select id="cobrado">
-        <option value="">Selecciona una opción</option>
-        <option value="SI">SI</option>
-        <option value="NO">NO</option>
+        <option value="NO">No</option>
+        <option value="SI">Sí</option>
       </select>
 
-      <label>tipoCliente</label>
-      <input id="tipoCliente" type="text">
+      <label>Tipo Cliente</label>
+      <select id="tipoCliente">
+        <option value="">Selecciona una opción</option>
+        <option value="AUTONOMO">Autónomo</option>
+        <option value="PARTICULARES">Particulares</option>
+        <option value="NORESIDENTE">No Residente</option>
+      </select>
 
-      <label>estadoCliente</label>
-      <input id="estadoCliente" type="text">
+      <label>Estado Cliente</label>
+      <select id="estadoCliente">
+        <option value="CONTACTADONO">No Contactado</option>
+        <option value="CONTACTADOSI">Contactado</option>
+      </select>
 
-      <label>casilla505Actual</label>
+      <label>Casilla 505 Actual</label>
       <input id="casilla505Actual" type="text">
 
       <button type="submit" class="cliente-guardar">
         <i class="fa-solid fa-floppy-disk"></i>
         Guardar Cliente
       </button>
-
     </form>
-
   </section>
-
 </main>
-
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-
 <script src="../js/Script.js"></script>
-
 </body>
 </html>

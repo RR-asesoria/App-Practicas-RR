@@ -27,14 +27,31 @@ function logout() {
     window.location.href = "../html/index.html";
 }
 
+// ===== ELIMINAR CLIENTE =====
+async function eliminarCliente(id, nombre) {
+    if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
+
+    try {
+        const response = await fetchConToken(`http://localhost:8080/api/clientes/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) throw new Error("Error al eliminar");
+        alert("Cliente eliminado correctamente");
+        cargarClientes();
+    } catch (error) {
+        console.error(error);
+        alert("Error al eliminar el cliente");
+    }
+}
+
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
     const token = localStorage.getItem('token');
-    console.log('Token:', token); // ← ver si hay token
+    console.log('Token:', token);
 
     try {
-        const response = await fetchConToken('http://localhost:8080/api/clientes');
-        console.log('Status:', response.status); // ← ver el código de respuesta
+        const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+        console.log('Status:', response.status);
         if (!response.ok) throw new Error("Error al obtener clientes");
         const clientes = await response.json();
 
@@ -54,7 +71,24 @@ async function cargarClientes() {
                 <td>${cliente.estadoCliente ?? ''}</td>
                 <td>${cliente.importe ?? ''}</td>
                 <td>${cliente.cobrado ?? ''}</td>
+                <td class="acciones-td">
+                    <button class="btn-editar" title="Editar">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn-eliminar" title="Eliminar">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
             `;
+
+            fila.querySelector('.btn-editar').addEventListener('click', () => {
+                window.location.href = `agregarCliente.html?id=${cliente.id}&modo=editar`;
+            });
+
+            fila.querySelector('.btn-eliminar').addEventListener('click', () => {
+                eliminarCliente(cliente.id, cliente.nombre);
+            });
+
             tabla.appendChild(fila);
         });
     } catch (error) {
@@ -100,7 +134,7 @@ class App {
         const botonLogin = document.querySelector(".login-aceptar");
         if (!botonLogin) return;
 
-        botonLogin.addEventListener("click", async () => {
+        const handleLogin = async () => {
             const email = document.querySelector(".login-usuario")?.value;
             const password = document.querySelector(".login-password")?.value;
 
@@ -113,6 +147,15 @@ class App {
                 console.error("Error al iniciar sesión:", error);
                 alert("Usuario o contraseña incorrectos");
             }
+        };
+
+        botonLogin.addEventListener("click", handleLogin);
+
+        document.querySelector(".login-usuario")?.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") handleLogin();
+        });
+        document.querySelector(".login-password")?.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") handleLogin();
         });
 
         const toggle = document.getElementById("togglePassword");
@@ -120,16 +163,12 @@ class App {
 
         if (toggle && input) {
             toggle.addEventListener("click", () => {
-
                 const isPassword = input.type === "password";
-
                 input.type = isPassword ? "text" : "password";
-
                 toggle.classList.toggle("fa-eye");
                 toggle.classList.toggle("fa-eye-slash");
             });
         }
-
     }
 
     // ===== MENU PRINCIPAL =====
@@ -158,27 +197,29 @@ class App {
             e.preventDefault();
 
             let cliente = {
-                nombre: document.getElementById("nombre").value,
-                nifCif: document.getElementById("nifCif").value,
-                fechaNacimiento: document.getElementById("fechaNacimiento").value,
-                referencia: document.getElementById("referencia").value,
-                casilla505anterior: document.getElementById("casilla505anterior").value,
-                numerosCC: document.getElementById("numerosCC").value,
-                datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value,
-                importe: document.getElementById("importe").value,
-                tipoFacturado: document.getElementById("facturado").value,
-                recogidaDatos: document.getElementById("recogidaDatos").value,
-                excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value,
-                borrador: document.getElementById("borrador").value,
-                presentada: document.getElementById("presentada").value,
-                cobrado: document.getElementById("cobrado").value,
-                tipoCliente: document.getElementById("tipoCliente").value,
-                estadoCliente: document.getElementById("estadoCliente").value,
-                casilla505Actual: document.getElementById("casilla505Actual").value
+                nombre: document.getElementById("nombre").value || null,
+                nifCif: document.getElementById("nifCif").value || null,
+                telefono: document.getElementById("telefono").value || null,
+                correoElectronico: document.getElementById("correoElectronico").value || null,
+                fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
+                referencia: document.getElementById("referencia").value || null,
+                casilla505anterior: document.getElementById("casilla505anterior").value || null,
+                numerosCC: document.getElementById("numerosCC").value || null,
+                datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value === "true",
+                importe: document.getElementById("importe").value || "0",
+                tipoFacturado: document.getElementById("tipoFacturado").value || null,
+                recogidaDatos: document.getElementById("recogidaDatos").value || null,
+                excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value === "true",
+                borrador: document.getElementById("borrador").value || null,
+                presentada: document.getElementById("presentada").value || null,
+                cobrado: document.getElementById("cobrado").value || "NO",
+                tipoCliente: document.getElementById("tipoCliente").value || null,
+                estadoCliente: document.getElementById("estadoCliente").value || null,
+                casilla505Actual: document.getElementById("casilla505Actual").value || null
             };
 
             try {
-                const response = await fetchConToken("http://localhost:8080/api/clientes", {
+                const response = await fetchConToken("http://localhost:8080/api/clientes/crearcliente", {
                     method: "POST",
                     body: JSON.stringify(cliente)
                 });
@@ -205,15 +246,28 @@ class App {
         if (!botonAceptar) return;
 
         botonAceptar.addEventListener("click", async () => {
-            const inputs = document.querySelectorAll(".agregarUsuarios-inp");
-            const usuario = inputs[0].value;
-            const password = inputs[1].value;
+            const nombre = document.getElementById("nuevoNombre").value;
+            const correo = document.getElementById("nuevoCorreo").value;
+            const password = document.getElementById("nuevaPassword").value;
 
-            console.log("Nuevo usuario:", usuario);
-            console.log("Password:", password);
+            try {
+                const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        correo: correo,
+                        psw: password
+                    })
+                });
 
-            alert("Usuario agregado correctamente");
-            window.location.href = "../html/menu.html";
+                if (!response.ok) throw new Error("Error al crear usuario");
+
+                alert("Usuario agregado correctamente");
+                window.location.href = "../html/menu.html";
+            } catch (error) {
+                console.error(error);
+                alert("Error al agregar usuario");
+            }
         });
     }
 
@@ -223,15 +277,25 @@ class App {
         if (!botonAceptar) return;
 
         botonAceptar.addEventListener("click", async () => {
-            const inputs = document.querySelectorAll(".passwordUsuarios-inp");
-            const usuario = inputs[0].value;
-            const nuevaPassword = inputs[1].value;
+            const correo = document.getElementById("correoUsuario").value;
+            const nuevaPassword = document.getElementById("nuevaContrasena").value;
 
-            console.log("Usuario:", usuario);
-            console.log("Nueva contraseña:", nuevaPassword);
+            try {
+                const response = await fetchConToken(
+                    `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
+                    method: "PUT",
+                    body: JSON.stringify({ passwordNueva: nuevaPassword })
+                });
 
-            alert("Contraseña cambiada correctamente");
-            window.location.href = "../html/menu.html";
+                if (!response.ok) throw new Error("Error al cambiar contraseña");
+
+                alert("Contraseña cambiada correctamente");
+                window.location.href = "../html/menu.html";
+
+            } catch (error) {
+                console.error(error);
+                alert("Error al cambiar contraseña: " + error.message);
+            }
         });
     }
 
