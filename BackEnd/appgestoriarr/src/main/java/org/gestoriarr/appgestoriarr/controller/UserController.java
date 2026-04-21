@@ -88,10 +88,20 @@ public class UserController {
                     .status(HttpStatus.OK)
                     .body(service.encontrarPorEmail(email)
                     );
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
+        } catch (Exception e) {
+            if (e instanceof IllegalArgumentException){
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(e.getMessage());
+            }else if (e instanceof FirebaseException){
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }else {
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }
         }
     }
 
@@ -103,10 +113,20 @@ public class UserController {
                     .status(HttpStatus.OK)
                     .body(service.encontrarPorNombre(nombre)
                     );
-        } catch (RuntimeException e) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
+        } catch (Exception e) {
+            if (e instanceof IllegalArgumentException){
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body(e.getMessage());
+            }else if (e instanceof FirebaseException){
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }else {
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(e.getMessage());
+            }
         }
     }
 
