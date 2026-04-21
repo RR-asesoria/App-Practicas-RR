@@ -1,7 +1,6 @@
 package org.gestoriarr.appgestoriarr.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
