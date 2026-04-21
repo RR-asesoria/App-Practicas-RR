@@ -5,94 +5,63 @@
     <link rel="stylesheet" href="../css/Style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="campaniaActual-page">
-
+<body class="consultarTablas-page">
 <div class="campaniaActual consultasActuales-tamanio">
     <div class="consultasActuales-header">
-
         <a href="menuClientes.html" class="back-button-tablas">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-
         <i class="fa-solid fa-circle-user"></i>
         <h2>Buscador de Clientes</h2>
     </div>
-
     <div class="consultasActuales-menu-horizontal">
-
         <div class="consultasActuales-item">
             <label>Nombre</label>
             <input type="text" class="consultasActuales-input" placeholder="Nombre">
         </div>
-
         <div class="consultasActuales-item">
             <label>Apellido</label>
             <input type="text" class="consultasActuales-input" placeholder="Apellido">
         </div>
-
         <div class="consultasActuales-item">
             <label>DNI / NIE</label>
             <input type="text" class="consultasActuales-input" placeholder="DNI / NIE">
         </div>
-
         <div class="consultasActuales-item">
             <label>Estado</label>
-                <select class="consultasActuales-input">
+            <select class="consultasActuales-input">
                 <option>Activo</option>
                 <option>No Activo</option>
             </select>
         </div>
-
         <button class="consultasActuales-aceptar">BUSCAR</button>
     </div>
-
     <div class="consultasActuales-tabla-container">
         <table class="consultasActuales-tabla">
             <thead>
             <tr>
-                <th>Cliente/DNI</th>
-                <th>Año</th>
-                <th>Fecha Creación</th>
+                <th>Nombre</th>
+                <th>NIF/CIF</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Fecha Nacimiento</th>
+                <th>Tipo Cliente</th>
                 <th>Estado</th>
+                <th>Importe</th>
+                <th>Cobrado</th>
                 <th>Acciones</th>
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>Juan Pérez / 12345678A</td>
-                <td>2026</td>
-                <td>12/03/2026</td>
-                <td>Activo</td>
-                <td class="acciones">
+            <tbody id="tablaClientes">
 
-                    <a href="editarCliente.html" class="btn-editar">
-                        <i class="fa-solid fa-pen"></i> Editar
-                    </a>
-
-                    <a href="#" class="btn-verDatos" onclick="return confirm('¿Seguro que quieres eliminar este cliente?')">
-                        <i class="fa-solid fa-eye"></i> Datos
-                    </a>
-
-                    <a href="#" class="btn-eliminar" onclick="return confirm('¿Seguro que quieres eliminar este cliente?')">
-                        <i class="fa-solid fa-trash"></i> Eliminar
-                    </a>
-
-
-
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
 </div>
-
 <!-- 1º Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-
 <!-- 2º Tu script -->
-<script src="Script.js"></script>
-
-
+<script src="../js/Script.js"></script>
 </body>
 </html>

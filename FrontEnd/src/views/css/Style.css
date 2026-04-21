@@ -286,6 +286,16 @@ body.campaniaActual-page {
     height: 100vh;
 }
 
+body.consultarTablas-page{
+    margin-left: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
 
 /* La tarjeta base renombrada */
 .campaniaActual {

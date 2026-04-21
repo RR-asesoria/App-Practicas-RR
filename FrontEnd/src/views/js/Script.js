@@ -33,7 +33,7 @@ async function cargarClientes() {
     console.log('Token:', token); // ← ver si hay token
 
     try {
-        const response = await fetchConToken('http://localhost:8080/api/clientes');
+        const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
         console.log('Status:', response.status); // ← ver el código de respuesta
         if (!response.ok) throw new Error("Error al obtener clientes");
         const clientes = await response.json();
