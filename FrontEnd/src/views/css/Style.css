@@ -1,16 +1,24 @@
 /* ===== VARIABLES ===== */
 
-:root{
+:root {
+    --color-primary: #4a6cf7;
+    --color-bg: #f5f5f5;
+    --color-card: #ffffff;
+    --color-border: #dcdcdc;
+    --color-text: #333;
+    --button-bg: #f7f8fa;
+    --button-hover-bg: #f0f3ff;
+    --radius: 8px;
+    --transition: 0.30s;
+}
 
-    --color-primary:#4a6cf7;
-    --color-bg:#f5f5f5;
-    --color-card:#ffffff;
-    --color-border:#dcdcdc;
-    --color-text:#333;
-
-    --radius:8px;
-    --transition:0.25s;
-
+body.dark-mode {
+    --color-bg: #1c1c1c;
+    --color-card: #2a2a2a;
+    --color-text: #e0e0e0;
+    --color-border: #444444;
+    --button-bg: #333333;
+    --button-hover-bg: #3d3d3d;
 }
 
 /* ===== RESET ===== */
@@ -1002,32 +1010,46 @@ body.eliminarBody {
 
 /* ===== HEADER LOGOUT ===== */
 
-.logout{
-    margin-top:20px;
-    display:flex;
-    justify-content:center;
+.logout {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.logout > div {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 
 .logout-btn {
     display: flex;
     align-items: center;
     gap: 6px;
-    background-color: #f7f8fa;
-    color: red;
-    border: 1px solid;
-    border-color: red;
+    background-color: var(--button-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
     padding: 8px 12px;
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 15px;  /* espacio sobre el botón */
-    justify-content: flex-start; /* alinear texto e icono a la izquierda */
     width: fit-content;
+    font-size: 14px;
 }
 
 .logout-btn:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.logout-btn.btn-logout:hover {
     background-color: #e74c3c;
+    border-color: #e74c3c;
     color: white;
 }
+
+#darkModeToggle .fa-moon { color: #7c83fd; }
+#darkModeToggle .fa-sun  { color: #f9ca24; }
 
 
 /* ===== HEADER ===== */
@@ -1054,27 +1076,28 @@ body.eliminarBody {
 
 /* ===== BUTTON ===== */
 
-.menu__button{
-
-    width:340px;
-    padding:20px 14px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#f7f8fa;
-    border:1px solid var(--color-border);
-    border-radius:var(--radius);
-    font-size:16px;
-    cursor:pointer;
-
-    transition:all var(--transition);
-
-    text-decoration:none;
-    color:inherit;
-
+.menu__button {
+    width: 340px;
+    padding: 20px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--button-bg);        /* ← antes era #f7f8fa hardcodeado */
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition);
+    text-decoration: none;
+    color: var(--color-text);            /* ← antes era inherit */
 }
 
+.menu__button:hover {
+    background: var(--button-hover-bg);  /* ← antes era #f0f3ff hardcodeado */
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 .menu__button .fa-user-plus{
     color:#4a6cf7;
 }
@@ -1091,16 +1114,19 @@ body.eliminarBody {
     color:#9b59b6;
 }
 
-/* hover */
 
-.menu__button:hover{
 
-    background:#f0f3ff;
-    border-color:var(--color-primary);
-    transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.08);
 
+body.dark-mode {
+    --bg: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #e0e0e0;
+    --color-border: #2a2a4a;
 }
+
+
+
+
 
 /* active */
 
@@ -1445,3 +1471,35 @@ body.agregarCliente-page{
 }
 
 /* Aquí termina el CSS de Carlos */
+
+
+body.dark-mode .login,
+body.dark-mode .consultas,
+body.dark-mode .campaniaActual,
+body.dark-mode .menuClientes,
+body.dark-mode .usuarios,
+body.dark-mode .agregarUsuarios,
+body.dark-mode .password,
+body.dark-mode .eliminar,
+body.dark-mode .agregarClienteApp {
+    background-color: var(--color-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+body.dark-mode .consultasActuales-tabla td,
+body.dark-mode .menuClientes-header h2,
+body.dark-mode .usuarios-header h2,
+body.dark-mode .menuClientes-btn,
+body.dark-mode .usuarios-btn {
+    color: var(--color-text);
+}
+
+body.dark-mode .menuClientes-btn,
+body.dark-mode .usuarios-btn,
+body.dark-mode .agregarUsuarios-inp,
+body.dark-mode .passwordUsuarios-inp,
+body.dark-mode .eliminarUsuarios-inp {
+    background: var(--button-bg);
+    border-color: var(--color-border);
+}

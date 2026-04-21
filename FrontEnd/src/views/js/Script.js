@@ -201,6 +201,8 @@ class App {
     }
 
     init() {
+        this.initDarkMode();
+
         if (this.body.classList.contains("login-page")) {
             this.initLogin();
         }
@@ -289,21 +291,21 @@ initHistorico() {
 }
 
     // ===== MENU PRINCIPAL =====
-    initMenuPrincipal() {
-        const resetButton = document.getElementById("resetButton");
-        const fileInput = document.getElementById("excelFile");
-        const importButton = document.getElementById("importButton");
+initMenuPrincipal() {
+    const resetButton = document.getElementById("resetButton");
+    const fileInput = document.getElementById("excelFile");
+    const importButton = document.getElementById("importButton");
 
-        if (resetButton) {
-            resetButton.addEventListener("click", () => this.resetFiscalYear());
-        }
-        if (importButton) {
-            importButton.addEventListener("click", () => fileInput.click());
-        }
-        if (fileInput) {
-            fileInput.addEventListener("change", (e) => this.handleFile(e));
-        }
+    if (resetButton) {
+        resetButton.addEventListener("click", () => this.resetFiscalYear());
     }
+    if (importButton) {
+        importButton.addEventListener("click", () => fileInput.click());
+    }
+    if (fileInput) {
+        fileInput.addEventListener("change", (e) => this.handleFile(e));
+    }
+}
 
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
@@ -453,6 +455,34 @@ initHistorico() {
          }
      });
  }
+
+
+    // ===== Dark Mode =====
+    initDarkMode() {
+        const toggle = document.getElementById("darkModeToggle");
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+            if (toggle) {
+                toggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+                toggle.querySelector("span").textContent = "Modo Claro";
+            }
+        }
+
+        if (!toggle) return; // si la página no tiene el botón, no hace nada más
+
+        toggle.addEventListener("click", () => {
+            const isDark = document.body.classList.toggle("dark-mode");
+            const icon = toggle.querySelector("i");
+            const label = toggle.querySelector("span");
+
+            icon.classList.toggle("fa-moon", !isDark);
+            icon.classList.toggle("fa-sun", isDark);
+            label.textContent = isDark ? "Modo Claro" : "Modo Oscuro";
+
+            localStorage.setItem("darkMode", isDark);
+        });
+    }
 
     // ===== FUNCIONES =====
     resetFiscalYear() {

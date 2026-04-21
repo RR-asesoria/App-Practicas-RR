@@ -44,7 +44,7 @@
 
     </a>
 
-    <button class="menu__button tooltip">
+    <button class="menu__button tooltip" id="resetButton">
       <span>Reseteo</span>
       <i class="fa-solid fa-rotate"></i>
 
@@ -81,12 +81,16 @@
   </section>
 
   <section class="logout">
-
-    <button class="logout-btn" onclick="logout()">
-      <span>Logout</span>
-      <i class="fa-solid fa-right-from-bracket"></i>
-    </button>
-
+    <div>
+      <button class="logout-btn" id="darkModeToggle">
+        <span>Modo Oscuro</span>
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <button class="logout-btn btn-logout" onclick="logout()">
+        <span>Logout</span>
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
   </section>
 
 </main>
