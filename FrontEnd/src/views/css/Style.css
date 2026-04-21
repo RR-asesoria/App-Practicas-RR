@@ -701,7 +701,7 @@ body.agregarBody {
 .agregarUsuarios {
     background-color: #ffffff;
     width: 400px;
-    height: 390px;
+    min-height: 390px;
     padding: 18px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -1473,6 +1473,8 @@ body.agregarCliente-page{
 /* Aquí termina el CSS de Carlos */
 
 
+/* ===== DARK MODE - TODAS LAS PÁGINAS ===== */
+
 body.dark-mode .login,
 body.dark-mode .consultas,
 body.dark-mode .campaniaActual,
@@ -1487,19 +1489,82 @@ body.dark-mode .agregarClienteApp {
     color: var(--color-text);
 }
 
-body.dark-mode .consultasActuales-tabla td,
+/* Iconos y títulos de cabeceras */
+body.dark-mode .menuClientes-header i,
 body.dark-mode .menuClientes-header h2,
+body.dark-mode .usuarios-header i,
 body.dark-mode .usuarios-header h2,
-body.dark-mode .menuClientes-btn,
-body.dark-mode .usuarios-btn {
+body.dark-mode .agregarUsuarios-header i,
+body.dark-mode .agregarUsuarios-header h2,
+body.dark-mode .passwordUsuarios-header i,
+body.dark-mode .passwordUsuarios-header h2,
+body.dark-mode .eliminarUsuarios-header i,
+body.dark-mode .eliminarUsuarios-header h2,
+body.dark-mode .back-button,
+body.dark-mode .back-button-menuClientes,
+body.dark-mode .back-button-usuarios,
+body.dark-mode .back-button-agregarUsuarios,
+body.dark-mode .back-button-tablas {
     color: var(--color-text);
 }
 
+/* Botones de navegación internos */
 body.dark-mode .menuClientes-btn,
-body.dark-mode .usuarios-btn,
-body.dark-mode .agregarUsuarios-inp,
-body.dark-mode .passwordUsuarios-inp,
-body.dark-mode .eliminarUsuarios-inp {
+body.dark-mode .usuarios-btn {
     background: var(--button-bg);
     border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+body.dark-mode .menuClientes-btn i,
+body.dark-mode .usuarios-btn i {
+    color: var(--color-text);
+}
+
+/* Inputs */
+body.dark-mode .agregarUsuarios-inp,
+body.dark-mode .passwordUsuarios-inp,
+body.dark-mode .eliminarUsuarios-inp,
+body.dark-mode .cliente-form input,
+body.dark-mode .consultas-input,
+body.dark-mode .consultasActuales-input {
+    background: var(--button-bg);
+    border-color: var(--color-border);
+    color: var(--color-text);
+}
+
+/* Labels del formulario cliente */
+body.dark-mode .cliente-form label {
+    color: var(--color-text);
+}
+
+/* Tabla */
+body.dark-mode .consultasActuales-tabla td {
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+body.dark-mode .consultasActuales-tabla tbody tr:nth-child(even) {
+    background-color: var(--button-bg);
+}
+
+body.dark-mode .consultasActuales-tabla tbody tr:hover {
+    background-color: var(--button-hover-bg);
+}
+
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    background-color: #3a3a3a !important;
+    color: #e0e0e0 !important;
+    border-color: #555555 !important;
+    color-scheme: dark;
+}
+
+
+body.dark-mode .agregarClienteApp,
+body.dark-mode .agregarCliente-page .form-card {
+    background-color: var(--color-card) !important;
+    border-color: var(--color-border) !important;
 }
