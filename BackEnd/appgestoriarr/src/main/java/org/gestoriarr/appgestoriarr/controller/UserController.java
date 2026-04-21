@@ -1,6 +1,5 @@
 package org.gestoriarr.appgestoriarr.controller;
 
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,114 +33,44 @@ public class UserController {
     //CREATE
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crearusuario")
-    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) {
-        try {
+    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) throws FirebaseAuthException {
             service.crearUsuario(dto);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body("Usuario creado");
-
-        } catch (IllegalStateException e) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(e.getMessage());
-        }
-        catch (FirebaseAuthException e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
     }
 
     //READ
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/id/{uid}")
     public ResponseEntity<?> encontrarPorId(@PathVariable String uid) {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorId(uid)
-                    );
-        } catch (Exception e) {
-            if (e instanceof IllegalArgumentException){
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(e.getMessage());
-            }else if (e instanceof FirebaseException){
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }else {
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }
-        }
-
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.encontrarPorId(uid));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
     public ResponseEntity<?> encontrarPorEmail(@PathVariable String email) {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorEmail(email)
-                    );
-        } catch (Exception e) {
-            if (e instanceof IllegalArgumentException){
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(e.getMessage());
-            }else if (e instanceof FirebaseException){
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }else {
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }
-        }
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.encontrarPorEmail(email));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<?> encontrarPorNombre(@PathVariable String nombre) {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.encontrarPorNombre(nombre)
-                    );
-        } catch (Exception e) {
-            if (e instanceof IllegalArgumentException){
-                return ResponseEntity
-                        .status(HttpStatus.NOT_FOUND)
-                        .body(e.getMessage());
-            }else if (e instanceof FirebaseException){
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }else {
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(e.getMessage());
-            }
-        }
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.encontrarPorNombre(nombre));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/todoslosusuarios")
     public ResponseEntity<?> obtenerTodos() {
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(service.obtenerTodos());
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.obtenerTodos());
     }
 
     //UPDATE
@@ -168,19 +97,15 @@ public class UserController {
             @Valid @RequestBody CambioPasswordDTO dto) {
 
         try {
-
             service.cambiarPasswordAdmin(correo, dto);
-
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body("Contraseña actualizada por admin");
-
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(e.getMessage());
         }
-
     }
 
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
@@ -233,7 +158,7 @@ public class UserController {
     public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
         try {
             service.eliminarUsuario(uid);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Usuario eliminado");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
