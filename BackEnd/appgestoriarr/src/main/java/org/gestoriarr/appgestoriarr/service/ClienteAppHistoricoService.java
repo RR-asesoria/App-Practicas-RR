@@ -30,10 +30,11 @@ public class ClienteAppHistoricoService {
     }
 
     public void eliminarCliente(String nifCif) {
-        if (!repo.existsById(nifCif)) {
+        try {
+            repo.deleteById(nifCif);
+        } catch (Exception e) {
             throw new RuntimeException("El cliente no existe");
         }
-        repo.deleteById(nifCif);
     }
 
     public void eliminarTodosClientes() {
