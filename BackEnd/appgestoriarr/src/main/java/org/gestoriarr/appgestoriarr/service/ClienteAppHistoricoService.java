@@ -51,4 +51,8 @@ public class ClienteAppHistoricoService {
     public List<ClienteAppHistorico> buscarPorNombre(String nombre) {
         return repo.findByNombreContaining(nombre);
     }
+
+    public void actualizarCliente(ClienteAppHistorico clienteAppHistorico) { repo.update(clienteAppHistorico);
+
+    }
 }

@@ -118,4 +118,16 @@ public class ClienteAppHistoricoController {
 
     /*Puede que crear metodos para aniadir usuarios y usuario*/
 
+    @PutMapping("/actualizar")
+    @PreAuthorize("hasAnyRole('USERBASE','ADMIN')")
+    public ResponseEntity<String> actualizar(@RequestBody ClienteAppHistorico cliente) {
+        try {
+            clienteHistoricoService.actualizarCliente(cliente);
+            return ResponseEntity.ok("Clientes eliminados correctamente");
+
+        }catch (RuntimeException e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
 }
