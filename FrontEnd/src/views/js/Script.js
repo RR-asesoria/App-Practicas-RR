@@ -178,10 +178,10 @@ class App {
             };
 
             try {
-                const response = await fetchConToken("http://localhost:8080/api/clientes", {
-                    method: "POST",
-                    body: JSON.stringify(cliente)
-                });
+           const response = await fetchConToken("http://localhost:8080/api/clientes/crearcliente", {
+          method: "POST",
+         body: JSON.stringify(cliente)
+          });
 
                 if (!response.ok) throw new Error("Error al guardar cliente");
 
