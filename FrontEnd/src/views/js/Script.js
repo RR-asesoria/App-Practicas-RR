@@ -46,14 +46,46 @@ async function eliminarCliente(id, nombre) {
 
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
-
     try {
-        const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
-        console.log('Status:', response.status);
-        if (!response.ok) throw new Error("Error al obtener clientes");
-        const clientes = await response.json();
+        const nombre = document.getElementById('filtroNombre')?.value;
+        const dni = document.getElementById('filtroDni')?.value;
+        const tipoCliente = document.getElementById('filtroTipoCliente')?.value;
+        const estadoCliente = document.getElementById('filtroEstadoCliente')?.value;
+        const tipoFacturado = document.getElementById('filtroTipoFacturado')?.value;
+        const recogidaDatos = document.getElementById('filtroRecogidaDatos')?.value;
+        const borrador = document.getElementById('filtroBorrador')?.value;
+        const presentada = document.getElementById('filtroPresentada')?.value;
+        const cobrado = document.getElementById('filtroCobrado')?.value;
+        const datosFiscales = document.getElementById('filtroDatosFiscales')?.value;
+        const excelElaboracion = document.getElementById('filtroExcelElaboracion')?.value;
+
+        const filtros = {};
+        if (nombre) filtros.nombre = nombre;
+        if (dni) filtros.nifCif = dni;
+        if (tipoCliente) filtros.tipoCliente = tipoCliente;
+        if (estadoCliente) filtros.estadoCliente = estadoCliente;
+        if (tipoFacturado) filtros.tipoFacturado = tipoFacturado;
+        if (recogidaDatos) filtros.recogidaDatos = recogidaDatos;
+        if (borrador) filtros.borrador = borrador;
+        if (presentada) filtros.presentada = presentada;
+        if (cobrado) filtros.cobrado = cobrado;
+        if (datosFiscales) filtros.datosFiscalesDescargados = datosFiscales === 'true';
+        if (excelElaboracion) filtros.excelDatosElaboracion = excelElaboracion === 'true';
+
+        let clientes;
+
+        if (Object.keys(filtros).length > 0) {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
+                method: 'POST',
+                body: JSON.stringify(filtros)
+            });
+            if (!response.ok) throw new Error("Error al obtener clientes");
+            clientes = await response.json();
+        } else {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+            if (!response.ok) throw new Error("Error al obtener clientes");
+            clientes = await response.json();
+        }
 
         const tabla = document.getElementById('tablaClientes');
         if (!tabla) return;
@@ -71,24 +103,12 @@ async function cargarClientes() {
                 <td>${cliente.estadoCliente ?? ''}</td>
                 <td>${cliente.importe ?? ''}</td>
                 <td>${cliente.cobrado ?? ''}</td>
-                <td class="acciones-td">
-                    <button class="btn-editar" title="Editar">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-eliminar" title="Eliminar">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                <td>
+                    <a href="editarCliente.html" class="btn-editar">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
                 </td>
             `;
-
-            fila.querySelector('.btn-editar').addEventListener('click', () => {
-                window.location.href = `agregarCliente.html?id=${cliente.id}&modo=editar`;
-            });
-
-            fila.querySelector('.btn-eliminar').addEventListener('click', () => {
-                eliminarCliente(cliente.id, cliente.nombre);
-            });
-
             tabla.appendChild(fila);
         });
     } catch (error) {
@@ -355,9 +375,24 @@ initMenuPrincipal() {
     }
 
     // ===== CONSULTAR TABLAS =====
-    initConsultarTablas() {
-        cargarClientes();
+initConsultarTablas() {
+    cargarClientes();
+
+    const botonBuscar = document.querySelector(".consultasActuales-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarClientes());
     }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
+    const panel = document.getElementById('panelFiltrosAvanzadosClientes');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== AGREGAR USUARIO =====
     initAgregarUsuario() {
