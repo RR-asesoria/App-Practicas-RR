@@ -28,6 +28,13 @@ public class GlobalExceptionHandler {
                 .body(errors);
     }
 
+    @ExceptionHandler(ExistingUserException.class)
+    public ResponseEntity<?> handlerExistingUserException(ExistingUserException e){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(e.getMessage());
+    }
+
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<?> handlerIllegalStateException(IllegalStateException e){
         return ResponseEntity
@@ -45,7 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handlerIllegalArgumentException(IllegalArgumentException e){
         return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
     }
 
@@ -76,13 +83,4 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(e.getMessage());
     }
-
-
-
-
-
-
-
-
-
 }

@@ -1,7 +1,9 @@
 package org.gestoriarr.appgestoriarr.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.AllArgsConstructor;
@@ -9,6 +11,7 @@ import org.gestoriarr.appgestoriarr.dto.CambioPasswordDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioActualizarDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioCreacionDTO;
 import org.gestoriarr.appgestoriarr.dto.UsuarioRespuestaDTO;
+import org.gestoriarr.appgestoriarr.exception.ExistingUserException;
 import org.gestoriarr.appgestoriarr.exception.UserNotFoundException;
 import org.gestoriarr.appgestoriarr.mapper.UsuarioMapper;
 import org.gestoriarr.appgestoriarr.model.Usuario;
@@ -34,11 +37,11 @@ public class UsuarioService {
 		try {
 
 			if (repository.findByEmail(dto.getCorreo()).isPresent()){
-				throw new IllegalStateException("El email ingresado ya existe.");
+				throw new ExistingUserException("El email ingresado ya existe.");
 			}
 
 			if (repository.findByName(dto.getNombre()).isPresent()){
-				throw new IllegalStateException("El nombre de usuario debe ser único.");
+				throw new ExistingUserException("El nombre ingresado ya existe");
 			}
 
 			userRecord = FirebaseAuth.getInstance()
@@ -57,52 +60,56 @@ public class UsuarioService {
 				FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
 			}
 
-			throw new IllegalStateException("User could not be created. "+e.getMessage());
+			throw new ExistingUserException(e.getMessage());
 		}
 
 	}
 
 	//READ
-	public Usuario encontrarPorIdInterno(String uid) throws Exception {
-		return repository.findById(uid)
-				.orElseThrow(()-> new UserNotFoundException("User not found"));
+	public Usuario encontrarPorIdInterno(String uid){
+		try {
+            return repository.findById(uid)
+                    .orElseThrow(()-> new UserNotFoundException("User not found"));
+		} catch (Exception e) {
+			throw new UserNotFoundException(e.getMessage());
+		}
+
 	}
 
-	public Usuario encontrarPorEmailInterno(String email) throws Exception {
-		return repository.findByEmail(email)
-				.orElseThrow(() -> new UserNotFoundException("User not found"));
-	}
+	public Usuario encontrarPorEmailInterno(String email){
+        try {
+            return repository
+                    .findByEmail(email)
+                    .orElseThrow( () -> new UserNotFoundException("User not found"));
+        } catch (Exception e) {
+            throw new UserNotFoundException(e.getMessage());
+        }
+    }
 
-	public Usuario encontrarPorNombreInterno(String nombre) throws Exception {
-		return repository.findByName(nombre)
-				.orElseThrow(() -> new UserNotFoundException("User not found"));
+	public Usuario encontrarPorNombreInterno(String nombre){
+		try {
+			return repository.findByName(nombre)
+					.orElseThrow(() -> new UserNotFoundException("User not found"));
+		} catch (Exception e) {
+			throw new UserNotFoundException(e.getMessage());
+		}
+
 	}
 
 	public UsuarioRespuestaDTO encontrarPorId(String uid){
-		try {
-			Usuario usuario = encontrarPorIdInterno(uid);
-			return UsuarioMapper.toDTO(usuario);
-		} catch (Exception e) {
-			throw new RuntimeException("Database error."+e.getMessage());
-		}
+		Usuario usuario = encontrarPorIdInterno(uid);
+		return UsuarioMapper.toDTO(usuario);
+
 	}
 
 	public UsuarioRespuestaDTO encontrarPorEmail(String email){
-		try {
 			Usuario usuario = encontrarPorEmailInterno(email);
 			return UsuarioMapper.toDTO(usuario);
-		} catch (Exception e) {
-			throw new RuntimeException("Database error."+e.getMessage());
-		}
     }
 
 	public UsuarioRespuestaDTO encontrarPorNombre(String nombre) {
-		try {
 			Usuario usuario = encontrarPorNombreInterno(nombre);
 			return UsuarioMapper.toDTO(usuario);
-		} catch (Exception e) {
-			throw new RuntimeException("Database error."+e.getMessage());
-		}
     }
 
     public List<UsuarioRespuestaDTO> obtenerTodos(){
@@ -135,14 +142,19 @@ public class UsuarioService {
 			repository.save(update);
 			return "Usuario actualizado";
 
-		} catch (Exception e) {
-			repository.save(original);
-			if (request != null) {
-				request.setEmail(original.getCorreo());
-			} else {
+		}
+		catch (Exception e) {
+			if (e instanceof UserNotFoundException){
+				throw new UserNotFoundException(e.getMessage());
+			}else {
+				repository.save(original);
+				if (request != null) {
+					request.setEmail(original.getCorreo());
+				} else {
 					throw new AssertionError("Rollback error.");
+				}
+				throw new RuntimeException("The user could not be updated." + e.getMessage());
 			}
-			throw new RuntimeException("The user could not be updated.", e);
 		}
 
 	}
@@ -202,8 +214,9 @@ public class UsuarioService {
 	}
 
 	//DELETE
-    public void eliminarUsuario(String uid) throws FirebaseAuthException {
-		FirebaseAuth.getInstance().deleteUser(uid);
+    public void eliminarUsuario(String uid) throws Exception {
+		Usuario usuario = encontrarPorIdInterno(uid);
+		FirebaseAuth.getInstance().deleteUser(usuario.getUid());
 		repository.deleteById(uid);
     }
 

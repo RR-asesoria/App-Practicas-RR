@@ -78,16 +78,10 @@ public class UserController {
     @PutMapping("/admin/users/{correo}/actualizarusuario")
     public ResponseEntity<String> AdminActualizarUsuario(
             @PathVariable String correo,
-            @Valid @RequestBody UsuarioActualizarDTO dto) {
+            @Valid @RequestBody UsuarioActualizarDTO dto) throws Exception {
 
-        try {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(service.AdminActualizarUsuario(correo, dto));
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
     }
 
     @PreAuthorize("hasRole('ADMIN')")
