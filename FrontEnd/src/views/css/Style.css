@@ -175,8 +175,8 @@ body.consultarTablas-page {
 
 /* Ancho del buscador */
 .consultas-tamanio {
-    width: 1450px;
-    height: 650px;
+    width: 1750px;
+    height: 800px;
 }
 
 .consultas-header {
@@ -1587,4 +1587,97 @@ body.dark-mode .back-button-tablas {
 body.dark-mode .consultasActuales-tabla th {
     background-color: #00659E;
     border-bottom: 2px solid #555;
+}
+
+/* ===== HISTÓRICO - MISMOS ESTILOS QUE CAMPAÑA ACTUAL ===== */
+
+body.historicoTablas-page {
+    margin-left: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.consultas-tabla-container {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow-y: auto;
+    max-height: 460px;
+}
+
+.consultas-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    table-layout: auto;
+}
+
+.consultas-tabla thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.consultas-tabla th {
+    background-color: #4a6cf7;
+    color: #ffffff;
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 2px solid #3c5ce0;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+}
+
+.consultas-tabla td {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #2d3436;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.consultas-tabla tbody tr:nth-child(even) {
+    background-color: #f8f9ff;
+}
+
+.consultas-tabla tbody tr:hover {
+    background-color: #eef1fd;
+    transition: background-color 0.15s;
+}
+
+/* Dark mode histórico */
+body.dark-mode .consultas {
+    background-color: #2a2a2a !important;
+    border-color: #444 !important;
+}
+
+body.dark-mode .consultas-header i,
+body.dark-mode .consultas-header h2 {
+    color: var(--color-text) !important;
+}
+
+body.dark-mode .consultas-tabla th {
+    background-color: #00659E;
+    border-bottom: 2px solid #555;
+}
+
+body.dark-mode .consultas-tabla td {
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+body.dark-mode .consultas-tabla tbody tr:nth-child(even) {
+    background-color: var(--button-bg);
+}
+
+body.dark-mode .consultas-tabla tbody tr:hover {
+    background-color: var(--button-hover-bg);
 }
