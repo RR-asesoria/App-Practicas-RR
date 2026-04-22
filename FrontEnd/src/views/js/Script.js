@@ -201,26 +201,61 @@ async function cargarHistorico() {
         if (!tabla) return;
         tabla.innerHTML = '';
 
-        clientes.forEach(cliente => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${cliente.nombre ?? ''}</td>
-                <td>${cliente.nifCif ?? ''}</td>
-                <td>${cliente.telefono ?? ''}</td>
-                <td>${cliente.correoElectronico ?? ''}</td>
-                <td>${cliente.anioFiscal ?? ''}</td>
-                <td>${cliente.tipoCliente ?? ''}</td>
-                <td>${cliente.estadoCliente ?? ''}</td>
-                <td>${cliente.importe ?? ''}</td>
-                <td>${cliente.cobrado ?? ''}</td>
-                <td>
-                    <a href="verDatosClientes.html" class="btn-editar">
-                        <i class="fa-solid fa-eye"></i> Ver datos
-                    </a>
-                </td>
-            `;
-            tabla.appendChild(fila);
-        });
+     clientes.forEach(cliente => {
+         const fila = document.createElement('tr');
+         fila.innerHTML = `
+             <td>${cliente.nombre ?? ''}</td>
+             <td>${cliente.nifCif ?? ''}</td>
+             <td>${cliente.telefono ?? ''}</td>
+             <td>${cliente.correoElectronico ?? ''}</td>
+             <td>${cliente.anioFiscal ?? ''}</td>
+             <td>${cliente.tipoCliente ?? ''}</td>
+             <td>${cliente.estadoCliente ?? ''}</td>
+             <td>${cliente.importe ?? ''}</td>
+             <td>${cliente.cobrado ?? ''}</td>
+             <td>
+                 <a href="verDatosClientes.html" class="btn-editar">
+                     <i class="fa-solid fa-eye"></i> Ver datos
+                 </a>
+             </td>
+         `;
+
+         // ===== FILA DETALLE =====
+         const filaDetalle = document.createElement('tr');
+         filaDetalle.classList.add('fila-detalle');
+         filaDetalle.style.display = 'none';
+
+         filaDetalle.innerHTML = `
+             <td colspan="10" style="padding:12px 20px; background:var(--button-bg);">
+                 <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px 20px;">
+                     <span><strong>Referencia:</strong> ${cliente.referencia ?? '-'}</span>
+                     <span><strong>NIF Anterior:</strong> ${cliente.nifAnterior ?? '-'}</span>
+                     <span><strong>Fecha Nacimiento:</strong> ${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : '-'}</span>
+                     <span><strong>Números CC:</strong> ${cliente.numerosCC ?? '-'}</span>
+                     <span><strong>Datos Fiscales:</strong> ${cliente.datosFiscalesDescargados ? 'Sí' : 'No'}</span>
+                     <span><strong>Excel Elaboración:</strong> ${cliente.excelDatosElaboracion ? 'Sí' : 'No'}</span>
+                     <span><strong>Tipo Facturado:</strong> ${cliente.tipoFacturado ?? '-'}</span>
+                     <span><strong>Recogida Datos:</strong> ${cliente.recogidaDatos ?? '-'}</span>
+                     <span><strong>Borrador:</strong> ${cliente.borrador ?? '-'}</span>
+                     <span><strong>Presentada:</strong> ${cliente.presentada ?? '-'}</span>
+                     <span><strong>Casilla 505 Actual:</strong> ${cliente.casilla505Actual ?? '-'}</span>
+                 </div>
+             </td>
+         `;
+
+         // ===== TOGGLE =====
+         fila.style.cursor = 'pointer';
+         fila.addEventListener('click', (e) => {
+             if (e.target.closest('.btn-editar')) return;
+
+             const visible = filaDetalle.style.display !== 'none';
+             filaDetalle.style.display = visible ? 'none' : 'table-row';
+             fila.style.background = visible ? '' : 'var(--button-hover-bg)';
+         });
+
+         tabla.appendChild(fila);
+         tabla.appendChild(filaDetalle);
+     });
     } catch (error) {
         console.error("Error al cargar histórico:", error);
         alert("Error al cargar el histórico");

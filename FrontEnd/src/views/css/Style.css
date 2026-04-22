@@ -1690,3 +1690,36 @@ body.dark-mode .consultas-tabla tbody tr:hover {
 .fila-detalle strong {
     color: var(--color-primary);
 }
+/* ===== FILA DETALLE (EXPANDIBLE) ===== */
+
+.fila-detalle td {
+    background: var(--button-bg);
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 13px;
+    color: var(--color-text);
+}
+
+.fila-detalle div {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px 20px;
+}
+
+.fila-detalle span {
+    display: block;
+    white-space: normal; /* permite saltos de línea */
+}
+
+.fila-detalle strong {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+body.dark-mode .fila-detalle td {
+    background: var(--button-bg);
+    border-color: var(--color-border);
+}
+
+body.dark-mode .fila-detalle strong {
+    color: #7c83fd; /* un pelín más visible en oscuro */
+}
