@@ -266,6 +266,7 @@ class App {
     }
 
 
+//cambiar nif
 initCambiarNif() {
     this.cargarClientesCambiarNif();
 
