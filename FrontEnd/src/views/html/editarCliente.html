@@ -12,6 +12,20 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+
+    <style>
+        body.dark-mode .agregarClienteApp { background: #2a2a2a !important; }
+        body.dark-mode .form-card { background: #2a2a2a !important; border-color: #444 !important; }
+        body.dark-mode .app__title { color: #e0e0e0 !important; }
+        body.dark-mode .back-button { color: #e0e0e0 !important; }
+        body.dark-mode .cliente-form label { color: #e0e0e0 !important; }
+        body.dark-mode .cliente-form input,
+        body.dark-mode .cliente-form select {
+            background: #3a3a3a !important;
+            color: #e0e0e0 !important;
+            border-color: #555 !important;
+        }
+    </style>
 </head>
 
 <body class="agregarCliente-page">
@@ -35,65 +49,93 @@
 
         <form class="cliente-form">
 
-            <label>nombre</label>
-            <input type="text" value="Juan Pérez">
+            <label>Nombre</label>
+            <input id="nombre" type="text">
 
-            <label>nifCif</label>
-            <input type="text" value="12345678A">
+            <label>NIF/CIF</label>
+            <input id="nifCif" type="text">
 
-            <label>fechaNacimiento</label>
-            <input type="date" value="1990-05-10">
+            <label>Teléfono</label>
+            <input id="telefono" type="text">
 
-            <label>referencia</label>
-            <input type="text" value="ABC123">
+            <label>Correo Electrónico</label>
+            <input id="correoElectronico" type="email">
 
-            <label>casilla505anterior</label>
-            <input type="text" value="4500">
+            <label>Fecha Nacimiento</label>
+            <input id="fechaNacimiento" type="date">
+
+            <label>Referencia</label>
+            <input id="referencia" type="text">
+
+            <label>Casilla 505 Anterior</label>
+            <input id="casilla505anterior" type="text" maxlength="5">
 
             <label>numerosCC</label>
-            <input type="text" value="ES12345678901234567890">
+            <input type="text"  maxlength="5">
 
-            <label>datosFiscalesDescargados</label>
-            <input type="text" value="Sí">
-
-            <label>importe</label>
-            <input type="number" value="120">
-
-            <label>facturado</label>
-            <select class="formulario-input">
-                <option value="">Selecciona una opción</option>
-                <option value="SI">SI</option>
-                <option value="NO">NO</option>
+            <label>Datos Fiscales Descargados</label>
+            <select id="datosFiscalesDescargados">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
             </select>
 
-            <label>recogidaDatos</label>
-            <input type="text" value="Completo">
+            <label>Importe</label>
+            <input id="importe" type="text">
 
-            <label>excelDatosElaboracion</label>
-            <input type="text" value="Sí">
+            <label>Facturado</label>
+            <select id="tipoFacturado">
+                <option value="FACTURADONO">No Facturado</option>
+                <option value="FACTURADOSI">Facturado</option>
+            </select>
 
-            <label>borrador</label>
-            <input type="text" value="Generado">
+            <label>Recogida Datos</label>
+            <select id="recogidaDatos">
+                <option value="FACTURARELLENANO">No Rellenada</option>
+                <option value="FACTURARELLENASI">Rellenada</option>
+            </select>
 
-            <label>presentada</label>
-            <input type="text" value="No">
+            <label>Excel Datos Elaboración</label>
+            <select id="excelDatosElaboracion">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+            </select>
 
-            <label>cobrado</label>
-            <select class="formulario-input">
-                <option value="">Selecciona una opción</option>
-                <option value="SI">SI</option>
-                <option value="NO">NO</option>
+            <label>Borrador</label>
+            <select id="borrador">
+                <option value="BORRADORCREADONO">No Creado</option>
+                <option value="BORRADORCREADOSI">Creado</option>
+            </select>
+
+            <label>Presentada</label>
+            <select id="presentada">
+                <option value="CONFIRMADOPRESENTARNO">No Presentada</option>
+                <option value="CONFIRMADOPRESENTARSI">Presentada</option>
+            </select>
+
+            <label>Cobrado</label>
+            <select id="cobrado">
+                <option value="NO">No</option>
+                <option value="SI">Sí</option>
             </select>
 
 
-            <label>tipoCliente</label>
-            <input type="text" value="Particular">
+            <label>Tipo Cliente</label>
+            <select id="tipoCliente">
+                <option value="">Selecciona una opción</option>
+                <option value="AUTONOMO">Autónomo</option>
+                <option value="PARTICULARES">Particulares</option>
+                <option value="NORESIDENTE">No Residente</option>
+            </select>
 
-            <label>estadoCliente</label>
-            <input type="text" value="Activo">
 
-            <label>casilla505Actual</label>
-            <input type="text" value="4800">
+            <label>Estado Cliente</label>
+            <select id="estadoCliente">
+                <option value="CONTACTADONO">No Contactado</option>
+                <option value="CONTACTADOSI">Contactado</option>
+            </select>
+
+            <label>Casilla 505 Actual</label>
+            <input id="casilla505Actual" type="text" maxlength="5">
 
             <button type="submit" class="cliente-actualizar">
                 <i class="fa-solid fa-pen-to-square"></i>
