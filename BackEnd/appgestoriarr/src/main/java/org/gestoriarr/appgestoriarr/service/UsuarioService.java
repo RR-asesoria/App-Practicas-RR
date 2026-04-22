@@ -228,7 +228,7 @@ public class UsuarioService {
     public void eliminarUsuario(String uid) {
 		try {
 
-			String userAuthenticateUid = (String) Objects
+			final String userAuthenticateUid = (String) Objects
 					.requireNonNull(SecurityContextHolder.getContext()
 							.getAuthentication()).getPrincipal();
 

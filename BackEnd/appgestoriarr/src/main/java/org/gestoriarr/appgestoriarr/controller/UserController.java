@@ -107,7 +107,7 @@ public class UserController {
     public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
 
-            String uid = (String) Objects.requireNonNull(SecurityContextHolder
+            final String uid = (String) Objects.requireNonNull(SecurityContextHolder
                             .getContext()
                             .getAuthentication())
                     .getPrincipal();
@@ -125,7 +125,7 @@ public class UserController {
     @PutMapping("/users/me/password")
     public ResponseEntity<String> cambiarMiPassword(
             @Valid @RequestBody CambioPasswordDTO dto) {
-            String uid = (String) Objects.requireNonNull(SecurityContextHolder
+            final String uid = (String) Objects.requireNonNull(SecurityContextHolder
                             .getContext()
                             .getAuthentication())
                     .getPrincipal();
