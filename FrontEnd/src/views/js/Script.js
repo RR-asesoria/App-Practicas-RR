@@ -28,11 +28,11 @@ function logout() {
 }
 
 // ===== ELIMINAR CLIENTE =====
-async function eliminarCliente(nifCif, nombre) {
+async function eliminarCliente(id, nombre) {
     if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
 
     try {
-        const response = await fetchConToken(`http://localhost:8080/api/clientes/${nifCif}`, {
+        const response = await fetchConToken(`http://localhost:8080/api/clientes/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) throw new Error("Error al eliminar");
@@ -46,14 +46,46 @@ async function eliminarCliente(nifCif, nombre) {
 
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
-
     try {
-        const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
-        console.log('Status:', response.status);
-        if (!response.ok) throw new Error("Error al obtener clientes");
-        const clientes = await response.json();
+        const nombre = document.getElementById('filtroNombre')?.value;
+        const dni = document.getElementById('filtroDni')?.value;
+        const tipoCliente = document.getElementById('filtroTipoCliente')?.value;
+        const estadoCliente = document.getElementById('filtroEstadoCliente')?.value;
+        const tipoFacturado = document.getElementById('filtroTipoFacturado')?.value;
+        const recogidaDatos = document.getElementById('filtroRecogidaDatos')?.value;
+        const borrador = document.getElementById('filtroBorrador')?.value;
+        const presentada = document.getElementById('filtroPresentada')?.value;
+        const cobrado = document.getElementById('filtroCobrado')?.value;
+        const datosFiscales = document.getElementById('filtroDatosFiscales')?.value;
+        const excelElaboracion = document.getElementById('filtroExcelElaboracion')?.value;
+
+        const filtros = {};
+        if (nombre) filtros.nombre = nombre;
+        if (dni) filtros.nifCif = dni;
+        if (tipoCliente) filtros.tipoCliente = tipoCliente;
+        if (estadoCliente) filtros.estadoCliente = estadoCliente;
+        if (tipoFacturado) filtros.tipoFacturado = tipoFacturado;
+        if (recogidaDatos) filtros.recogidaDatos = recogidaDatos;
+        if (borrador) filtros.borrador = borrador;
+        if (presentada) filtros.presentada = presentada;
+        if (cobrado) filtros.cobrado = cobrado;
+        if (datosFiscales) filtros.datosFiscalesDescargados = datosFiscales === 'true';
+        if (excelElaboracion) filtros.excelDatosElaboracion = excelElaboracion === 'true';
+
+        let clientes;
+
+        if (Object.keys(filtros).length > 0) {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
+                method: 'POST',
+                body: JSON.stringify(filtros)
+            });
+            if (!response.ok) throw new Error("Error al obtener clientes");
+            clientes = await response.json();
+        } else {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+            if (!response.ok) throw new Error("Error al obtener clientes");
+            clientes = await response.json();
+        }
 
         const tabla = document.getElementById('tablaClientes');
         if (!tabla) return;
@@ -71,29 +103,112 @@ async function cargarClientes() {
                 <td>${cliente.estadoCliente ?? ''}</td>
                 <td>${cliente.importe ?? ''}</td>
                 <td>${cliente.cobrado ?? ''}</td>
-                <td class="acciones-td">
-                    <button class="btn-editar" title="Editar">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-eliminar" title="Eliminar">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                <td>
+                    <a href="editarCliente.html" class="btn-editar">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
                 </td>
             `;
-
-            fila.querySelector('.btn-editar').addEventListener('click', () => {
-                window.location.href = `editarCliente.html?id=${cliente.nifCif}&modo=editar`;
-            });
-
-            fila.querySelector('.btn-eliminar').addEventListener('click', () => {
-                eliminarCliente(cliente.nifCif, cliente.nombre);
-            });
-
             tabla.appendChild(fila);
         });
     } catch (error) {
         console.error("Error al cargar clientes:", error);
         alert("Error al cargar los clientes");
+    }
+}
+async function cargarHistorico() {
+    try {
+        const anioSeleccionado = document.getElementById('filtroCampania')?.value;
+        const nombreFiltro = document.querySelector('.consultas-input[placeholder="Nombre"]')?.value;
+        const dniFiltro = document.querySelector('.consultas-input[placeholder="DNI / NIE"]')?.value;
+        const tipoCliente = document.getElementById('filtroTipoCliente')?.value;
+        const estadoCliente = document.getElementById('filtroEstadoCliente')?.value;
+        const tipoFacturado = document.getElementById('filtroTipoFacturado')?.value;
+        const recogidaDatos = document.getElementById('filtroRecogidaDatos')?.value;
+        const borrador = document.getElementById('filtroBorrador')?.value;
+        const presentada = document.getElementById('filtroPresentada')?.value;
+        const cobrado = document.getElementById('filtroCobrado')?.value;
+        const datosFiscales = document.getElementById('filtroDatosFiscales')?.value;
+        const excelElaboracion = document.getElementById('filtroExcelElaboracion')?.value;
+
+        const filtros = {};
+        if (anioSeleccionado) filtros.anioFiscal = anioSeleccionado;
+        if (nombreFiltro) filtros.nombre = nombreFiltro;
+        if (dniFiltro) filtros.nifCif = dniFiltro;
+        if (tipoCliente) filtros.tipoCliente = tipoCliente;
+        if (estadoCliente) filtros.estadoCliente = estadoCliente;
+        if (tipoFacturado) filtros.tipoFacturado = tipoFacturado;
+        if (recogidaDatos) filtros.recogidaDatos = recogidaDatos;
+        if (borrador) filtros.borrador = borrador;
+        if (presentada) filtros.presentada = presentada;
+        if (cobrado) filtros.cobrado = cobrado;
+        if (datosFiscales) filtros.datosFiscalesDescargados = datosFiscales === 'true';
+        if (excelElaboracion) filtros.excelDatosElaboracion = excelElaboracion === 'true';
+
+        let clientes;
+
+        if (Object.keys(filtros).length > 0) {
+            const response = await fetchConToken('http://localhost:8080/api/clientesHistorico/buscar', {
+                method: 'POST',
+                body: JSON.stringify(filtros)
+            });
+            if (!response.ok) throw new Error("Error al obtener histórico");
+            clientes = await response.json();
+        } else {
+            const response = await fetchConToken('http://localhost:8080/api/clientesHistorico');
+            if (!response.ok) throw new Error("Error al obtener histórico");
+            clientes = await response.json();
+        }
+
+        const tabla = document.getElementById('tablaHistorico');
+        if (!tabla) return;
+        tabla.innerHTML = '';
+
+        clientes.forEach(cliente => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${cliente.nombre ?? ''}</td>
+                <td>${cliente.nifCif ?? ''}</td>
+                <td>${cliente.telefono ?? ''}</td>
+                <td>${cliente.correoElectronico ?? ''}</td>
+                <td>${cliente.anioFiscal ?? ''}</td>
+                <td>${cliente.tipoCliente ?? ''}</td>
+                <td>${cliente.estadoCliente ?? ''}</td>
+                <td>${cliente.importe ?? ''}</td>
+                <td>${cliente.cobrado ?? ''}</td>
+                <td>
+                    <a href="verDatosClientes.html" class="btn-editar">
+                        <i class="fa-solid fa-eye"></i> Ver datos
+                    </a>
+                </td>
+            `;
+            tabla.appendChild(fila);
+        });
+    } catch (error) {
+        console.error("Error al cargar histórico:", error);
+        alert("Error al cargar el histórico");
+    }
+}
+
+async function inicializarSelectAnios() {
+    try {
+        const response = await fetchConToken('http://localhost:8080/api/clientesHistorico');
+        if (!response.ok) return;
+        const todos = await response.json();
+
+        const selectAnio = document.getElementById('filtroCampania');
+        if (!selectAnio) return;
+
+        const aniosUnicos = [...new Set(todos.map(c => c.anioFiscal).filter(a => a))].sort().reverse();
+        selectAnio.innerHTML = '<option value="">Todos los años</option>';
+        aniosUnicos.forEach(anio => {
+            const option = document.createElement('option');
+            option.value = anio;
+            option.textContent = anio;
+            selectAnio.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Error al cargar años:", error);
     }
 }
 
@@ -106,6 +221,8 @@ class App {
     }
 
     init() {
+        this.initDarkMode();
+
         if (this.body.classList.contains("login-page")) {
             this.initLogin();
         }
@@ -126,6 +243,9 @@ class App {
         }
         if (this.body.classList.contains("consultarTablas-page")) {
             this.initConsultarTablas();
+        }
+        if (this.body.classList.contains("historicoTablas-page")) {
+            this.initHistorico();
         }
     }
 
@@ -170,23 +290,42 @@ class App {
             });
         }
     }
+    //HISTORICOS
+initHistorico() {
+    inicializarSelectAnios().then(() => cargarHistorico());
+
+    const botonBuscar = document.querySelector(".consultas-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarHistorico());
+    }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
+    const panel = document.getElementById('panelFiltrosAvanzados');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== MENU PRINCIPAL =====
-    initMenuPrincipal() {
-        const resetButton = document.getElementById("resetButton");
-        const fileInput = document.getElementById("excelFile");
-        const importButton = document.getElementById("importButton");
+initMenuPrincipal() {
+    const resetButton = document.getElementById("resetButton");
+    const fileInput = document.getElementById("excelFile");
+    const importButton = document.getElementById("importButton");
 
-        if (resetButton) {
-            resetButton.addEventListener("click", () => this.resetFiscalYear());
-        }
-        if (importButton) {
-            importButton.addEventListener("click", () => fileInput.click());
-        }
-        if (fileInput) {
-            fileInput.addEventListener("change", (e) => this.handleFile(e));
-        }
+    if (resetButton) {
+        resetButton.addEventListener("click", () => this.resetFiscalYear());
     }
+    if (importButton) {
+        importButton.addEventListener("click", () => fileInput.click());
+    }
+    if (fileInput) {
+        fileInput.addEventListener("change", (e) => this.handleFile(e));
+    }
+}
 
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
@@ -236,9 +375,24 @@ class App {
     }
 
     // ===== CONSULTAR TABLAS =====
-    initConsultarTablas() {
-        cargarClientes();
+initConsultarTablas() {
+    cargarClientes();
+
+    const botonBuscar = document.querySelector(".consultasActuales-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarClientes());
     }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
+    const panel = document.getElementById('panelFiltrosAvanzadosClientes');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== AGREGAR USUARIO =====
     initAgregarUsuario() {
@@ -300,17 +454,68 @@ class App {
     }
 
     // ===== ELIMINAR USUARIO =====
-    initEliminarUsuario() {
-        const botonAceptar = document.querySelector(".eliminar-aceptar");
-        if (!botonAceptar) return;
+ initEliminarUsuario() {
+     const botonAceptar = document.querySelector(".eliminar-aceptar");
+     if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const usuario = document.querySelector(".eliminarUsuarios-inp").value;
+     botonAceptar.addEventListener("click", async () => {
+         const correo = document.getElementById("correoEliminar").value;
 
-            console.log("Usuario eliminado:", usuario);
+         if (!confirm(`¿Seguro que quieres eliminar el usuario ${correo}?`)) return;
 
-            alert("Usuario eliminado correctamente");
-            window.location.href = "../html/menu.html";
+         try {
+             // 1. Buscar uid por email
+             const responseUsuario = await fetchConToken(
+                 `http://localhost:8080/user/email/${encodeURIComponent(correo)}`
+             );
+
+             if (!responseUsuario.ok) throw new Error("Usuario no encontrado");
+
+             const usuario = await responseUsuario.json();
+
+             // 2. Eliminar por uid
+             const responseEliminar = await fetchConToken(
+                 `http://localhost:8080/user/eliminarusuario/${usuario.uid}`, {
+                 method: "DELETE"
+             });
+
+             if (!responseEliminar.ok) throw new Error("Error al eliminar usuario");
+
+             alert("Usuario eliminado correctamente");
+             window.location.href = "../html/menu.html";
+
+         } catch (error) {
+             console.error(error);
+             alert("Error: " + error.message);
+         }
+     });
+ }
+
+
+    // ===== Dark Mode =====
+    initDarkMode() {
+        const toggle = document.getElementById("darkModeToggle");
+
+        if (localStorage.getItem("darkMode") === "true") {
+            document.body.classList.add("dark-mode");
+            if (toggle) {
+                toggle.querySelector("i").classList.replace("fa-moon", "fa-sun");
+                toggle.querySelector("span").textContent = "Modo Claro";
+            }
+        }
+
+        if (!toggle) return; // si la página no tiene el botón, no hace nada más
+
+        toggle.addEventListener("click", () => {
+            const isDark = document.body.classList.toggle("dark-mode");
+            const icon = toggle.querySelector("i");
+            const label = toggle.querySelector("span");
+
+            icon.classList.toggle("fa-moon", !isDark);
+            icon.classList.toggle("fa-sun", isDark);
+            label.textContent = isDark ? "Modo Claro" : "Modo Oscuro";
+
+            localStorage.setItem("darkMode", isDark);
         });
     }
 
