@@ -1568,3 +1568,23 @@ body.dark-mode .agregarCliente-page .form-card {
     background-color: var(--color-card) !important;
     border-color: var(--color-border) !important;
 }
+
+
+body.dark-mode .campaniaActual {
+    background-color: #2a2a2a !important;
+    border-color: #444 !important;
+}
+
+body.dark-mode .consultasActuales-header i,
+body.dark-mode .consultasActuales-header h2 {
+    color: var(--color-text) !important;
+}
+
+body.dark-mode .back-button-tablas {
+    color: var(--color-text) !important;
+}
+
+body.dark-mode .consultasActuales-tabla th {
+    background-color: #00659E;
+    border-bottom: 2px solid #555;
+}
