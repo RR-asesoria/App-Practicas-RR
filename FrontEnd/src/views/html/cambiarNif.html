@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/Style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="cambiarNif-page">
+
+<div class="campaniaActual consultasActuales-tamanio">
+    <div class="consultasActuales-header">
+        <a href="menu.html" class="back-button-tablas">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <i class="fa-solid fa-id-card"></i>
+        <h2>Cambiar NIF/CIF de Cliente</h2>
+    </div>
+
+    <div class="cierreEjercicio-aviso">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <p><strong>Atención:</strong> Cambiar el NIF/CIF es una operación sensible. Tras realizarla deberás revisar el Excel y el CRM para evitar inconsistencias de versiones.</p>
+    </div>
+
+    <div class="consultasActuales-menu-horizontal">
+        <div class="consultasActuales-item">
+            <label>Buscar cliente</label>
+            <input type="text" id="buscarCliente" class="consultasActuales-input" placeholder="Nombre o NIF/CIF">
+        </div>
+        <button class="consultasActuales-aceptar" id="btnBuscar">BUSCAR</button>
+    </div>
+
+    <div class="consultasActuales-tabla-container">
+        <table class="consultasActuales-tabla">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>NIF/CIF actual</th>
+                <th>Acción</th>
+            </tr>
+            </thead>
+            <tbody id="tablaClientes">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
+<script src="../js/Script.js"></script>
+
+</body>
+</html>

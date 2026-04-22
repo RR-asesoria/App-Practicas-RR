@@ -28,11 +28,11 @@ function logout() {
 }
 
 // ===== ELIMINAR CLIENTE =====
-async function eliminarCliente(nifCif, nombre) {
+async function eliminarCliente(id, nombre) {
     if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
 
     try {
-        const response = await fetchConToken(`http://localhost:8080/api/clientes/${nifCif}`, {
+        const response = await fetchConToken(`http://localhost:8080/api/clientes/${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) throw new Error("Error al eliminar");
@@ -103,24 +103,12 @@ async function cargarClientes() {
                 <td>${cliente.estadoCliente ?? ''}</td>
                 <td>${cliente.importe ?? ''}</td>
                 <td>${cliente.cobrado ?? ''}</td>
-                <td class="acciones-td">
-                    <button class="btn-editar" title="Editar">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-eliminar" title="Eliminar">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+                <td>
+                    <a href="editarCliente.html" class="btn-editar">
+                        <i class="fa-solid fa-pen"></i> Editar
+                    </a>
                 </td>
             `;
-
-            fila.querySelector('.btn-editar').addEventListener('click', () => {
-                window.location.href = `agregarClienteNuevo.html?id=${cliente.nifCif}&modo=editar`;
-            });
-
-            fila.querySelector('.btn-eliminar').addEventListener('click', () => {
-                eliminarCliente(cliente.nifCif, cliente.nombre);
-            });
-
             tabla.appendChild(fila);
         });
     } catch (error) {
@@ -128,7 +116,6 @@ async function cargarClientes() {
         alert("Error al cargar los clientes");
     }
 }
-
 async function cargarHistorico() {
     try {
         const anioSeleccionado = document.getElementById('filtroCampania')?.value;
@@ -303,43 +290,42 @@ class App {
             });
         }
     }
+    //HISTORICOS
+initHistorico() {
+    inicializarSelectAnios().then(() => cargarHistorico());
 
-    // ===== HISTORICO =====
-    initHistorico() {
-        inicializarSelectAnios().then(() => cargarHistorico());
-
-        const botonBuscar = document.querySelector(".consultas-aceptar");
-        if (botonBuscar) {
-            botonBuscar.addEventListener("click", () => cargarHistorico());
-        }
-
-        const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
-        const panel = document.getElementById('panelFiltrosAvanzados');
-        if (btnAvanzados && panel) {
-            btnAvanzados.addEventListener("click", () => {
-                const visible = panel.style.display !== 'none';
-                panel.style.display = visible ? 'none' : 'flex';
-                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
-            });
-        }
+    const botonBuscar = document.querySelector(".consultas-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarHistorico());
     }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
+    const panel = document.getElementById('panelFiltrosAvanzados');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== MENU PRINCIPAL =====
-    initMenuPrincipal() {
-        const resetButton = document.getElementById("resetButton");
-        const fileInput = document.getElementById("excelFile");
-        const importButton = document.getElementById("importButton");
+initMenuPrincipal() {
+    const resetButton = document.getElementById("resetButton");
+    const fileInput = document.getElementById("excelFile");
+    const importButton = document.getElementById("importButton");
 
-        if (resetButton) {
-            resetButton.addEventListener("click", () => this.resetFiscalYear());
-        }
-        if (importButton) {
-            importButton.addEventListener("click", () => fileInput.click());
-        }
-        if (fileInput) {
-            fileInput.addEventListener("change", (e) => this.handleFile(e));
-        }
+    if (resetButton) {
+        resetButton.addEventListener("click", () => this.resetFiscalYear());
     }
+    if (importButton) {
+        importButton.addEventListener("click", () => fileInput.click());
+    }
+    if (fileInput) {
+        fileInput.addEventListener("change", (e) => this.handleFile(e));
+    }
+}
 
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
@@ -389,24 +375,24 @@ class App {
     }
 
     // ===== CONSULTAR TABLAS =====
-    initConsultarTablas() {
-        cargarClientes();
+initConsultarTablas() {
+    cargarClientes();
 
-        const botonBuscar = document.querySelector(".consultasActuales-aceptar");
-        if (botonBuscar) {
-            botonBuscar.addEventListener("click", () => cargarClientes());
-        }
-
-        const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
-        const panel = document.getElementById('panelFiltrosAvanzadosClientes');
-        if (btnAvanzados && panel) {
-            btnAvanzados.addEventListener("click", () => {
-                const visible = panel.style.display !== 'none';
-                panel.style.display = visible ? 'none' : 'flex';
-                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
-            });
-        }
+    const botonBuscar = document.querySelector(".consultasActuales-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarClientes());
     }
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
+    const panel = document.getElementById('panelFiltrosAvanzadosClientes');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== AGREGAR USUARIO =====
     initAgregarUsuario() {
@@ -468,42 +454,45 @@ class App {
     }
 
     // ===== ELIMINAR USUARIO =====
-    initEliminarUsuario() {
-        const botonAceptar = document.querySelector(".eliminar-aceptar");
-        if (!botonAceptar) return;
+ initEliminarUsuario() {
+     const botonAceptar = document.querySelector(".eliminar-aceptar");
+     if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const correo = document.getElementById("correoEliminar").value;
+     botonAceptar.addEventListener("click", async () => {
+         const correo = document.getElementById("correoEliminar").value;
 
-            if (!confirm(`¿Seguro que quieres eliminar el usuario ${correo}?`)) return;
+         if (!confirm(`¿Seguro que quieres eliminar el usuario ${correo}?`)) return;
 
-            try {
-                const responseUsuario = await fetchConToken(
-                    `http://localhost:8080/user/email/${encodeURIComponent(correo)}`
-                );
+         try {
+             // 1. Buscar uid por email
+             const responseUsuario = await fetchConToken(
+                 `http://localhost:8080/user/email/${encodeURIComponent(correo)}`
+             );
 
-                if (!responseUsuario.ok) throw new Error("Usuario no encontrado");
+             if (!responseUsuario.ok) throw new Error("Usuario no encontrado");
 
-                const usuario = await responseUsuario.json();
+             const usuario = await responseUsuario.json();
 
-                const responseEliminar = await fetchConToken(
-                    `http://localhost:8080/user/eliminarusuario/${usuario.uid}`, {
-                    method: "DELETE"
-                });
+             // 2. Eliminar por uid
+             const responseEliminar = await fetchConToken(
+                 `http://localhost:8080/user/eliminarusuario/${usuario.uid}`, {
+                 method: "DELETE"
+             });
 
-                if (!responseEliminar.ok) throw new Error("Error al eliminar usuario");
+             if (!responseEliminar.ok) throw new Error("Error al eliminar usuario");
 
-                alert("Usuario eliminado correctamente");
-                window.location.href = "../html/menu.html";
+             alert("Usuario eliminado correctamente");
+             window.location.href = "../html/menu.html";
 
-            } catch (error) {
-                console.error(error);
-                alert("Error: " + error.message);
-            }
-        });
-    }
+         } catch (error) {
+             console.error(error);
+             alert("Error: " + error.message);
+         }
+     });
+ }
 
-    // ===== DARK MODE =====
+
+    // ===== Dark Mode =====
     initDarkMode() {
         const toggle = document.getElementById("darkModeToggle");
 
@@ -515,7 +504,7 @@ class App {
             }
         }
 
-        if (!toggle) return;
+        if (!toggle) return; // si la página no tiene el botón, no hace nada más
 
         toggle.addEventListener("click", () => {
             const isDark = document.body.classList.toggle("dark-mode");
