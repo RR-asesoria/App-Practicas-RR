@@ -197,14 +197,17 @@ public class UsuarioService {
 			return "Usuario actualizado.";
 
 		} catch (Exception e) {
-			repository.save(original);
-			if (request != null) {
-				request.setEmail(original.getCorreo());
-			} else {
-				throw new AssertionError("Rollback error.");
+			if (e instanceof UserNotFoundException){
+				throw new UserNotFoundException(e.getMessage());
+			}else {
+				repository.save(original);
+				if (request != null) {
+					request.setEmail(original.getCorreo());
+				} else {
+					throw new AssertionError("Rollback error.");
+				}
+				throw new RuntimeException("The user could not be updated." + e.getMessage());
 			}
-
-			throw new RuntimeException("The user could not be updated ", e);
 		}
 
 	}
