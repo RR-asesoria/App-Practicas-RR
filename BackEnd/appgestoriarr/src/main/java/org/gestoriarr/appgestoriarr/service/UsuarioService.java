@@ -56,11 +56,16 @@ public class UsuarioService {
 			repository.save(usuario);
 
 		} catch (Exception e) {
+
+			if (e instanceof ExistingUserException){
+				throw new ExistingUserException(e.getMessage());
+			}
+
 			if (userRecord != null) {
 				FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
 			}
 
-			throw new ExistingUserException(e.getMessage());
+			throw new RuntimeException(e.getMessage());
 		}
 
 	}
