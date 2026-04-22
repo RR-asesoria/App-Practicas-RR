@@ -125,8 +125,6 @@ public class UserController {
     @PutMapping("/users/me/password")
     public ResponseEntity<String> cambiarMiPassword(
             @Valid @RequestBody CambioPasswordDTO dto) {
-
-        try {
             String uid = (String) Objects.requireNonNull(SecurityContextHolder
                             .getContext()
                             .getAuthentication())
@@ -137,26 +135,13 @@ public class UserController {
                     .status(HttpStatus.OK)
                     .body("Contraseña actualizada");
 
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
-
     }
 
     //DELETE
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminarusuario/{uid}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
-        try {
             service.eliminarUsuario(uid);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(e.getMessage());
-        }
     }
 }

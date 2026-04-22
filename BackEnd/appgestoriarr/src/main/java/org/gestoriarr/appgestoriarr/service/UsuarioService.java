@@ -1,9 +1,7 @@
 package org.gestoriarr.appgestoriarr.service;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import lombok.AllArgsConstructor;
@@ -30,12 +28,10 @@ public class UsuarioService {
 
 	//CREATE
 	public void crearUsuario(UsuarioCreacionDTO dto) throws FirebaseAuthException {
-
 		UserRecord userRecord = null;
 		Usuario usuario;
 
 		try {
-
 			if (repository.findByEmail(dto.getCorreo()).isPresent()){
 				throw new ExistingUserException("El email ingresado ya existe.");
 			}
@@ -56,15 +52,12 @@ public class UsuarioService {
 			repository.save(usuario);
 
 		} catch (Exception e) {
-
 			if (e instanceof ExistingUserException){
 				throw new ExistingUserException(e.getMessage());
 			}
-
 			if (userRecord != null) {
 				FirebaseAuth.getInstance().deleteUser(userRecord.getUid());
 			}
-
 			throw new RuntimeException(e.getMessage());
 		}
 
@@ -164,16 +157,21 @@ public class UsuarioService {
 
 	}
 
-	public void cambiarPasswordAdmin(String correo, CambioPasswordDTO dto) throws Exception {
+	public void cambiarPasswordAdmin(String correo, CambioPasswordDTO dto) {
+		try {
+			Usuario usuario = encontrarPorEmailInterno(correo);
 
-		Usuario usuario = encontrarPorEmailInterno(correo);
+			UserRecord.UpdateRequest request = new UserRecord
+					.UpdateRequest(usuario.getUid())
+					.setPassword(dto.getPasswordNueva());
 
-		UserRecord.UpdateRequest request = new UserRecord
-				.UpdateRequest(usuario.getUid())
-				.setPassword(dto.getPasswordNueva());
-
-		FirebaseAuth.getInstance().updateUser(request);
-
+			FirebaseAuth.getInstance().updateUser(request);
+		} catch (Exception e) {
+			if (e instanceof UserNotFoundException){
+				throw new UserNotFoundException("User not found");
+			}
+			throw new RuntimeException(e);
+		}
 	}
 
 	public String actualizar(String uid, UsuarioActualizarDTO dto) throws Exception {
@@ -213,19 +211,32 @@ public class UsuarioService {
 	}
 
 
-	public void cambiarPasswordUser(String uid, CambioPasswordDTO dto) throws Exception {
-		UserRecord.UpdateRequest request = new UserRecord
-				.UpdateRequest(uid)
-				.setPassword(dto.getPasswordNueva());
-		FirebaseAuth.getInstance().updateUser(request);
-
+	public void cambiarPasswordUser(String uid, CambioPasswordDTO dto) {
+		try {
+			UserRecord.UpdateRequest request = new UserRecord
+					.UpdateRequest(uid)
+					.setPassword(dto.getPasswordNueva());
+			FirebaseAuth.getInstance().updateUser(request);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	//DELETE
-    public void eliminarUsuario(String uid) throws Exception {
-		Usuario usuario = encontrarPorIdInterno(uid);
-		FirebaseAuth.getInstance().deleteUser(usuario.getUid());
-		repository.deleteById(uid);
+    public void eliminarUsuario(String uid) {
+		try {
+			Usuario usuario = encontrarPorIdInterno(uid);
+			FirebaseAuth.getInstance().deleteUser(usuario.getUid());
+			repository.deleteById(uid);
+		} catch (Exception e) {
+
+			if (e instanceof UserNotFoundException){
+				throw new UserNotFoundException("User not found.");
+			}
+
+			throw new RuntimeException(e);
+		}
+
     }
 
 	public void eliminarUsuarioPorEmail(String email) throws Exception {
