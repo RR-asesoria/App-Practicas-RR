@@ -91,38 +91,62 @@ async function cargarClientes() {
         if (!tabla) return;
         tabla.innerHTML = '';
 
-        clientes.forEach(cliente => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${cliente.nombre ?? ''}</td>
-                <td>${cliente.nifCif ?? ''}</td>
-                <td>${cliente.telefono ?? ''}</td>
-                <td>${cliente.correoElectronico ?? ''}</td>
-                <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
-                <td>${cliente.tipoCliente ?? ''}</td>
-                <td>${cliente.estadoCliente ?? ''}</td>
-                <td>${cliente.importe ?? ''}</td>
-                <td>${cliente.cobrado ?? ''}</td>
-                <td class="acciones-td">
-                    <button class="btn-editar" title="Editar">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button class="btn-eliminar" title="Eliminar">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-                </td>
-            `;
+       clientes.forEach(cliente => {
+           const fila = document.createElement('tr');
+           fila.innerHTML = `
+               <td>${cliente.nombre ?? ''}</td>
+               <td>${cliente.nifCif ?? ''}</td>
+               <td>${cliente.telefono ?? ''}</td>
+               <td>${cliente.correoElectronico ?? ''}</td>
+               <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
+               <td>${cliente.tipoCliente ?? ''}</td>
+               <td>${cliente.estadoCliente ?? ''}</td>
+               <td>${cliente.importe ?? ''}</td>
+               <td>${cliente.cobrado ?? ''}</td>
+               <td>
+                   <a href="editarCliente.html?id=${cliente.id}&modo=editar" class="btn-editar">
+                       <i class="fa-solid fa-pen"></i> Editar
+                   </a>
+               </td>
+           `;
 
-            fila.querySelector('.btn-editar').addEventListener('click', () => {
-                window.location.href = `editarCliente.html?id=${cliente.nifCif}&modo=editar`;
-            });
+           // Fila de detalle (oculta por defecto)
+           const filaDetalle = document.createElement('tr');
+           filaDetalle.classList.add('fila-detalle');
+           filaDetalle.style.display = 'none';
+           filaDetalle.innerHTML = `
+               <td colspan="10" style="padding:12px 20px; background:var(--button-bg);">
+                   <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px 20px;">
+                       <span><strong>Referencia:</strong> ${cliente.referencia ?? '-'}</span>
+                       <span><strong>Casilla 505 Anterior:</strong> ${cliente.casilla505anterior ?? '-'}</span>
+                       <span><strong>Casilla 505 Actual:</strong> ${cliente.casilla505Actual ?? '-'}</span>
+                       <span><strong>Números CC:</strong> ${cliente.numerosCC ?? '-'}</span>
+                       <span><strong>Datos Fiscales:</strong> ${cliente.datosFiscalesDescargados ? 'Sí' : 'No'}</span>
+                       <span><strong>Excel Elaboración:</strong> ${cliente.excelDatosElaboracion ? 'Sí' : 'No'}</span>
+                       <span><strong>Tipo Facturado:</strong> ${cliente.tipoFacturado ?? '-'}</span>
+                       <span><strong>Recogida Datos:</strong> ${cliente.recogidaDatos ?? '-'}</span>
+                       <span><strong>Borrador:</strong> ${cliente.borrador ?? '-'}</span>
+                       <span><strong>Presentada:</strong> ${cliente.presentada ?? '-'}</span>
+                       <span><strong>NIF Anterior:</strong> ${cliente.nifAnterior ?? '-'}</span>
+                       <span><strong>NIF Histórico:</strong> ${cliente.nifHistorico?.join(', ') ?? '-'}</span>
+                   </div>
+               </td>
+           `;
 
-            fila.querySelector('.btn-eliminar').addEventListener('click', () => {
-                eliminarCliente(cliente.nifCif, cliente.nombre);
-            });
+           // Clic en la fila para expandir/colapsar
+           fila.style.cursor = 'pointer';
+           fila.addEventListener('click', (e) => {
+               // Que el clic en Editar no expanda la fila
+               if (e.target.closest('.btn-editar')) return;
 
-            tabla.appendChild(fila);
-        });
+               const visible = filaDetalle.style.display !== 'none';
+               filaDetalle.style.display = visible ? 'none' : 'table-row';
+               fila.style.background = visible ? '' : 'var(--button-hover-bg)';
+           });
+
+           tabla.appendChild(fila);
+           tabla.appendChild(filaDetalle);
+       });
     } catch (error) {
         console.error("Error al cargar clientes:", error);
         alert("Error al cargar los clientes");
