@@ -1681,3 +1681,12 @@ body.dark-mode .consultas-tabla tbody tr:nth-child(even) {
 body.dark-mode .consultas-tabla tbody tr:hover {
     background-color: var(--button-hover-bg);
 }
+
+.fila-detalle td {
+    color: var(--color-text);
+    font-size: 13px;
+}
+
+.fila-detalle strong {
+    color: var(--color-primary);
+}
