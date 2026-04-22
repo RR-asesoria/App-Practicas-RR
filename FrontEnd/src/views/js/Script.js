@@ -247,7 +247,111 @@ class App {
         if (this.body.classList.contains("historicoTablas-page")) {
             this.initHistorico();
         }
+        if (this.body.classList.contains("cambiarNif-page")) {
+            this.initCambiarNif();
+        }
     }
+
+
+initCambiarNif() {
+    this.cargarClientesCambiarNif();
+
+    const btnBuscar = document.getElementById('btnBuscar');
+    if (btnBuscar) {
+        btnBuscar.addEventListener('click', () => this.cargarClientesCambiarNif());
+    }
+
+    const inputBuscar = document.getElementById('buscarCliente');
+    if (inputBuscar) {
+        inputBuscar.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') this.cargarClientesCambiarNif();
+        });
+    }
+}
+
+async cargarClientesCambiarNif() {
+    try {
+        const busqueda = document.getElementById('buscarCliente')?.value;
+
+        let clientes;
+
+        if (busqueda) {
+            const response = await fetchConToken(
+                `http://localhost:8080/api/clientes/buscar/nombre?nombre=${encodeURIComponent(busqueda)}`
+            );
+            if (!response.ok) throw new Error("Error al buscar clientes");
+            clientes = await response.json();
+        } else {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+            if (!response.ok) throw new Error("Error al obtener clientes");
+            clientes = await response.json();
+        }
+
+        const tabla = document.getElementById('tablaClientes');
+        if (!tabla) return;
+        tabla.innerHTML = '';
+
+        clientes.forEach(cliente => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${cliente.nombre ?? ''}</td>
+                <td>${cliente.nifCif ?? ''}</td>
+                <td>
+                    <button class="btn-editar btn-cambiar-nif" data-nif="${cliente.nifCif}" data-nombre="${cliente.nombre}">
+                        <i class="fa-solid fa-pen"></i> Cambiar NIF
+                    </button>
+                </td>
+            `;
+
+            fila.querySelector('.btn-cambiar-nif').addEventListener('click', () => {
+                this.ejecutarCambioNif(cliente.nifCif, cliente.nombre);
+            });
+
+            tabla.appendChild(fila);
+        });
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al cargar clientes");
+    }
+}
+
+async ejecutarCambioNif(nifViejo, nombre) {
+    const aviso = `⚠️ Vas a cambiar el NIF/CIF de "${nombre}" (${nifViejo}).\n\nRecuerda revisar el Excel y el CRM tras este cambio para evitar inconsistencias.\n\nEscribe el nuevo NIF/CIF:`;
+    const nifNuevo = prompt(aviso);
+
+    if (nifNuevo === null) return;
+
+    if (!nifNuevo.trim()) {
+        alert("El nuevo NIF/CIF no puede estar vacío.");
+        return;
+    }
+
+    const confirmacion = confirm(`¿Confirmas cambiar el NIF de "${nombre}" de ${nifViejo} a ${nifNuevo}?`);
+    if (!confirmacion) return;
+
+    try {
+        const response = await fetchConToken(
+            `http://localhost:8080/api/clientes/cambiar-nif?nifViejo=${encodeURIComponent(nifViejo)}&nifNuevo=${encodeURIComponent(nifNuevo.trim())}`, {
+            method: 'PUT'
+        });
+
+        const mensaje = await response.text();
+
+        if (!response.ok) {
+            alert("Error: " + mensaje);
+            return;
+        }
+
+        alert(mensaje);
+        this.cargarClientesCambiarNif();
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al cambiar el NIF: " + error.message);
+    }
+}
+
 
     // ===== LOGIN =====
     initLogin() {
