@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
@@ -15,6 +16,7 @@ import org.gestoriarr.appgestoriarr.mapper.UsuarioMapper;
 import org.gestoriarr.appgestoriarr.model.Usuario;
 
 import org.gestoriarr.appgestoriarr.repository.UsuarioRepo;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -225,13 +227,27 @@ public class UsuarioService {
 	//DELETE
     public void eliminarUsuario(String uid) {
 		try {
+
+			String userAuthenticateUid = (String) Objects
+					.requireNonNull(SecurityContextHolder.getContext()
+							.getAuthentication()).getPrincipal();
+
+			if (uid.equals(userAuthenticateUid)){
+				throw new IllegalArgumentException(
+						"No puedes eliminar al usuario admin.");
+			}
+
 			Usuario usuario = encontrarPorIdInterno(uid);
 			FirebaseAuth.getInstance().deleteUser(usuario.getUid());
 			repository.deleteById(uid);
 		} catch (Exception e) {
 
 			if (e instanceof UserNotFoundException){
-				throw new UserNotFoundException("User not found.");
+				throw new UserNotFoundException(e.getMessage());
+			}
+
+			if (e instanceof IllegalArgumentException){
+				throw new IllegalArgumentException(e.getMessage());
 			}
 
 			throw new RuntimeException(e);
@@ -239,10 +255,30 @@ public class UsuarioService {
 
     }
 
-	public void eliminarUsuarioPorEmail(String email) throws Exception {
-		Usuario usuario = encontrarPorEmailInterno(email);
-		FirebaseAuth.getInstance().deleteUser(usuario.getUid());
-		repository.deleteById(usuario.getId());
+	public void eliminarUsuarioPorEmail(String email) {
+
+		try {
+			Usuario usuario = encontrarPorEmailInterno(email);
+
+			if (usuario.getRole().name().equals("ADMIN")){
+				throw new IllegalArgumentException("No puedes eliminar el usuario admin.");
+			}
+
+			FirebaseAuth.getInstance().deleteUser(usuario.getUid());
+			repository.deleteById(usuario.getId());
+		}catch (Exception e) {
+
+			if (e instanceof UserNotFoundException){
+				throw new UserNotFoundException(e.getMessage());
+			}
+
+			if (e instanceof IllegalArgumentException){
+				throw new IllegalArgumentException(e.getMessage());
+			}
+
+			throw new RuntimeException(e);
+		}
+
 	}
 
 
