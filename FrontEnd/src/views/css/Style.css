@@ -453,6 +453,79 @@ body.consultarTablas-page{
     transition: background-color 0.15s;
 }
 
+
+/* ===== CAMBIAR NIF ===== */
+
+body.cambiarNif-page {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--color-bg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    min-height: 100vh;
+}
+
+.cambiarNif-card {
+    background: var(--color-card);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid var(--color-border);
+    padding: 30px 40px;
+    width: 900px;
+    position: relative;
+}
+
+.cambiarNif-aviso {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #fff8e1;
+    border: 1px solid #f9ca24;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #7d6608;
+}
+
+.cambiarNif-aviso i {
+    color: #f9ca24;
+    font-size: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+body.dark-mode .cambiarNif-aviso {
+    background: #3a3000;
+    border-color: #f9ca24;
+    color: #f0d060;
+}
+
+.cambiarNif-busqueda {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cambiarNif-busqueda input {
+    flex: 1;
+}
+
+body.dark-mode .cambiarNif-card {
+    background: var(--color-card);
+    border-color: var(--color-border);
+}
+
+
+
+
+
+
+
+
+
 /* ===== FIN CAMBIOS TABLA ===== */
 
 .tablaActual-vacia {

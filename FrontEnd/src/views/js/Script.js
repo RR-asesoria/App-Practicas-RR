@@ -114,25 +114,41 @@ async function cargarClientes() {
            const filaDetalle = document.createElement('tr');
            filaDetalle.classList.add('fila-detalle');
            filaDetalle.style.display = 'none';
-           filaDetalle.innerHTML = `
-               <td colspan="10" style="padding:12px 20px; background:var(--button-bg);">
-                   <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px 20px;">
-                       <span><strong>Referencia:</strong> ${cliente.referencia ?? '-'}</span>
-                       <span><strong>Casilla 505 Anterior:</strong> ${cliente.casilla505anterior ?? '-'}</span>
-                       <span><strong>Casilla 505 Actual:</strong> ${cliente.casilla505Actual ?? '-'}</span>
-                       <span><strong>Números CC:</strong> ${cliente.numerosCC ?? '-'}</span>
-                       <span><strong>Datos Fiscales:</strong> ${cliente.datosFiscalesDescargados ? 'Sí' : 'No'}</span>
-                       <span><strong>Excel Elaboración:</strong> ${cliente.excelDatosElaboracion ? 'Sí' : 'No'}</span>
-                       <span><strong>Tipo Facturado:</strong> ${cliente.tipoFacturado ?? '-'}</span>
-                       <span><strong>Recogida Datos:</strong> ${cliente.recogidaDatos ?? '-'}</span>
-                       <span><strong>Borrador:</strong> ${cliente.borrador ?? '-'}</span>
-                       <span><strong>Presentada:</strong> ${cliente.presentada ?? '-'}</span>
-                       <span><strong>NIF Anterior:</strong> ${cliente.nifAnterior ?? '-'}</span>
-                       <span><strong>NIF Histórico:</strong> ${cliente.nifHistorico?.join(', ') ?? '-'}</span>
-                   </div>
-               </td>
-           `;
-
+filaDetalle.innerHTML = `
+    <td colspan="10" style="padding:0; border-bottom: 2px solid var(--color-primary);">
+        <div style="
+            display:grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap:0;
+            background: var(--color-card);
+            border-top: 1px solid var(--color-border);
+        ">
+            ${[
+                ['Referencia', cliente.referencia],
+                ['Casilla 505 Anterior', cliente.casilla505anterior],
+                ['Casilla 505 Actual', cliente.casilla505Actual],
+                ['Números CC', cliente.numerosCC],
+                ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
+                ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
+                ['Tipo Facturado', cliente.tipoFacturado],
+                ['Recogida Datos', cliente.recogidaDatos],
+                ['Borrador', cliente.borrador],
+                ['Presentada', cliente.presentada],
+                ['NIF Anterior', cliente.nifAnterior],
+                ['NIF Histórico', cliente.nifHistorico?.join(', ')]
+            ].map(([label, valor]) => `
+                <div style="
+                    padding: 10px 16px;
+                    border-right: 1px solid var(--color-border);
+                    border-bottom: 1px solid var(--color-border);
+                ">
+                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px;">${label}</div>
+                    <div style="font-size:13px; font-weight:500; color:var(--color-text);">${valor ?? '-'}</div>
+                </div>
+            `).join('')}
+        </div>
+    </td>
+`;
            // Clic en la fila para expandir/colapsar
            fila.style.cursor = 'pointer';
            fila.addEventListener('click', (e) => {
@@ -225,23 +241,40 @@ async function cargarHistorico() {
          filaDetalle.classList.add('fila-detalle');
          filaDetalle.style.display = 'none';
 
-         filaDetalle.innerHTML = `
-             <td colspan="10" style="padding:12px 20px; background:var(--button-bg);">
-                 <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px 20px;">
-                     <span><strong>Referencia:</strong> ${cliente.referencia ?? '-'}</span>
-                     <span><strong>NIF Anterior:</strong> ${cliente.nifAnterior ?? '-'}</span>
-                     <span><strong>Fecha Nacimiento:</strong> ${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : '-'}</span>
-                     <span><strong>Números CC:</strong> ${cliente.numerosCC ?? '-'}</span>
-                     <span><strong>Datos Fiscales:</strong> ${cliente.datosFiscalesDescargados ? 'Sí' : 'No'}</span>
-                     <span><strong>Excel Elaboración:</strong> ${cliente.excelDatosElaboracion ? 'Sí' : 'No'}</span>
-                     <span><strong>Tipo Facturado:</strong> ${cliente.tipoFacturado ?? '-'}</span>
-                     <span><strong>Recogida Datos:</strong> ${cliente.recogidaDatos ?? '-'}</span>
-                     <span><strong>Borrador:</strong> ${cliente.borrador ?? '-'}</span>
-                     <span><strong>Presentada:</strong> ${cliente.presentada ?? '-'}</span>
-                     <span><strong>Casilla 505 Actual:</strong> ${cliente.casilla505Actual ?? '-'}</span>
-                 </div>
-             </td>
-         `;
+filaDetalle.innerHTML = `
+    <td colspan="10" style="padding:0; border-bottom: 2px solid var(--color-primary);">
+        <div style="
+            display:grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap:0;
+            background: var(--color-card);
+            border-top: 1px solid var(--color-border);
+        ">
+            ${[
+                ['Referencia', cliente.referencia],
+                ['NIF Anterior', cliente.nifAnterior],
+                ['Fecha Nacimiento', cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : null],
+                ['Números CC', cliente.numerosCC],
+                ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
+                ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
+                ['Tipo Facturado', cliente.tipoFacturado],
+                ['Recogida Datos', cliente.recogidaDatos],
+                ['Borrador', cliente.borrador],
+                ['Presentada', cliente.presentada],
+                ['Casilla 505 Actual', cliente.casilla505Actual],
+            ].map(([label, valor]) => `
+                <div style="
+                    padding: 10px 16px;
+                    border-right: 1px solid var(--color-border);
+                    border-bottom: 1px solid var(--color-border);
+                ">
+                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px;">${label}</div>
+                    <div style="font-size:13px; font-weight:500; color:var(--color-text);">${valor ?? '-'}</div>
+                </div>
+            `).join('')}
+        </div>
+    </td>
+`;
 
          // ===== TOGGLE =====
          fila.style.cursor = 'pointer';
