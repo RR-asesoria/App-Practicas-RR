@@ -244,11 +244,6 @@ async function cargarHistorico() {
              <td>${cliente.estadoCliente ?? ''}</td>
              <td>${cliente.importe ?? ''}</td>
              <td>${cliente.cobrado ?? ''}</td>
-             <td>
-                 <a href="verDatosClientes.html" class="btn-editar">
-                     <i class="fa-solid fa-eye"></i> Ver datos
-                 </a>
-             </td>
          `;
 
          // ===== FILA DETALLE =====
