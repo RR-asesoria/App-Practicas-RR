@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Editar Cliente</title>
-
     <link rel="stylesheet" href="../css/Style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
     <style>
         body.dark-mode .editarCliente-page { background: #2a2a2a !important; }
         body.dark-mode .form-card { background: #2a2a2a !important; border-color: #444 !important; }
@@ -27,26 +20,18 @@
         }
     </style>
 </head>
-
 <body class="editarCliente-page">
-
 <main class="agregarClienteApp">
-
     <header class="app__header">
-
         <a href="campaniaActual.html" class="back-button">
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-
         <h1 class="app__title">
             <i class="fa-solid fa-user-pen"></i>
             Editar Cliente
         </h1>
-
     </header>
-
     <section class="form-card">
-
         <form class="cliente-form">
 
             <label>Nombre</label>
@@ -70,8 +55,8 @@
             <label>Casilla 505 Anterior</label>
             <input id="casilla505anterior" type="text" maxlength="5">
 
-            <label>numerosCC</label>
-            <input type="text"  maxlength="5">
+            <label>Números CC (últimos 5 IBAN)</label>
+            <input id="numerosCC" type="text" maxlength="5">
 
             <label>Datos Fiscales Descargados</label>
             <select id="datosFiscalesDescargados">
@@ -82,16 +67,19 @@
             <label>Importe</label>
             <input id="importe" type="text">
 
-            <label>Facturado</label>
+            <label>Tipo Facturado</label>
             <select id="tipoFacturado">
                 <option value="FACTURADONO">No Facturado</option>
-                <option value="FACTURADOSI">Facturado</option>
+                <option value="FACTIRADOSIENVIADANO">Facturado - Enviada No</option>
+                <option value="FACTURADOSIENVIADASI">Facturado - Enviada Sí</option>
             </select>
 
             <label>Recogida Datos</label>
             <select id="recogidaDatos">
                 <option value="FACTURARELLENANO">No Rellenada</option>
-                <option value="FACTURARELLENASI">Rellenada</option>
+                <option value="FACTURARELLENASIENVIADANO">Rellenada - Enviada No</option>
+                <option value="FACTURARELLENASIENVIADASIFIRMADANO">Rellenada - Enviada Sí - Firmada No</option>
+                <option value="FACTURARELLENASIENVIADASIFIRMADASI">Rellenada - Enviada Sí - Firmada Sí</option>
             </select>
 
             <label>Excel Datos Elaboración</label>
@@ -103,13 +91,16 @@
             <label>Borrador</label>
             <select id="borrador">
                 <option value="BORRADORCREADONO">No Creado</option>
-                <option value="BORRADORCREADOSI">Creado</option>
+                <option value="BORRADORCREADOSIENVIADONO">Creado - Enviado No</option>
+                <option value="BORRADORCREADOSIENVIADOSI">Creado - Enviado Sí</option>
             </select>
 
             <label>Presentada</label>
             <select id="presentada">
                 <option value="CONFIRMADOPRESENTARNO">No Presentada</option>
-                <option value="CONFIRMADOPRESENTARSI">Presentada</option>
+                <option value="CONFIRMADOPRESENTARSIPRESENTADANO">Confirmada - Presentada No</option>
+                <option value="CONFIRMADOPRESENTARSIPRESENTADASIENVIADANO">Confirmada - Presentada Sí - Enviada No</option>
+                <option value="CONFIRMADOPRESENTARSIPRESENTADASIENVIADASI">Confirmada - Presentada Sí - Enviada Sí</option>
             </select>
 
             <label>Cobrado</label>
@@ -117,7 +108,6 @@
                 <option value="NO">No</option>
                 <option value="SI">Sí</option>
             </select>
-
 
             <label>Tipo Cliente</label>
             <select id="tipoCliente">
@@ -127,11 +117,12 @@
                 <option value="NORESIDENTE">No Residente</option>
             </select>
 
-
             <label>Estado Cliente</label>
             <select id="estadoCliente">
                 <option value="CONTACTADONO">No Contactado</option>
-                <option value="CONTACTADOSI">Contactado</option>
+                <option value="CONTACTADOSISEHACENO">Contactado - Se Hace No</option>
+                <option value="CONTACTADOSISEHACESI">Contactado - Se Hace Sí</option>
+                <option value="CONTACTADOSISEHACEPENDIENTE">Contactado - Pendiente</option>
             </select>
 
             <label>Casilla 505 Actual</label>
@@ -143,17 +134,10 @@
             </button>
 
         </form>
-
     </section>
-
 </main>
-
-<!-- 1º Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-
-<!-- 2º Tu script -->
 <script src="../js/Script.js"></script>
-
 </body>
 </html>
