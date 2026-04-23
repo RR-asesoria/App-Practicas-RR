@@ -812,35 +812,52 @@ initAgregarUsuario() {
 }
 
     // ===== CAMBIAR CONTRASEÑA =====
-   initCambiarPassword() {
-       const botonAceptar = document.querySelector(".password-aceptar");
-       if (!botonAceptar) return;
+initCambiarPassword() {
+    const botonAceptar = document.querySelector(".password-aceptar");
+    if (!botonAceptar) return;
 
-       botonAceptar.addEventListener("click", async () => {
-           const correo = document.getElementById("correoUsuario").value;
-           const nuevaPassword = document.getElementById("nuevaContrasena").value;
+    botonAceptar.addEventListener("click", async () => {
+        const correo = document.getElementById("correoUsuario").value;
+        const nuevaPassword = document.getElementById("nuevaContrasena").value;
+        const repetirPassword = document.getElementById("repetirContrasena").value;
 
-           // Confirmación
-           if (!confirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`)) return;
+        // Validaciones previas
+        if (!correo || !nuevaPassword || !repetirPassword) {
+            alert("Todos los campos son obligatorios");
+            return;
+        }
 
-           try {
-               const response = await fetchConToken(
-                   `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
-                   method: "PUT",
-                   body: JSON.stringify({ passwordNueva: nuevaPassword })
-               });
+        if (nuevaPassword !== repetirPassword) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
 
-               if (!response.ok) throw new Error("Error al cambiar contraseña");
+        if (nuevaPassword.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
 
-               alert("Contraseña cambiada correctamente");
-               window.location.href = "../html/menu.html";
+        // Confirmación FINAL (solo si todo está correcto)
+        if (!confirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`)) return;
 
-           } catch (error) {
-               console.error(error);
-               alert("Error al cambiar contraseña: " + error.message);
-           }
-       });
-   }
+        try {
+            const response = await fetchConToken(
+                `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
+                method: "PUT",
+                body: JSON.stringify({ passwordNueva: nuevaPassword })
+            });
+
+            if (!response.ok) throw new Error("Error al cambiar contraseña");
+
+            alert("Contraseña cambiada correctamente");
+            window.location.href = "../html/menu.html";
+
+        } catch (error) {
+            console.error(error);
+            alert("Error al cambiar contraseña: " + error.message);
+        }
+    });
+}
 
     // ===== ELIMINAR USUARIO =====
     initEliminarUsuario() {
