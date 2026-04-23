@@ -44,6 +44,7 @@ async function eliminarCliente(nifCif, nombre) {
     }
 }
 
+
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
     try {
