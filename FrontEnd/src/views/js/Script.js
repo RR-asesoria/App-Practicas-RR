@@ -426,24 +426,30 @@ initCambiarNif() {
         btnBuscar.addEventListener('click', () => this.cargarClientesCambiarNif());
     }
 
-    const inputBuscar = document.getElementById('buscarCliente');
-    if (inputBuscar) {
-        inputBuscar.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') this.cargarClientesCambiarNif();
-        });
-    }
+    document.getElementById('buscarNombre')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') this.cargarClientesCambiarNif();
+    });
+    document.getElementById('buscarDni')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') this.cargarClientesCambiarNif();
+    });
 }
 
 async cargarClientesCambiarNif() {
     try {
-        const busqueda = document.getElementById('buscarCliente')?.value;
+        const nombre = document.getElementById('buscarNombre')?.value;
+        const dni = document.getElementById('buscarDni')?.value;
+
+        const filtros = {};
+        if (nombre) filtros.nombre = nombre;
+        if (dni) filtros.nifCif = dni;
 
         let clientes;
 
-        if (busqueda) {
-            const response = await fetchConToken(
-                `http://localhost:8080/api/clientes/buscar/nombre?nombre=${encodeURIComponent(busqueda)}`
-            );
+        if (Object.keys(filtros).length > 0) {
+            const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
+                method: 'POST',
+                body: JSON.stringify(filtros)
+            });
             if (!response.ok) throw new Error("Error al buscar clientes");
             clientes = await response.json();
         } else {
@@ -462,7 +468,7 @@ async cargarClientesCambiarNif() {
                 <td>${cliente.nombre ?? ''}</td>
                 <td>${cliente.nifCif ?? ''}</td>
                 <td>
-                    <button class="btn-editar btn-cambiar-nif" data-nif="${cliente.nifCif}" data-nombre="${cliente.nombre}">
+                    <button class="btn-editar btn-cambiar-nif">
                         <i class="fa-solid fa-pen"></i> Cambiar NIF
                     </button>
                 </td>
@@ -561,24 +567,31 @@ async ejecutarCambioNif(nifViejo, nombre) {
     }
 
     // ===== HISTORICO =====
-    initHistorico() {
-        inicializarSelectAnios().then(() => cargarHistorico());
+initHistorico() {
+    inicializarSelectAnios().then(() => cargarHistorico());
 
-        const botonBuscar = document.querySelector(".consultas-aceptar");
-        if (botonBuscar) {
-            botonBuscar.addEventListener("click", () => cargarHistorico());
-        }
-
-        const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
-        const panel = document.getElementById('panelFiltrosAvanzados');
-        if (btnAvanzados && panel) {
-            btnAvanzados.addEventListener("click", () => {
-                const visible = panel.style.display !== 'none';
-                panel.style.display = visible ? 'none' : 'flex';
-                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
-            });
-        }
+    const botonBuscar = document.querySelector(".consultas-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarHistorico());
     }
+
+    document.querySelector('.consultas-input[placeholder="Nombre"]')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') cargarHistorico();
+    });
+    document.querySelector('.consultas-input[placeholder="DNI / NIE"]')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') cargarHistorico();
+    });
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
+    const panel = document.getElementById('panelFiltrosAvanzados');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== MENU PRINCIPAL =====
   initMenuPrincipal() {
@@ -687,7 +700,9 @@ async initEditarCliente() {
         const cliente = await response.json();
 
         document.getElementById('nombre').value            = cliente.nombre ?? '';
-        document.getElementById('nifCif').value            = cliente.nifCif ?? '';
+        const nifInput = document.getElementById('nifCif');
+        nifInput.value = cliente.nifCif ?? '';
+        nifInput.setAttribute('readonly', true);
         document.getElementById('telefono').value          = cliente.telefono ?? '';
         document.getElementById('correoElectronico').value = cliente.correoElectronico ?? '';
         document.getElementById('fechaNacimiento').value   = cliente.fechaNacimiento?.split('T')[0] ?? '';
@@ -758,24 +773,31 @@ async initEditarCliente() {
 
 
     // ===== CONSULTAR TABLAS =====
-    initConsultarTablas() {
-        cargarClientes();
+initConsultarTablas() {
+    cargarClientes();
 
-        const botonBuscar = document.querySelector(".consultasActuales-aceptar");
-        if (botonBuscar) {
-            botonBuscar.addEventListener("click", () => cargarClientes());
-        }
-
-        const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
-        const panel = document.getElementById('panelFiltrosAvanzadosClientes');
-        if (btnAvanzados && panel) {
-            btnAvanzados.addEventListener("click", () => {
-                const visible = panel.style.display !== 'none';
-                panel.style.display = visible ? 'none' : 'flex';
-                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
-            });
-        }
+    const botonBuscar = document.querySelector(".consultasActuales-aceptar");
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", () => cargarClientes());
     }
+
+    document.getElementById('filtroNombre')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') cargarClientes();
+    });
+    document.getElementById('filtroDni')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') cargarClientes();
+    });
+
+    const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
+    const panel = document.getElementById('panelFiltrosAvanzadosClientes');
+    if (btnAvanzados && panel) {
+        btnAvanzados.addEventListener("click", () => {
+            const visible = panel.style.display !== 'none';
+            panel.style.display = visible ? 'none' : 'flex';
+            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        });
+    }
+}
 
     // ===== AGREGAR USUARIO =====
 initAgregarUsuario() {
