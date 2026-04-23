@@ -1,6 +1,5 @@
 package org.gestoriarr.appgestoriarr.exception;
 
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
