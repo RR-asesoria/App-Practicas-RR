@@ -1,6 +1,7 @@
 package org.gestoriarr.appgestoriarr.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import org.gestoriarr.appgestoriarr.exception.UserNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
@@ -80,8 +81,10 @@ public class UserController {
             @PathVariable String correo,
             @Valid @RequestBody UsuarioActualizarDTO dto) throws Exception {
 
+            service.AdminActualizarUsuario(correo, dto);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(service.AdminActualizarUsuario(correo, dto));
+                    .body("Usuario actualizado.");
+
     }
 
     @PreAuthorize("hasRole('ADMIN')")

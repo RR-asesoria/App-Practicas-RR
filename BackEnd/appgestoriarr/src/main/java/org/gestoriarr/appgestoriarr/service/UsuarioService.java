@@ -123,13 +123,14 @@ public class UsuarioService {
 	}
 
 	//UPDATE
-	public String AdminActualizarUsuario(String correo, UsuarioActualizarDTO dto) throws Exception {
+	public void AdminActualizarUsuario(String correo, UsuarioActualizarDTO dto) throws Exception {
 
 		Usuario original= new Usuario();
 		Usuario update;
 		UserRecord.UpdateRequest request = null;
 
 		try {
+			original = encontrarPorEmailInterno(correo);
 
 			if (repository.findByName(dto.getNombre()).isPresent()){
 				throw new ExistingUserException("El nombre de usuario ya existe");
@@ -138,7 +139,6 @@ public class UsuarioService {
 				throw new ExistingUserException("El correo ya existe.");
 			}
 
-			original = encontrarPorEmailInterno(correo);
 			update= UsuarioMapper.updateFromDTO(original, dto);
 			request = new UserRecord.UpdateRequest(original.getUid());
 
@@ -148,21 +148,30 @@ public class UsuarioService {
 
 			FirebaseAuth.getInstance().updateUser(request);
 			repository.save(update);
-			return "Usuario actualizado";
-
 		}
 		catch (Exception e) {
-			if (e instanceof UserNotFoundException){
+
+			if (e instanceof UserNotFoundException) {
 				throw new UserNotFoundException(e.getMessage());
-			}else {
-				repository.save(original);
-				if (request != null) {
-					request.setEmail(original.getCorreo());
-				} else {
-					throw new AssertionError("Rollback error.");
-				}
-				throw new RuntimeException("The user could not be updated." + e.getMessage());
 			}
+
+			if (e instanceof ExistingUserException) {
+				throw new ExistingUserException(e.getMessage());
+			}
+
+			if (e instanceof NullPointerException){
+				throw new IllegalArgumentException(e.getMessage());
+			}
+
+			repository.save(original);
+			if (request != null) {
+				request.setEmail(original.getCorreo());
+			} else {
+				throw new AssertionError("Rollback error.");
+			}
+
+			throw new RuntimeException("The user could not be updated." + e.getMessage());
+
 		}
 
 	}
@@ -191,6 +200,7 @@ public class UsuarioService {
 		UserRecord.UpdateRequest request = null;
 
 		try {
+			original = encontrarPorIdInterno(uid);
 
 			if (repository.findByName(dto.getNombre()).isPresent()){
 				throw new ExistingUserException("El nombre de usuario ya existe");
@@ -199,7 +209,6 @@ public class UsuarioService {
 				throw new ExistingUserException("El correo ya existe.");
 			}
 
-			original = encontrarPorIdInterno(uid);
 			update = UsuarioMapper.updateFromDTO(original, dto);
 			request = new UserRecord.UpdateRequest(uid);
 
@@ -212,17 +221,26 @@ public class UsuarioService {
 			return "Usuario actualizado.";
 
 		} catch (Exception e) {
-			if (e instanceof UserNotFoundException){
+			if (e instanceof UserNotFoundException) {
 				throw new UserNotFoundException(e.getMessage());
-			}else {
-				repository.save(original);
-				if (request != null) {
-					request.setEmail(original.getCorreo());
-				} else {
-					throw new AssertionError("Rollback error.");
-				}
-				throw new RuntimeException("The user could not be updated." + e.getMessage());
 			}
+
+			if (e instanceof ExistingUserException) {
+				throw new ExistingUserException(e.getMessage());
+			}
+
+			if (e instanceof NullPointerException){
+				throw new IllegalArgumentException(e.getMessage());
+			}
+
+			repository.save(original);
+			if (request != null) {
+				request.setEmail(original.getCorreo());
+			} else {
+				throw new AssertionError("Rollback error.");
+			}
+
+			throw new RuntimeException("The user could not be updated." + e.getMessage());
 		}
 
 	}

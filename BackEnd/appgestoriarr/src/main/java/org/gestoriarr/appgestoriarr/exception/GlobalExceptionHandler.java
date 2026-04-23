@@ -35,13 +35,6 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<?> handlerIllegalStateException(IllegalStateException e){
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(e.getMessage());
-    }
-
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handlerUserNotFoundException(UserNotFoundException e){
         return ResponseEntity
@@ -49,15 +42,44 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(FirebaseAuthException.class)
+    public ResponseEntity<?> handlerFirebaseAuthException(FirebaseAuthException e){
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(e.getMessage());
+    }
+
+
+    @ExceptionHandler(AssertionError.class)
+    public ResponseEntity<?> handlerAssertionError(AssertionError e){
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(e.getMessage());
+    }
+}
+
+
+
+
+/*
+* Handlers genéricos
+*
+* @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<?> handlerIllegalStateException(IllegalStateException e){
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(e.getMessage());
+    }
+*
+*   @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handlerIllegalArgumentException(IllegalArgumentException e){
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(e.getMessage());
     }
 
-    @ExceptionHandler(FirebaseAuthException.class)
-    public ResponseEntity<?> handlerFirebaseAuthException(FirebaseAuthException e){
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handlerRuntimeException(RuntimeException e){
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(e.getMessage());
@@ -69,18 +91,6 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(e.getMessage());
     }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handlerRuntimeException(RuntimeException e){
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
-    }
-
-    @ExceptionHandler(AssertionError.class)
-    public ResponseEntity<?> handlerAssertionError(AssertionError e){
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
-    }
-}
+*
+*
+* */
