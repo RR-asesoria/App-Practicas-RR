@@ -25,10 +25,12 @@ public class Usuario implements Identificable {
 
     private Rol role;
 
-    @Exclude
     @Override
     public String getId() {
-        // TODO Auto-generated method stub
         return uid;
+    }
+
+    public void setId(String id) {
+       uid=id;
     }
 }
