@@ -274,7 +274,23 @@
       <option name="project" value="LOCAL" />
       <updated>1776941632299</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Agragando validaciones en el método de actualizar del usuario">
+      <option name="closed" value="true" />
+      <created>1776941734004</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1776941734004</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Agregando validaciones al método de validación">
+      <option name="closed" value="true" />
+      <created>1776948882521</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1776948882521</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -299,6 +315,8 @@
     <MESSAGE value="Agregando validación en el service" />
     <MESSAGE value="Agregando validación en el método de actualización" />
     <MESSAGE value="Capturando excepciones en el método de actualización" />
-    <option name="LAST_COMMIT_MESSAGE" value="Capturando excepciones en el método de actualización" />
+    <MESSAGE value="Agragando validaciones en el método de actualizar del usuario" />
+    <MESSAGE value="Agregando validaciones al método de validación" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agregando validaciones al método de validación" />
   </component>
 </project>
