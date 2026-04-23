@@ -296,7 +296,7 @@ filaDetalle.innerHTML = `
     </td>
 `;
 
-         // ===== TOGGLE =====
+         // ===== TOGGLE =====.
          fila.style.cursor = 'pointer';
          fila.addEventListener('click', (e) => {
              if (e.target.closest('.btn-editar')) return;
