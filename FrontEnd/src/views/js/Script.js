@@ -581,21 +581,50 @@ async ejecutarCambioNif(nifViejo, nombre) {
     }
 
     // ===== MENU PRINCIPAL =====
-    initMenuPrincipal() {
-        const resetButton = document.getElementById("resetButton");
-        const fileInput = document.getElementById("excelFile");
-        const importButton = document.getElementById("importButton");
+  initMenuPrincipal() {
+      const resetButton = document.getElementById("resetButton");
+      const fileInput = document.getElementById("excelFile");
+      const importButton = document.getElementById("importButton");
 
-        if (resetButton) {
-            resetButton.addEventListener("click", () => this.resetFiscalYear());
-        }
-        if (importButton) {
-            importButton.addEventListener("click", () => fileInput.click());
-        }
-        if (fileInput) {
-            fileInput.addEventListener("change", (e) => this.handleFile(e));
-        }
+    if (resetButton) {
+        resetButton.addEventListener("click", async () => {
+            const confirmacion = prompt("Esta acción es irreversible. Escribe ACEPTAR para confirmar el cierre de ejercicio:");
+
+            if (confirmacion === null) return; // canceló
+
+            if (confirmacion !== "ACEPTAR") {
+                alert("Texto incorrecto. Debes escribir exactamente ACEPTAR. El uso de mayúsculas es necesario.");
+                return;
+            }
+
+            // Segunda confirmación
+            const seguro = confirm("¿Seguro que quieres realizar esta acción?");
+
+            if (!seguro) return; // usuario canceló aquí
+
+            try {
+                const response = await fetchConToken(
+                    "http://localhost:8080/api/clientes/cierre-ejercicio", {
+                    method: "POST"
+                });
+
+                if (!response.ok) throw new Error("Error en el cierre de ejercicio");
+
+                alert("Cierre de ejercicio realizado correctamente.");
+            } catch (error) {
+                console.error(error);
+                alert("Error al realizar el cierre: " + error.message);
+            }
+        });
     }
+
+      if (importButton) {
+          importButton.addEventListener("click", () => fileInput.click());
+      }
+      if (fileInput) {
+          fileInput.addEventListener("change", (e) => this.handleFile(e));
+      }
+  }
 
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
@@ -749,63 +778,69 @@ async initEditarCliente() {
     }
 
     // ===== AGREGAR USUARIO =====
-    initAgregarUsuario() {
-        const botonAceptar = document.querySelector(".agregar-aceptar");
-        if (!botonAceptar) return;
+initAgregarUsuario() {
+    const botonAceptar = document.querySelector(".agregar-aceptar");
+    if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const nombre = document.getElementById("nuevoNombre").value;
-            const correo = document.getElementById("nuevoCorreo").value;
-            const password = document.getElementById("nuevaPassword").value;
+    botonAceptar.addEventListener("click", async () => {
+        const nombre = document.getElementById("nuevoNombre").value;
+        const correo = document.getElementById("nuevoCorreo").value;
+        const password = document.getElementById("nuevaPassword").value;
 
-            try {
-                const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
-                    method: "POST",
-                    body: JSON.stringify({
-                        nombre: nombre,
-                        correo: correo,
-                        psw: password
-                    })
-                });
+        // Confirmación
+        if (!confirm(`¿Quieres crear el usuario ${correo}?`)) return;
 
-                if (!response.ok) throw new Error("Error al crear usuario");
+        try {
+            const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
+                method: "POST",
+                body: JSON.stringify({
+                    nombre: nombre,
+                    correo: correo,
+                    psw: password
+                })
+            });
 
-                alert("Usuario agregado correctamente");
-                window.location.href = "../html/menu.html";
-            } catch (error) {
-                console.error(error);
-                alert("Error al agregar usuario");
-            }
-        });
-    }
+            if (!response.ok) throw new Error("Error al crear usuario");
+
+            alert("Usuario agregado correctamente");
+            window.location.href = "../html/menu.html";
+        } catch (error) {
+            console.error(error);
+            alert("Error al agregar usuario");
+        }
+    });
+}
 
     // ===== CAMBIAR CONTRASEÑA =====
-    initCambiarPassword() {
-        const botonAceptar = document.querySelector(".password-aceptar");
-        if (!botonAceptar) return;
+   initCambiarPassword() {
+       const botonAceptar = document.querySelector(".password-aceptar");
+       if (!botonAceptar) return;
 
-        botonAceptar.addEventListener("click", async () => {
-            const correo = document.getElementById("correoUsuario").value;
-            const nuevaPassword = document.getElementById("nuevaContrasena").value;
+       botonAceptar.addEventListener("click", async () => {
+           const correo = document.getElementById("correoUsuario").value;
+           const nuevaPassword = document.getElementById("nuevaContrasena").value;
 
-            try {
-                const response = await fetchConToken(
-                    `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
-                    method: "PUT",
-                    body: JSON.stringify({ passwordNueva: nuevaPassword })
-                });
+           // Confirmación
+           if (!confirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`)) return;
 
-                if (!response.ok) throw new Error("Error al cambiar contraseña");
+           try {
+               const response = await fetchConToken(
+                   `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
+                   method: "PUT",
+                   body: JSON.stringify({ passwordNueva: nuevaPassword })
+               });
 
-                alert("Contraseña cambiada correctamente");
-                window.location.href = "../html/menu.html";
+               if (!response.ok) throw new Error("Error al cambiar contraseña");
 
-            } catch (error) {
-                console.error(error);
-                alert("Error al cambiar contraseña: " + error.message);
-            }
-        });
-    }
+               alert("Contraseña cambiada correctamente");
+               window.location.href = "../html/menu.html";
+
+           } catch (error) {
+               console.error(error);
+               alert("Error al cambiar contraseña: " + error.message);
+           }
+       });
+   }
 
     // ===== ELIMINAR USUARIO =====
     initEliminarUsuario() {
