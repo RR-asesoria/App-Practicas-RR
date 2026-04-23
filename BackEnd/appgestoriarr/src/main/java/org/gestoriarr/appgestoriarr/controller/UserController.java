@@ -33,7 +33,7 @@ public class UserController {
     //CREATE
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crearusuario")
-    public ResponseEntity<String> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) throws FirebaseAuthException {
+    public ResponseEntity<?> crearUsuario(@Valid @RequestBody UsuarioCreacionDTO dto) throws FirebaseAuthException {
             service.crearUsuario(dto);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -76,7 +76,7 @@ public class UserController {
     //UPDATE
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/users/{correo}/actualizarusuario")
-    public ResponseEntity<String> AdminActualizarUsuario(
+    public ResponseEntity<?> AdminActualizarUsuario(
             @PathVariable String correo,
             @Valid @RequestBody UsuarioActualizarDTO dto) throws Exception {
 
@@ -86,7 +86,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/users/{correo}/password")
-    public ResponseEntity<String> adminCambiarPassword(
+    public ResponseEntity<?> adminCambiarPassword(
             @PathVariable String correo,
             @Valid @RequestBody CambioPasswordDTO dto) {
 
@@ -104,7 +104,7 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
     @PutMapping("/users/actualizarusuario")
-    public ResponseEntity<String> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
+    public ResponseEntity<?> actualizar(@Valid @RequestBody UsuarioActualizarDTO dto) {
         try {
 
             final String uid = (String) Objects.requireNonNull(SecurityContextHolder
@@ -123,7 +123,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('USERBASE') or hasRole('ADMIN')")
     @PutMapping("/users/me/password")
-    public ResponseEntity<String> cambiarMiPassword(
+    public ResponseEntity<?> cambiarMiPassword(
             @Valid @RequestBody CambioPasswordDTO dto) {
             final String uid = (String) Objects.requireNonNull(SecurityContextHolder
                             .getContext()
@@ -140,7 +140,7 @@ public class UserController {
     //DELETE
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/eliminarusuario/{uid}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable String uid) {
+    public ResponseEntity<?> eliminarUsuario(@PathVariable String uid) {
             service.eliminarUsuario(uid);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

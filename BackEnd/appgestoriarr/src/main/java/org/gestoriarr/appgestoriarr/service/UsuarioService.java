@@ -34,11 +34,11 @@ public class UsuarioService {
 		Usuario usuario;
 
 		try {
-			if (repository.findByEmail(dto.getCorreo()).isPresent()){
+			if (repository.findByEmail(dto.getCorreo().toLowerCase()).isPresent()){
 				throw new ExistingUserException("El email ingresado ya existe.");
 			}
 
-			if (repository.findByName(dto.getNombre()).isPresent()){
+			if (repository.findByName(dto.getNombre().toLowerCase()).isPresent()){
 				throw new ExistingUserException("El nombre ingresado ya existe");
 			}
 
