@@ -45,6 +45,51 @@ async function eliminarCliente(nifCif, nombre) {
 }
 
 
+// ===== TRADUCIR ENUMS =====
+function traducirEnum(valor) {
+    const traducciones = {
+        // EstadoCliente
+        'CONTACTADONO': 'No Contactado',
+        'CONTACTADOSISEHACENO': 'Contactado - No se hace',
+        'CONTACTADOSISEHACESI': 'Contactado - Se hace',
+        'CONTACTADOSISEHACEPENDIENTE': 'Contactado - Pendiente',
+
+        // TipoFacturado
+        'FACTURADONO': 'No Facturado',
+        'FACTIRADOSIENVIADANO': 'Facturado - Enviada No',
+        'FACTURADOSIENVIADASI': 'Facturado - Enviada Sí',
+
+        // TipoRecogidaDatos
+        'FACTURARELLENANO': 'No Rellenada',
+        'FACTURARELLENASIENVIADANO': 'Rellenada - Enviada No',
+        'FACTURARELLENASIENVIADASIFIRMADANO': 'Rellenada - Enviada Sí - Firmada No',
+        'FACTURARELLENASIENVIADASIFIRMADASI': 'Rellenada - Enviada Sí - Firmada Sí',
+
+        // TipoBorrador
+        'BORRADORCREADONO': 'No Creado',
+        'BORRADORCREADOSIENVIADONO': 'Creado - Enviado No',
+        'BORRADORCREADOSIENVIADOSI': 'Creado - Enviado Sí',
+
+        // TipoPresentada
+        'CONFIRMADOPRESENTARNO': 'No Presentada',
+        'CONFIRMADOPRESENTARSIPRESENTADANO': 'Confirmada - Presentada No',
+        'CONFIRMADOPRESENTARSIPRESENTADASIENVIADANO': 'Confirmada - Presentada Sí - Enviada No',
+        'CONFIRMADOPRESENTARSIPRESENTADASIENVIADASI': 'Confirmada - Presentada Sí - Enviada Sí',
+
+        // TipoCliente
+        'AUTONOMO': 'Autónomo',
+        'PARTICULARES': 'Particulares',
+        'NORESIDENTE': 'No Residente',
+
+        // Cobrado
+        'NO': 'No',
+        'SI': 'Sí'
+    };
+
+    return traducciones[valor] ?? valor ?? '-';
+}
+
+
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
     try {
@@ -100,10 +145,10 @@ async function cargarClientes() {
                <td>${cliente.telefono ?? ''}</td>
                <td>${cliente.correoElectronico ?? ''}</td>
                <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
-               <td>${cliente.tipoCliente ?? ''}</td>
-               <td>${cliente.estadoCliente ?? ''}</td>
+               <td>${traducirEnum(cliente.tipoCliente)}</td>
+              <td>${traducirEnum(cliente.estadoCliente)}</td>
                <td>${cliente.importe ?? ''}</td>
-               <td>${cliente.cobrado ?? ''}</td>
+               <td>${traducirEnum(cliente.cobrado)}</td>
                <td>
                    <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
                        <i class="fa-solid fa-pen"></i> Editar
@@ -134,10 +179,10 @@ filaDetalle.innerHTML = `
                 ['Números CC', cliente.numerosCC],
                 ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
                 ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
-                ['Tipo Facturado', cliente.tipoFacturado],
-                ['Recogida Datos', cliente.recogidaDatos],
-                ['Borrador', cliente.borrador],
-                ['Presentada', cliente.presentada],
+                ['Tipo Facturado', traducirEnum(cliente.tipoFacturado)],
+                ['Recogida Datos', traducirEnum(cliente.recogidaDatos)],
+                ['Borrador', traducirEnum(cliente.borrador)],
+                ['Presentada', traducirEnum(cliente.presentada)],
                 ['NIF Anterior', cliente.nifAnterior],
                 ['NIF Histórico', cliente.nifHistorico?.join(', ')]
             ].map(([label, valor]) => `
@@ -267,10 +312,10 @@ filaDetalle.innerHTML = `
                 ['Números CC', cliente.numerosCC],
                 ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
                 ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
-                ['Tipo Facturado', cliente.tipoFacturado],
-                ['Recogida Datos', cliente.recogidaDatos],
-                ['Borrador', cliente.borrador],
-                ['Presentada', cliente.presentada],
+                ['Tipo Facturado', traducirEnum(cliente.tipoFacturado)],
+                ['Recogida Datos', traducirEnum(cliente.recogidaDatos)],
+                ['Borrador', traducirEnum(cliente.borrador)],
+                ['Presentada', traducirEnum(cliente.presentada)],
                 ['Casilla 505 Actual', cliente.casilla505Actual],
             ].map(([label, valor]) => `
                 <div style="
