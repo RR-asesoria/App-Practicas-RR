@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.gestoriarr.appgestoriarr.model.enums.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +17,7 @@ import java.util.Date;
 public class ClienteAppHistorico {
 
     private String nifCif;
-    private String nifAnterior;
+    private List<String> nifHistorico;
     private String nombre;
     private Date fechaNacimiento;
     private String telefono;
