@@ -8,7 +8,6 @@ import org.gestoriarr.appgestoriarr.model.enums.*;
 
 import java.util.Date;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
