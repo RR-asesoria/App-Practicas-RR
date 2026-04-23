@@ -786,8 +786,25 @@ initAgregarUsuario() {
         const nombre = document.getElementById("nuevoNombre").value;
         const correo = document.getElementById("nuevoCorreo").value;
         const password = document.getElementById("nuevaPassword").value;
+        const repetirPassword = document.getElementById("repetirPassword").value;
 
-        // Confirmación
+
+        if (!nombre || !correo || !password || !repetirPassword) {
+            alert("Todos los campos son obligatorios");
+            return;
+        }
+
+        if (password !== repetirPassword) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+
+        if (password.length < 6) {
+            alert("La contraseña debe tener al menos 6 caracteres");
+            return;
+        }
+
+
         if (!confirm(`¿Quieres crear el usuario ${correo}?`)) return;
 
         try {
@@ -804,6 +821,7 @@ initAgregarUsuario() {
 
             alert("Usuario agregado correctamente");
             window.location.href = "../html/menu.html";
+
         } catch (error) {
             console.error(error);
             alert("Error al agregar usuario");
@@ -837,7 +855,7 @@ initCambiarPassword() {
             return;
         }
 
-        // Confirmación FINAL (solo si todo está correcto)
+
         if (!confirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`)) return;
 
         try {
