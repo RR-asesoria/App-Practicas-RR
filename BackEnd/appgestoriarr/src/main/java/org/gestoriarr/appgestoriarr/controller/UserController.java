@@ -1,7 +1,6 @@
 package org.gestoriarr.appgestoriarr.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
-import org.gestoriarr.appgestoriarr.exception.UserNotFoundException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
