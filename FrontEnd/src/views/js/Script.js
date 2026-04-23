@@ -109,6 +109,14 @@ async function cargarClientes() {
                        <i class="fa-solid fa-pen"></i> Editar
                    </a>
                </td>
+               <td>
+                   <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
+                       <i class="fa-solid fa-pen"></i> Editar
+                   </a>
+                   <button class="btn-eliminar" title="Eliminar cliente">
+                       <i class="fa-solid fa-trash"></i>
+                   </button>
+               </td>
            `;
 
            // Fila de detalle (oculta por defecto)
@@ -161,6 +169,17 @@ filaDetalle.innerHTML = `
                fila.style.background = visible ? '' : 'var(--button-hover-bg)';
            });
 
+fila.querySelector('.btn-eliminar').addEventListener('click', (e) => {
+    e.stopPropagation(); // evita que expanda la fila detalle
+    const aviso = `⚠️ ATENCIÓN\n\n` +
+        `Vas a eliminar a "${cliente.nombre}" (${cliente.nifCif}).\n\n` +
+        `Este cliente será eliminado permanentemente de la campaña actual. ` +
+        `No podrás recuperar su estado actual una vez eliminado.\n\n` +
+        `¿Confirmas la eliminación?`;
+    if (confirm(aviso)) {
+        eliminarCliente(cliente.nifCif, cliente.nombre);
+    }
+});
            tabla.appendChild(fila);
            tabla.appendChild(filaDetalle);
        });
