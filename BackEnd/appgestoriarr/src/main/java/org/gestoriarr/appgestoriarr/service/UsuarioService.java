@@ -192,6 +192,13 @@ public class UsuarioService {
 
 		try {
 
+			if (repository.findByName(dto.getNombre()).isPresent()){
+				throw new ExistingUserException("El nombre de usuario ya existe");
+			}
+			if (repository.findByEmail(dto.getCorreo()).isPresent()){
+				throw new ExistingUserException("El correo ya existe.");
+			}
+
 			original = encontrarPorIdInterno(uid);
 			update = UsuarioMapper.updateFromDTO(original, dto);
 			request = new UserRecord.UpdateRequest(uid);
