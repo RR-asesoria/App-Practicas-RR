@@ -178,7 +178,7 @@ public class UsuarioService {
 			FirebaseAuth.getInstance().updateUser(request);
 		} catch (Exception e) {
 			if (e instanceof UserNotFoundException){
-				throw new UserNotFoundException("User not found");
+				throw new UserNotFoundException(e.getMessage());
 			}
 			throw new RuntimeException(e);
 		}
