@@ -1292,7 +1292,8 @@ body.dark-mode {
 
 }
 
-body.agregarCliente-page{
+body.agregarCliente-page,
+body.editarCliente-page {
 
     font-family: "Segoe UI", Arial, sans-serif;
     background:var(--color-bg);
@@ -1316,7 +1317,8 @@ body.agregarCliente-page{
 
 
 
-.agregarCliente-page .form-card{
+body.agregarCliente-page .form-card,
+body.editarCliente-page .form-card {
 
     width:520px;
     margin:auto;

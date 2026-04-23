@@ -32,7 +32,7 @@ async function eliminarCliente(nifCif, nombre) {
     if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
 
     try {
-        const response = await fetchConToken(`http://localhost:8080/api/clientes/${nifCif}`, {
+        const response = await fetchConToken(`http://localhost:8080/api/clientes/eliminarcliente/${nifCif}`, {
             method: 'DELETE'
         });
         if (!response.ok) throw new Error("Error al eliminar");
@@ -104,7 +104,7 @@ async function cargarClientes() {
                <td>${cliente.importe ?? ''}</td>
                <td>${cliente.cobrado ?? ''}</td>
                <td>
-                   <a href="editarCliente.html?id=${cliente.id}&modo=editar" class="btn-editar">
+               <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
                        <i class="fa-solid fa-pen"></i> Editar
                    </a>
                </td>
@@ -355,6 +355,10 @@ class App {
         if (this.body.classList.contains("cambiarNif-page")) {
             this.initCambiarNif();
         }
+
+        if (this.body.classList.contains("editarCliente-page")) {
+            this.initEditarCliente();
+        }
     }
 
 
@@ -584,6 +588,90 @@ async ejecutarCambioNif(nifViejo, nombre) {
             }
         });
     }
+
+
+
+// ===== EDITAR CLIENTE =====
+async initEditarCliente() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id) return;
+
+    try {
+        const response = await fetchConToken(`http://localhost:8080/api/clientes/obtenerpornif/${id}`);
+        if (!response.ok) throw new Error("Error al obtener cliente");
+        const cliente = await response.json();
+
+        document.getElementById('nombre').value            = cliente.nombre ?? '';
+        document.getElementById('nifCif').value            = cliente.nifCif ?? '';
+        document.getElementById('telefono').value          = cliente.telefono ?? '';
+        document.getElementById('correoElectronico').value = cliente.correoElectronico ?? '';
+        document.getElementById('fechaNacimiento').value   = cliente.fechaNacimiento?.split('T')[0] ?? '';
+        document.getElementById('referencia').value        = cliente.referencia ?? '';
+        document.getElementById('casilla505anterior').value = cliente.casilla505anterior ?? '';
+        document.getElementById('importe').value           = cliente.importe ?? '';
+        document.getElementById('casilla505Actual').value  = cliente.casilla505Actual ?? '';
+        document.getElementById('datosFiscalesDescargados').value = cliente.datosFiscalesDescargados ? 'true' : 'false';
+        document.getElementById('excelDatosElaboracion').value    = cliente.excelDatosElaboracion ? 'true' : 'false';
+        document.getElementById('tipoFacturado').value     = cliente.tipoFacturado ?? '';
+        document.getElementById('recogidaDatos').value     = cliente.recogidaDatos ?? '';
+        document.getElementById('borrador').value          = cliente.borrador ?? '';
+        document.getElementById('presentada').value        = cliente.presentada ?? '';
+        document.getElementById('cobrado').value           = cliente.cobrado ?? '';
+        document.getElementById('tipoCliente').value       = cliente.tipoCliente ?? '';
+        document.getElementById('estadoCliente').value     = cliente.estadoCliente ?? '';
+
+    } catch (error) {
+        console.error(error);
+        alert("Error al cargar los datos del cliente");
+    }
+
+    const form = document.querySelector(".cliente-form");
+    if (!form) return;
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const clienteActualizado = {
+            nombre: document.getElementById("nombre").value || null,
+            nifCif: document.getElementById("nifCif").value || null,
+            telefono: document.getElementById("telefono").value || null,
+            correoElectronico: document.getElementById("correoElectronico").value || null,
+            fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
+            referencia: document.getElementById("referencia").value || null,
+            casilla505anterior: document.getElementById("casilla505anterior").value || null,
+            datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value === "true",
+            importe: document.getElementById("importe").value || "0",
+            tipoFacturado: document.getElementById("tipoFacturado").value || null,
+            recogidaDatos: document.getElementById("recogidaDatos").value || null,
+            excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value === "true",
+            borrador: document.getElementById("borrador").value || null,
+            presentada: document.getElementById("presentada").value || null,
+            cobrado: document.getElementById("cobrado").value || "NO",
+            tipoCliente: document.getElementById("tipoCliente").value || null,
+            estadoCliente: document.getElementById("estadoCliente").value || null,
+            casilla505Actual: document.getElementById("casilla505Actual").value || null
+        };
+
+        try {
+            const response = await fetchConToken(`http://localhost:8080/api/clientes/actualizarcliente/${id}`, {
+                method: "PUT",
+                body: JSON.stringify(clienteActualizado)
+            });
+
+            if (!response.ok) throw new Error("Error al actualizar cliente");
+
+            alert("Cliente actualizado correctamente");
+            window.location.href = "../html/campaniaActual.html";
+        } catch (error) {
+            console.error(error);
+            alert("Error al actualizar el cliente");
+        }
+    });
+}
+
+
+
 
     // ===== CONSULTAR TABLAS =====
     initConsultarTablas() {
