@@ -834,67 +834,77 @@ async initEditarCliente() {
         }
     }
 
- handleFile(event) {
-     const file = event.target.files[0];
-     if (!file) return;
+handleFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
 
-     const aviso = `⚠️ AVISO ANTES DE IMPORTAR ⚠️\n\n` +
-         `1. Los clientes sin NIF/CIF en el Excel recibirán un identificador temporal (SIN-NIF-XXXXXX).\n\n` +
-         `2. Si un cliente tiene un NIF/CIF diferente en el Excel al de la aplicación, se creará como cliente nuevo y puede generar duplicados. Revisa el Excel y el CRM antes de continuar.\n\n` +
-         `3. Al importar, solo se actualizarán los datos básicos del cliente (nombre, teléfono, correo, fecha de nacimiento, tipo de cliente y números CC). El resto de estados se conservarán tal como están en la aplicación.\n\n` +
-         `¿Deseas continuar con la importación?`;
+    const aviso = `⚠️ AVISO ANTES DE IMPORTAR ⚠️\n\n` +
+        `1. Los clientes sin NIF/CIF en el Excel recibirán un identificador temporal (SIN-NIF-XXXXXX).\n\n` +
+        `2. Si un cliente tiene un NIF/CIF diferente en el Excel al de la aplicación, se creará como cliente nuevo y puede generar duplicados. Revisa el Excel y el CRM antes de continuar.\n\n` +
+        `3. Al importar, solo se actualizarán los datos básicos del cliente (nombre, teléfono, correo, fecha de nacimiento, tipo de cliente y números CC). El resto de estados se conservarán tal como están en la aplicación.\n\n` +
+        `¿Deseas continuar con la importación?`;
 
-     if (!confirm(aviso)) {
-         event.target.value = '';
-         return;
-     }
+    if (!confirm(aviso)) {
+        event.target.value = '';
+        return;
+    }
 
-     const formData = new FormData();
-     formData.append("file", file);
+    const formData = new FormData();
+    formData.append("file", file);
 
-     const token = localStorage.getItem('token');
-     fetch("http://localhost:8080/api/clientes/excel/importar", {
-         method: "POST",
-         headers: {
-             'Authorization': `Bearer ${token}`
-         },
-         body: formData
-     })
-     .then(response => response.json())
-     .then(data => {
-         console.log("Resultado importación:", data);
+    const token = localStorage.getItem('token');
 
-         let mensaje = `✅ Importación completada:\n\n`;
-         mensaje += `• Clientes importados: ${data.creados}\n`;
-         mensaje += `• Clientes actualizados: ${data.actualizados}\n`;
+    // Mostrar overlay
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) overlay.style.display = 'flex';
 
-         if (data.filasSinNif && data.filasSinNif.length > 0) {
-             mensaje += `\n⚠️ Clientes sin NIF/CIF a los que se les asignó uno temporal:\n`;
-             data.filasSinNif.forEach(fila => {
-                 mensaje += `  - Fila ${fila} del Excel\n`;
-             });
-         }
+    fetch("http://localhost:8080/api/clientes/excel/importar", {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Ocultar overlay
+        if (overlay) overlay.style.display = 'none';
 
-         if (data.yaExistian && data.yaExistian.length > 0) {
-             const errores = data.yaExistian.filter(n => n.startsWith('ERROR-'));
-             if (errores.length > 0) {
-                 mensaje += `\n❌ NIFs con error al procesar:\n${errores.map(e => e.replace('ERROR-', '')).join(', ')}`;
-             }
-         }
+        console.log("Resultado importación:", data);
 
-         if (data.error) {
-             mensaje += `\n\n❌ Error: ${data.error}`;
-         }
+        let mensaje = `✅ Importación completada:\n\n`;
+        mensaje += `• Clientes importados: ${data.creados}\n`;
+        mensaje += `• Clientes actualizados: ${data.actualizados}\n`;
 
-         alert(mensaje);
-         event.target.value = '';
-     })
-     .catch(error => {
-         console.error(error);
-         alert("Error al importar el archivo");
-         event.target.value = '';
-     });
- }
+        if (data.filasSinNif && data.filasSinNif.length > 0) {
+            mensaje += `\n⚠️ Clientes sin NIF/CIF a los que se les asignó uno temporal:\n`;
+            data.filasSinNif.forEach(fila => {
+                mensaje += `  - Fila ${fila} del Excel\n`;
+            });
+        }
+
+        if (data.yaExistian && data.yaExistian.length > 0) {
+            const errores = data.yaExistian.filter(n => n.startsWith('ERROR-'));
+            if (errores.length > 0) {
+                mensaje += `\n❌ NIFs con error al procesar:\n${errores.map(e => e.replace('ERROR-', '')).join(', ')}`;
+            }
+        }
+
+        if (data.error) {
+            mensaje += `\n\n❌ Error: ${data.error}`;
+        }
+
+        alert(mensaje);
+        event.target.value = '';
+    })
+    .catch(error => {
+        // Ocultar overlay en caso de error también
+        if (overlay) overlay.style.display = 'none';
+        console.error(error);
+        alert("Error al importar el archivo");
+        event.target.value = '';
+    });
+}
 }
 
 document.addEventListener("DOMContentLoaded", () => {
