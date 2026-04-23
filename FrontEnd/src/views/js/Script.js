@@ -105,11 +105,6 @@ async function cargarClientes() {
                <td>${cliente.importe ?? ''}</td>
                <td>${cliente.cobrado ?? ''}</td>
                <td>
-               <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
-                       <i class="fa-solid fa-pen"></i> Editar
-                   </a>
-               </td>
-               <td>
                    <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
                        <i class="fa-solid fa-pen"></i> Editar
                    </a>

@@ -1799,3 +1799,7 @@ body.dark-mode .fila-detalle td {
 body.dark-mode .fila-detalle strong {
     color: #7c83fd; /* un pelín más visible en oscuro */
 }
+th:last-child, td:last-child {
+    white-space: nowrap;
+    min-width: 160px;
+}
