@@ -119,6 +119,7 @@ public class ClienteAppService {
                     .casilla505Actual(cliente.getCasilla505Actual())
                     .anioFiscal(String.valueOf(anioActual))
                     .nifAnterior(cliente.getNifAnterior())
+                    .nifHistorico(cliente.getNifHistorico())
                     .build();
 
             batch.set(historicoRef, historico);
