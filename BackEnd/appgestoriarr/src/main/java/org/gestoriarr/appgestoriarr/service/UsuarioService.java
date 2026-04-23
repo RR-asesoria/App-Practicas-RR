@@ -130,6 +130,14 @@ public class UsuarioService {
 		UserRecord.UpdateRequest request = null;
 
 		try {
+
+			if (repository.findByName(dto.getNombre()).isPresent()){
+				throw new ExistingUserException("El nombre de usuario ya existe");
+			}
+			if (repository.findByEmail(dto.getCorreo()).isPresent()){
+				throw new ExistingUserException("El correo ya existe.");
+			}
+
 			original = encontrarPorEmailInterno(correo);
 			update= UsuarioMapper.updateFromDTO(original, dto);
 			request = new UserRecord.UpdateRequest(original.getUid());
@@ -170,7 +178,7 @@ public class UsuarioService {
 			FirebaseAuth.getInstance().updateUser(request);
 		} catch (Exception e) {
 			if (e instanceof UserNotFoundException){
-				throw new UserNotFoundException("User not found");
+				throw new UserNotFoundException(e.getMessage());
 			}
 			throw new RuntimeException(e);
 		}
@@ -183,6 +191,13 @@ public class UsuarioService {
 		UserRecord.UpdateRequest request = null;
 
 		try {
+
+			if (repository.findByName(dto.getNombre()).isPresent()){
+				throw new ExistingUserException("El nombre de usuario ya existe");
+			}
+			if (repository.findByEmail(dto.getCorreo()).isPresent()){
+				throw new ExistingUserException("El correo ya existe.");
+			}
 
 			original = encontrarPorIdInterno(uid);
 			update = UsuarioMapper.updateFromDTO(original, dto);

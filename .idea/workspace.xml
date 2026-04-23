@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="Edito campaniaActual.html y elimino eliminarCliente.html">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/agregarClienteNuevo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/html/editarCliente.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/html/editarCliente.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEnd/src/views/js/Script.js" afterDir="false" />
-    </list>
+    <list default="true" id="a7f9f22b-745e-4c5c-9df0-1d1110db3b3d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,7 +13,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
+        <option value="Exception" />
         <option value="Class" />
       </list>
     </option>
@@ -29,7 +24,7 @@
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;nahuel250&quot;
+    &quot;assignee&quot;: &quot;jenymunoz&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
@@ -38,17 +33,20 @@
     &quot;accountId&quot;: &quot;f59ac6d0-8454-4b48-a90d-a27a3cee0d00&quot;
   }
 }</component>
-  <component name="McpProjectServerCommands">
-    <commands />
-    <urls />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
+  &quot;associatedIndex&quot;: 1
 }</component>
-  <component name="ProjectId" id="3AFXFnjNgmy7htUNz8biFMZDmfb" />
+  <component name="ProjectId" id="3CRnTtCvDvg8TIstRRHhPpyiQ4U" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
@@ -58,26 +56,11 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;Spring Boot.AppgestoriarrApplication.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;GitStage.ChangesTree.GroupingKeys&quot;: [
@@ -88,17 +71,25 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="App-Practicas-RR" />
+    <configuration name="AppgestoriarrApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="appgestoriarr" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.gestoriarr.appgestoriarr.AppgestoriarrApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.gestoriarr.appgestoriarr.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="App-Practicas-RR" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.AppgestoriarrApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -109,472 +100,205 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e352e020-6f8e-424d-98d2-3663494cff59" name="Changes" comment="" />
-      <created>1772189193474</created>
+      <changelist id="a7f9f22b-745e-4c5c-9df0-1d1110db3b3d" name="Changes" comment="" />
+      <created>1776357261130</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1772189193474</updated>
-      <workItem from="1772189200141" duration="1914000" />
-      <workItem from="1772191558615" duration="75000" />
-      <workItem from="1772191654795" duration="16000" />
-      <workItem from="1772191682852" duration="14000" />
-      <workItem from="1772191732553" duration="632000" />
-      <workItem from="1772460589833" duration="5709000" />
-      <workItem from="1772701848979" duration="1311000" />
-      <workItem from="1772703351932" duration="3592000" />
-      <workItem from="1772790778342" duration="5544000" />
-      <workItem from="1773047293259" duration="8822000" />
-      <workItem from="1773135221952" duration="7605000" />
-      <workItem from="1773220197223" duration="5889000" />
-      <workItem from="1773307896128" duration="1415000" />
-      <workItem from="1773652217897" duration="6507000" />
-      <workItem from="1773738589533" duration="3439000" />
-      <workItem from="1773766272475" duration="1461000" />
-      <workItem from="1774258678766" duration="7520000" />
-      <workItem from="1774434310328" duration="5398000" />
-      <workItem from="1774515775738" duration="747000" />
-      <workItem from="1775549708513" duration="125000" />
-      <workItem from="1774609522725" duration="692000" />
+      <updated>1776357261130</updated>
     </task>
-    <task id="LOCAL-00019" summary="modifico css">
+    <task id="LOCAL-00001" summary="Agregando anotaciones de lombok">
       <option name="closed" value="true" />
-      <created>1773051617552</created>
+      <created>1776382034119</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776382034119</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Modificando la forma en que se envian los mensajes de error">
+      <option name="closed" value="true" />
+      <created>1776423605140</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776423605140</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Quitando imports innecesarios">
+      <option name="closed" value="true" />
+      <created>1776423802710</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776423802710</updated>
+    </task>
+    <task id="LOCAL-00004" summary="agregando catch al endPoint de crearUsuario para evitar que las excepciones se detengan la ejecución">
+      <option name="closed" value="true" />
+      <created>1776426885441</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776426885441</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Agregando métodos de busqueda internos en el service">
+      <option name="closed" value="true" />
+      <created>1776764023116</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776764023116</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Personalizando excepciones">
+      <option name="closed" value="true" />
+      <created>1776764773261</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776764773261</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Personalizando excepciones en el filtro">
+      <option name="closed" value="true" />
+      <created>1776766079447</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1776766079447</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Personalizando excepciones en el controller">
+      <option name="closed" value="true" />
+      <created>1776766731167</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1776766731167</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Creando el manejador de excepciones y una excepción personalizada para evitar el exception generico">
+      <option name="closed" value="true" />
+      <created>1776785395075</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1776785395075</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Reorganizando la excepciones para enviar mensajes más claros">
+      <option name="closed" value="true" />
+      <created>1776785432888</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1776785432888</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Quitando imports sin usar">
+      <option name="closed" value="true" />
+      <created>1776785530051</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1776785530051</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Agregando excepciones específicas para no interrumpir las del sistema">
+      <option name="closed" value="true" />
+      <created>1776850184993</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1776850184993</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Arreglando los mensajes de las excepciones">
+      <option name="closed" value="true" />
+      <created>1776850229169</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1776850229169</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Arreglando los mensajes de las excepciones en el service">
+      <option name="closed" value="true" />
+      <created>1776851412155</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1776851412155</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Normalizando los mensajes de error del service">
+      <option name="closed" value="true" />
+      <created>1776851623641</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1776851623641</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Quitando try-catch innecesarios">
+      <option name="closed" value="true" />
+      <created>1776853177649</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1776853177649</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Añadiendo la confirmación del uid para evitar borrar el admin">
+      <option name="closed" value="true" />
+      <created>1776857350418</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1776857350418</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Volviendo finales la recuperación del uid del usuario autenticado">
+      <option name="closed" value="true" />
+      <created>1776859183924</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1776859183924</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Agregando validación en el service">
+      <option name="closed" value="true" />
+      <created>1776940972408</created>
       <option name="number" value="00019" />
       <option name="presentableId" value="LOCAL-00019" />
       <option name="project" value="LOCAL" />
-      <updated>1773051617552</updated>
+      <updated>1776940972409</updated>
     </task>
-    <task id="LOCAL-00020" summary="modifico css de usuarios">
+    <task id="LOCAL-00020" summary="Agregando validación en el método de actualización">
       <option name="closed" value="true" />
-      <created>1773052411994</created>
+      <created>1776941505254</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1773052411994</updated>
+      <updated>1776941505254</updated>
     </task>
-    <task id="LOCAL-00021" summary="modifico css Login">
+    <task id="LOCAL-00021" summary="Capturando excepciones en el método de actualización">
       <option name="closed" value="true" />
-      <created>1773054258684</created>
+      <created>1776941632299</created>
       <option name="number" value="00021" />
       <option name="presentableId" value="LOCAL-00021" />
       <option name="project" value="LOCAL" />
-      <updated>1773054258684</updated>
+      <updated>1776941632299</updated>
     </task>
-    <task id="LOCAL-00022" summary="quito boton de usuarios de aceptar de usuarios.html">
-      <option name="closed" value="true" />
-      <created>1773135670723</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1773135670723</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Agregamos el html agregar.html">
-      <option name="closed" value="true" />
-      <created>1773138291955</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1773138291955</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Agregamos el html password.html">
-      <option name="closed" value="true" />
-      <created>1773140178785</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1773140178785</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Modifico usuarios.html">
-      <option name="closed" value="true" />
-      <created>1773140455568</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1773140455568</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Agregue eliminarUsuario.html">
-      <option name="closed" value="true" />
-      <created>1773141624452</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1773141624452</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Modifico eliminarUsuario.html">
-      <option name="closed" value="true" />
-      <created>1773141826582</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1773141826582</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Modifico agregarClienteNuevo.html y menu.html">
-      <option name="closed" value="true" />
-      <created>1773223076198</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1773223076198</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Modifico menu.html">
-      <option name="closed" value="true" />
-      <created>1773224113183</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1773224113183</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Modifico Style.css">
-      <option name="closed" value="true" />
-      <created>1773309909259</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1773309909259</updated>
-    </task>
-    <task id="LOCAL-00031" summary="edito funcion para que se puedan subir Excels">
-      <option name="closed" value="true" />
-      <created>1773656137548</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1773656137548</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Les agrego funciones a agregarUsuario.html, eliminarUsuario.html y password.html en JS">
-      <option name="closed" value="true" />
-      <created>1773658267788</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1773658267788</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Edito botones de guardado en varias pestañas">
-      <option name="closed" value="true" />
-      <created>1773741450232</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1773741450232</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Edito campaniaActual.html y elimino eliminarCliente.html">
-      <option name="closed" value="true" />
-      <created>1774265155827</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1774265155827</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Agregando creando interfaz de validación">
-      <option name="closed" value="true" />
-      <created>1775556968729</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1775556968729</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Eliminando clases mal creadas">
-      <option name="closed" value="true" />
-      <created>1775557140547</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1775557140547</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Agregando validación para la contraseña">
-      <option name="closed" value="true" />
-      <created>1775559079273</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1775559079273</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Agregando validación para la contraseña">
-      <option name="closed" value="true" />
-      <created>1775559747663</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1775559747663</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Agregando validación para la contraseña en DTO de creación">
-      <option name="closed" value="true" />
-      <created>1775560090828</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1775560090828</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Quitando imports no usados">
-      <option name="closed" value="true" />
-      <created>1775560162408</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1775560162408</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Arreglando service">
-      <option name="closed" value="true" />
-      <created>1775560515460</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1775560515460</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Arreglando LogService">
-      <option name="closed" value="true" />
-      <created>1775562689154</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1775562689154</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Arreglando DTO de cambio de contraseña">
-      <option name="closed" value="true" />
-      <created>1775572082055</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1775572082055</updated>
-    </task>
-    <task id="LOCAL-00044" summary="Corriguiendo errores del repositorio de Usuario y el servicio de usuario">
-      <option name="closed" value="true" />
-      <created>1775572882029</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1775572882029</updated>
-    </task>
-    <task id="LOCAL-00045" summary="Corriguiendo errores en servicio">
-      <option name="closed" value="true" />
-      <created>1775574388440</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1775574388440</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Corriguiendo &quot;crearUsuario&quot; en service">
-      <option name="closed" value="true" />
-      <created>1775629347128</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1775629347128</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Cambiando el nombre del service de &quot;AdminService&quot; a &quot;UserService&quot;">
-      <option name="closed" value="true" />
-      <created>1775629784445</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1775629784445</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Cambiando el nombre del service de &quot;AdminService&quot; a &quot;UserService&quot;">
-      <option name="closed" value="true" />
-      <created>1775629851592</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1775629851592</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Corrigiendo el método actualizar del service">
-      <option name="closed" value="true" />
-      <created>1775634875668</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1775634875668</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Corrigiendo métodos de UsuarioService">
-      <option name="closed" value="true" />
-      <created>1775635359819</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1775635359820</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Creando el controlador de usuario">
-      <option name="closed" value="true" />
-      <created>1775639589735</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1775639589735</updated>
-    </task>
-    <task id="LOCAL-00052" summary="Agregando endpoints">
-      <option name="closed" value="true" />
-      <created>1775639620702</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1775639620702</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Arreglando el controller">
-      <option name="closed" value="true" />
-      <created>1775641851524</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1775641851524</updated>
-    </task>
-    <task id="LOCAL-00054" summary="Agregando el filtro">
-      <option name="closed" value="true" />
-      <created>1775642429807</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1775642429807</updated>
-    </task>
-    <task id="LOCAL-00055" summary="Agregando el filtro">
-      <option name="closed" value="true" />
-      <created>1775643808246</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1775643808246</updated>
-    </task>
-    <task id="LOCAL-00056" summary="Limpiando el filtro">
-      <option name="closed" value="true" />
-      <created>1775643873633</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1775643873633</updated>
-    </task>
-    <task id="LOCAL-00057" summary="Protegiendo endPoints">
-      <option name="closed" value="true" />
-      <created>1775646946315</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1775646946315</updated>
-    </task>
-    <task id="LOCAL-00058" summary="Protegiendo endPoints">
-      <option name="closed" value="true" />
-      <created>1775646967855</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1775646967855</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Arreglando el filtro">
-      <option name="closed" value="true" />
-      <created>1775647720376</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1775647720376</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Arreglando las rutas del filtro">
-      <option name="closed" value="true" />
-      <created>1775647914979</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1775647914979</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Arreglando las rutas del filtro">
-      <option name="closed" value="true" />
-      <created>1775648949208</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1775648949209</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Quitando espacios en blanco">
-      <option name="closed" value="true" />
-      <created>1775651502740</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1775651502740</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Quitando el uid que recibe el endpoint de actualización para que un usuario no pueda actualizar otro">
-      <option name="closed" value="true" />
-      <created>1776075154630</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1776075154630</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Modificando endPoints para el cambio de contraseñas">
-      <option name="closed" value="true" />
-      <created>1776081046878</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1776081046878</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Modificando endPoints">
-      <option name="closed" value="true" />
-      <created>1776332732697</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1776332732697</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Arreglando el error de buscar por correo">
-      <option name="closed" value="true" />
-      <created>1776334199125</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1776334199125</updated>
-    </task>
-    <task id="LOCAL-00067" summary="Agregando endpoints de actualización solo para el admin">
-      <option name="closed" value="true" />
-      <created>1776356396865</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1776356396866</updated>
-    </task>
-    <option name="localTasksCounter" value="68" />
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Agregando validación para la contraseña en DTO de creación" />
-    <MESSAGE value="Quitando imports no usados" />
-    <MESSAGE value="Arreglando service" />
-    <MESSAGE value="Arreglando LogService" />
-    <MESSAGE value="Arreglando DTO de cambio de contraseña" />
-    <MESSAGE value="Corriguiendo errores del repositorio de Usuario y el servicio de usuario" />
-    <MESSAGE value="Corriguiendo errores en servicio" />
-    <MESSAGE value="Corriguiendo &quot;crearUsuario&quot; en service" />
-    <MESSAGE value="Cambiando el nombre del service de &quot;AdminService&quot; a &quot;UserService&quot;" />
-    <MESSAGE value="Corrigiendo el método actualizar del service" />
-    <MESSAGE value="Corrigiendo métodos de UsuarioService" />
-    <MESSAGE value="Creando el controlador de usuario" />
-    <MESSAGE value="Agregando endpoints" />
-    <MESSAGE value="Arreglando el controller" />
-    <MESSAGE value="Agregando el filtro" />
-    <MESSAGE value="Limpiando el filtro" />
-    <MESSAGE value="Protegiendo endPoints" />
-    <MESSAGE value="Arreglando el filtro" />
-    <MESSAGE value="Arreglando las rutas del filtro" />
-    <MESSAGE value="Quitando espacios en blanco" />
-    <MESSAGE value="Quitando el uid que recibe el endpoint de actualización para que un usuario no pueda actualizar otro" />
-    <MESSAGE value="Modificando endPoints para el cambio de contraseñas" />
-    <MESSAGE value="Modificando endPoints" />
-    <MESSAGE value="Arreglando el error de buscar por correo" />
-    <MESSAGE value="Agregando endpoints de actualización solo para el admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregando endpoints de actualización solo para el admin" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+    <MESSAGE value="Agregando anotaciones de lombok" />
+    <MESSAGE value="Modificando la forma en que se envian los mensajes de error" />
+    <MESSAGE value="Quitando imports innecesarios" />
+    <MESSAGE value="agregando catch al endPoint de crearUsuario para evitar que las excepciones se detengan la ejecución" />
+    <MESSAGE value="Agregando métodos de busqueda internos en el service" />
+    <MESSAGE value="Personalizando excepciones" />
+    <MESSAGE value="Personalizando excepciones en el filtro" />
+    <MESSAGE value="Personalizando excepciones en el controller" />
+    <MESSAGE value="Creando el manejador de excepciones y una excepción personalizada para evitar el exception generico" />
+    <MESSAGE value="Reorganizando la excepciones para enviar mensajes más claros" />
+    <MESSAGE value="Quitando imports sin usar" />
+    <MESSAGE value="Agregando excepciones específicas para no interrumpir las del sistema" />
+    <MESSAGE value="Arreglando los mensajes de las excepciones" />
+    <MESSAGE value="Arreglando los mensajes de las excepciones en el service" />
+    <MESSAGE value="Normalizando los mensajes de error del service" />
+    <MESSAGE value="Quitando try-catch innecesarios" />
+    <MESSAGE value="Añadiendo la confirmación del uid para evitar borrar el admin" />
+    <MESSAGE value="Volviendo finales la recuperación del uid del usuario autenticado" />
+    <MESSAGE value="Agregando validación en el service" />
+    <MESSAGE value="Agregando validación en el método de actualización" />
+    <MESSAGE value="Capturando excepciones en el método de actualización" />
+    <option name="LAST_COMMIT_MESSAGE" value="Capturando excepciones en el método de actualización" />
   </component>
 </project>
