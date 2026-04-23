@@ -67,6 +67,31 @@
       <label>Importe</label>
       <input id="importe" type="text">
 
+      <label>Tipo Cliente</label>
+      <select id="tipoCliente">
+        <option value="">Selecciona una opción</option>
+        <option value="AUTONOMO">Autónomo</option>
+        <option value="PARTICULARES">Particulares</option>
+        <option value="NORESIDENTE">No Residente</option>
+      </select>
+
+      <label>Casilla 505 Actual</label>
+      <input id="casilla505Actual" type="text" maxlength="5">
+
+      <label>Excel Datos Elaboración</label>
+      <select id="excelDatosElaboracion">
+        <option value="false">No</option>
+        <option value="true">Sí</option>
+      </select>
+
+      <label>Estado Cliente</label>
+      <select id="estadoCliente">
+        <option value="CONTACTADONO">No Contactado</option>
+        <option value="CONTACTADOSISEHACENO">Contactado - No se Hace</option>
+        <option value="CONTACTADOSISEHACESI">Contactado - Sí se Hace</option>
+        <option value="CONTACTADOSISEHACEPENDIENTE">Contactado - Pendiente</option>
+      </select>
+
       <label>Tipo Facturado</label>
       <select id="tipoFacturado">
         <option value="FACTURADONO">No Facturado</option>
@@ -82,10 +107,10 @@
         <option value="FACTURARELLENASIENVIADASIFIRMADASI">Rellenada - Enviada Sí - Firmada Sí</option>
       </select>
 
-      <label>Excel Datos Elaboración</label>
-      <select id="excelDatosElaboracion">
-        <option value="false">No</option>
-        <option value="true">Sí</option>
+      <label>Cobrado</label>
+      <select id="cobrado">
+        <option value="NO">No</option>
+        <option value="SI">Sí</option>
       </select>
 
       <label>Borrador</label>
@@ -102,31 +127,6 @@
         <option value="CONFIRMADOPRESENTARSIPRESENTADASIENVIADANO">Confirmada - Sí Presentada - No Enviada</option>
         <option value="CONFIRMADOPRESENTARSIPRESENTADASIENVIADASI">Confirmada - Sí Presentada - Sí Enviada</option>
       </select>
-
-      <label>Cobrado</label>
-      <select id="cobrado">
-        <option value="NO">No</option>
-        <option value="SI">Sí</option>
-      </select>
-
-      <label>Tipo Cliente</label>
-      <select id="tipoCliente">
-        <option value="">Selecciona una opción</option>
-        <option value="AUTONOMO">Autónomo</option>
-        <option value="PARTICULARES">Particulares</option>
-        <option value="NORESIDENTE">No Residente</option>
-      </select>
-
-      <label>Estado Cliente</label>
-      <select id="estadoCliente">
-        <option value="CONTACTADONO">No Contactado</option>
-        <option value="CONTACTADOSISEHACENO">Contactado - No se Hace</option>
-        <option value="CONTACTADOSISEHACESI">Contactado - Sí se Hace</option>
-        <option value="CONTACTADOSISEHACEPENDIENTE">Contactado - Pendiente</option>
-      </select>
-
-      <label>Casilla 505 Actual</label>
-      <input id="casilla505Actual" type="text" maxlength="5">
 
       <button type="submit" class="cliente-guardar">
         <i class="fa-solid fa-floppy-disk"></i>
