@@ -2,6 +2,7 @@ package org.gestoriarr.appgestoriarr.config;
 
 import org.gestoriarr.appgestoriarr.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,13 +18,15 @@ public class AuditoriaInterceptor implements HandlerInterceptor{
 	
 	@Autowired
 	private LogService logService;
-	
+
+	@Value("${app.logging.enabled}")
+	private boolean loggingEnabled;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 							HttpServletResponse response, 
 							Object handler) {
-		
+		if (!loggingEnabled) return true;
 		Authentication auth = SecurityContextHolder
 				.getContext().getAuthentication();
 		
