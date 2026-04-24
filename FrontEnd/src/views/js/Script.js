@@ -91,8 +91,13 @@ function traducirEnum(valor) {
 
 
 // ===== CARGAR CLIENTES =====
-async function cargarClientes() {
+let ultimoNifPagina = null;
+let hayMasPaginas = false;
+
+async function cargarClientes(resetear = true) {
     try {
+        if (resetear) ultimoNifPagina = null;
+
         const nombre = document.getElementById('filtroNombre')?.value;
         const dni = document.getElementById('filtroDni')?.value;
         const tipoCliente = document.getElementById('filtroTipoCliente')?.value;
@@ -120,6 +125,7 @@ async function cargarClientes() {
 
         let clientes;
 
+        // Si hay filtros activos, usa el endpoint de filtros (trae todos)
         if (Object.keys(filtros).length > 0) {
             const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
                 method: 'POST',
@@ -127,105 +133,123 @@ async function cargarClientes() {
             });
             if (!response.ok) throw new Error("Error al obtener clientes");
             clientes = await response.json();
+            hayMasPaginas = false;
+            renderClientes(clientes, resetear);
         } else {
-            const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+            // Sin filtros, usa paginación real
+            let url = `http://localhost:8080/api/clientes/paginado?limite=10`;
+            if (ultimoNifPagina) url += `&ultimoNif=${encodeURIComponent(ultimoNifPagina)}`;
+
+            const response = await fetchConToken(url);
             if (!response.ok) throw new Error("Error al obtener clientes");
-            clientes = await response.json();
+            const data = await response.json();
+
+            clientes = data.clientes;
+            ultimoNifPagina = data.ultimoNif;
+            hayMasPaginas = data.hayMas;
+            renderClientes(clientes, resetear);
         }
 
-        const tabla = document.getElementById('tablaClientes');
-        if (!tabla) return;
-        tabla.innerHTML = '';
+        actualizarBotonesPaginacion();
 
-       clientes.forEach(cliente => {
-           const fila = document.createElement('tr');
-           fila.innerHTML = `
-               <td>${cliente.nombre ?? ''}</td>
-               <td>${cliente.nifCif ?? ''}</td>
-               <td>${cliente.telefono ?? ''}</td>
-               <td>${cliente.correoElectronico ?? ''}</td>
-               <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
-               <td>${traducirEnum(cliente.tipoCliente)}</td>
-              <td>${traducirEnum(cliente.estadoCliente)}</td>
-               <td>${cliente.importe ?? ''}</td>
-               <td>${traducirEnum(cliente.cobrado)}</td>
-               <td>
-                   <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
-                       <i class="fa-solid fa-pen"></i> Editar
-                   </a>
-                   <button class="btn-eliminar" title="Eliminar cliente">
-                       <i class="fa-solid fa-trash"></i>
-                   </button>
-               </td>
-           `;
-
-           // Fila de detalle (oculta por defecto)
-           const filaDetalle = document.createElement('tr');
-           filaDetalle.classList.add('fila-detalle');
-           filaDetalle.style.display = 'none';
-filaDetalle.innerHTML = `
-    <td colspan="10" style="padding:0; border-bottom: 2px solid var(--color-primary);">
-        <div style="
-            display:grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap:0;
-            background: var(--color-card);
-            border-top: 1px solid var(--color-border);
-        ">
-            ${[
-                ['Referencia', cliente.referencia],
-                ['Casilla 505 Anterior', cliente.casilla505anterior],
-                ['Casilla 505 Actual', cliente.casilla505Actual],
-                ['Números CC', cliente.numerosCC],
-                ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
-                ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
-                ['Tipo Facturado', traducirEnum(cliente.tipoFacturado)],
-                ['Recogida Datos', traducirEnum(cliente.recogidaDatos)],
-                ['Borrador', traducirEnum(cliente.borrador)],
-                ['Presentada', traducirEnum(cliente.presentada)],
-                ['NIF Anterior', cliente.nifAnterior],
-                ['NIF Histórico', cliente.nifHistorico?.join(', ')]
-            ].map(([label, valor]) => `
-                <div style="
-                    padding: 10px 16px;
-                    border-right: 1px solid var(--color-border);
-                    border-bottom: 1px solid var(--color-border);
-                ">
-                    <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px;">${label}</div>
-                    <div style="font-size:13px; font-weight:500; color:var(--color-text);">${valor ?? '-'}</div>
-                </div>
-            `).join('')}
-        </div>
-    </td>
-`;
-           // Clic en la fila para expandir/colapsar
-           fila.style.cursor = 'pointer';
-           fila.addEventListener('click', (e) => {
-               // Que el clic en Editar no expanda la fila
-               if (e.target.closest('.btn-editar')) return;
-
-               const visible = filaDetalle.style.display !== 'none';
-               filaDetalle.style.display = visible ? 'none' : 'table-row';
-               fila.style.background = visible ? '' : 'var(--button-hover-bg)';
-           });
-
-fila.querySelector('.btn-eliminar').addEventListener('click', (e) => {
-    e.stopPropagation(); // evita que expanda la fila detalle
-    const aviso = `⚠️ ATENCIÓN\n\n` +
-        `Vas a eliminar a "${cliente.nombre}" (${cliente.nifCif}).\n\n` +
-        `Este cliente será eliminado permanentemente de la campaña actual. ` +
-        `No podrás recuperar su estado actual una vez eliminado.\n\n` +
-        `¿Confirmas la eliminación?`;
-    if (confirm(aviso)) {
-        eliminarCliente(cliente.nifCif, cliente.nombre);
-    }
-});
-           tabla.appendChild(fila);
-           tabla.appendChild(filaDetalle);
-       });
     } catch (error) {
         console.error("Error al cargar clientes:", error);
         alert("Error al cargar los clientes");
+    }
+}
+
+function renderClientes(clientes, resetear) {
+    const tabla = document.getElementById('tablaClientes');
+    if (!tabla) return;
+    if (resetear) tabla.innerHTML = '';
+
+    clientes.forEach(cliente => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+            <td>${cliente.nombre ?? ''}</td>
+            <td>${cliente.nifCif ?? ''}</td>
+            <td>${cliente.telefono ?? ''}</td>
+            <td>${cliente.correoElectronico ?? ''}</td>
+            <td>${cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : ''}</td>
+            <td>${traducirEnum(cliente.tipoCliente)}</td>
+            <td>${traducirEnum(cliente.estadoCliente)}</td>
+            <td>${cliente.importe ?? ''}</td>
+            <td>${traducirEnum(cliente.cobrado)}</td>
+            <td>
+                <a href="editarCliente.html?id=${cliente.nifCif}&modo=editar" class="btn-editar">
+                    <i class="fa-solid fa-pen"></i> Editar
+                </a>
+                <button class="btn-eliminar" title="Eliminar cliente">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        `;
+
+        const filaDetalle = document.createElement('tr');
+        filaDetalle.classList.add('fila-detalle');
+        filaDetalle.style.display = 'none';
+        filaDetalle.innerHTML = `
+            <td colspan="10" style="padding:0; border-bottom: 2px solid var(--color-primary);">
+                <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:0; background: var(--color-card); border-top: 1px solid var(--color-border);">
+                    ${[
+                        ['Referencia', cliente.referencia],
+                        ['Casilla 505 Anterior', cliente.casilla505anterior],
+                        ['Casilla 505 Actual', cliente.casilla505Actual],
+                        ['Números CC', cliente.numerosCC],
+                        ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
+                        ['Excel Elaboración', cliente.excelDatosElaboracion ? 'Sí' : 'No'],
+                        ['Tipo Facturado', traducirEnum(cliente.tipoFacturado)],
+                        ['Recogida Datos', traducirEnum(cliente.recogidaDatos)],
+                        ['Borrador', traducirEnum(cliente.borrador)],
+                        ['Presentada', traducirEnum(cliente.presentada)],
+                        ['NIF Anterior', cliente.nifAnterior],
+                        ['NIF Histórico', cliente.nifHistorico?.join(', ')]
+                    ].map(([label, valor]) => `
+                        <div style="padding: 10px 16px; border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+                            <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#888; margin-bottom:3px;">${label}</div>
+                            <div style="font-size:13px; font-weight:500; color:var(--color-text);">${valor ?? '-'}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            </td>
+        `;
+
+        fila.style.cursor = 'pointer';
+        fila.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-editar') || e.target.closest('.btn-eliminar')) return;
+            const visible = filaDetalle.style.display !== 'none';
+            filaDetalle.style.display = visible ? 'none' : 'table-row';
+            fila.style.background = visible ? '' : 'var(--button-hover-bg)';
+        });
+
+        fila.querySelector('.btn-eliminar').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const aviso = `⚠️ ATENCIÓN\n\nVas a eliminar a "${cliente.nombre}" (${cliente.nifCif}).\n\n¿Confirmas la eliminación?`;
+            if (confirm(aviso)) eliminarCliente(cliente.nifCif, cliente.nombre);
+        });
+
+        tabla.appendChild(fila);
+        tabla.appendChild(filaDetalle);
+    });
+}
+
+function actualizarBotonesPaginacion() {
+    let contenedor = document.getElementById('paginacion-clientes');
+    if (!contenedor) {
+        contenedor = document.createElement('div');
+        contenedor.id = 'paginacion-clientes';
+        contenedor.style.cssText = 'display:flex; justify-content:center; gap:8px; padding:12px;';
+        document.querySelector('.consultasActuales-tabla-container')?.after(contenedor);
+    }
+
+    contenedor.innerHTML = '';
+
+    if (hayMasPaginas) {
+        const btnSiguiente = document.createElement('button');
+        btnSiguiente.textContent = 'Siguiente →';
+        btnSiguiente.style.cssText = 'padding:8px 16px; border-radius:6px; border:1px solid var(--color-border); background:var(--color-primary); color:white; cursor:pointer; font-size:13px;';
+        btnSiguiente.addEventListener('click', () => cargarClientes(false));
+        contenedor.appendChild(btnSiguiente);
     }
 }
 
