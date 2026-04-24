@@ -130,4 +130,11 @@ public class ClienteAppHistoricoController {
         }
     }
 
+    @GetMapping("/anios")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    public ResponseEntity<List<String>> obtenerAniosDisponibles() {
+        return ResponseEntity.ok(clienteHistoricoService.obtenerAniosDisponibles());
+    }
+
+
 }

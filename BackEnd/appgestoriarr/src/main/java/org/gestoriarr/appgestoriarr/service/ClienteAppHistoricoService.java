@@ -3,10 +3,13 @@ package org.gestoriarr.appgestoriarr.service;
 
 import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.gestoriarr.appgestoriarr.repository.ClienteAppHistoricoRepo;
+import org.gestoriarr.appgestoriarr.repository.ClienteAppRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,5 +57,14 @@ public class ClienteAppHistoricoService {
 
     public void actualizarCliente(ClienteAppHistorico clienteAppHistorico) { repo.update(clienteAppHistorico);
 
+    }
+    public List<String> obtenerAniosDisponibles() {
+        return repo.findAll()
+                .stream()
+                .map(ClienteAppHistorico::getAnioFiscal)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
     }
 }
