@@ -598,7 +598,7 @@ async ejecutarCambioNif(nifViejo, nombre) {
         const mensaje = await response.text();
 
         if (!response.ok) {
-            alert("Error: " + mensaje);
+            alert("Error: " + "Los usuarios sin permisos de administrador no pueden realizar esta acción, consulta con tu administrador");
             return;
         }
 
