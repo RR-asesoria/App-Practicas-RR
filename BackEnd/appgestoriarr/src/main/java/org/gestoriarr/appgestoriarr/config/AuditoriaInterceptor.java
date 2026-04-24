@@ -53,12 +53,6 @@ public class AuditoriaInterceptor implements HandlerInterceptor{
 
 }
 
-
-
-
-
-
-
 /*
  * 
  * System.out.println("El usuario está autenticado?" + auth.isAuthenticated());
