@@ -395,6 +395,7 @@ filaDetalle.innerHTML = `
             ${[
                 ['Referencia', cliente.referencia],
                 ['NIF Anterior', cliente.nifAnterior],
+                ['NIF Histórico', cliente.nifHistorico?.join(', ')],
                 ['Fecha Nacimiento', cliente.fechaNacimiento ? new Date(cliente.fechaNacimiento).toLocaleDateString('es-ES') : null],
                 ['Números CC', cliente.numerosCC],
                 ['Datos Fiscales', cliente.datosFiscalesDescargados ? 'Sí' : 'No'],
