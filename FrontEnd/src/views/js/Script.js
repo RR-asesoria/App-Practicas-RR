@@ -27,6 +27,7 @@ function logout() {
     window.location.href = "../html/index.html";
 }
 
+
 // ===== ELIMINAR CLIENTE =====
 async function eliminarCliente(nifCif, nombre) {
     if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
@@ -598,7 +599,7 @@ async ejecutarCambioNif(nifViejo, nombre) {
         const mensaje = await response.text();
 
         if (!response.ok) {
-            alert("Error: " + mensaje);
+            alert("Error: " + "Los usuarios sin permisos de administrador no pueden realizar esta acción, consulta con tu administrador");
             return;
         }
 
