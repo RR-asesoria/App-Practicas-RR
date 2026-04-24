@@ -23,28 +23,29 @@ public class AuditoriaInterceptor implements HandlerInterceptor{
 	private boolean loggingEnabled;
 	
 	@Override
-	public boolean preHandle(HttpServletRequest request,
+	public void afterCompletion(HttpServletRequest request,
 							HttpServletResponse response, 
-							Object handler) {
-		if (!loggingEnabled) return true;
+							Object handler, Exception ex) {
+
+		if (!loggingEnabled) return;
+
+		if (ex == null)return;
+
 		Authentication auth = SecurityContextHolder
 				.getContext().getAuthentication();
-		
+
+		String uid = "anonymous";
 		
 		if(auth!=null&&auth.isAuthenticated() && !"anonymousUser".equals(auth.getName())) {
-			
-			String uid = auth.getName();
-			
-			logService.registrarAccion(
-					uid,
-					request.getMethod(), 
-					request.getRequestURI()
-			);
-			
+			uid = auth.getName();
 		}
-		
-		
-		return true;
+
+		logService.registrarError(
+				uid,
+				request.getMethod(),
+				request.getRequestURI(),
+				ex.getMessage()
+		);
 		
 	}
 	
