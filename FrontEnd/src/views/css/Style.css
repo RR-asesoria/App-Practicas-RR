@@ -1139,6 +1139,19 @@ body.eliminarBody {
 
 /* ===== HEADER ===== */
 
+.app__logo {
+    display: block;
+    margin: 0 auto 10px auto;
+    width: 120px;        /* ajusta el tamaño que quieras */
+    height: auto;
+    object-fit: contain;
+}
+
+body.dark-mode .app__logo {
+    filter: brightness(0.9);  /* o filter: invert(1) si es logo negro */
+}
+
+
 .app__title{
 
     text-align:center;
