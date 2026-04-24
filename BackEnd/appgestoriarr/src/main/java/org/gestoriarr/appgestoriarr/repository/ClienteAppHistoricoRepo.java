@@ -1,15 +1,13 @@
 package org.gestoriarr.appgestoriarr.repository;
 
 import com.google.cloud.firestore.*;
+import org.gestoriarr.appgestoriarr.model.ClienteApp;
 import org.gestoriarr.appgestoriarr.model.ClienteAppHistorico;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Repository
@@ -112,14 +110,10 @@ public class ClienteAppHistoricoRepo {
     }
     public List<ClienteAppHistorico> findByNombreContaining(String nombre) {
         try {
-            Query query = historicos().orderBy("nombre").startAt(nombre).endAt(nombre + "\uf8ff");
 
-            QuerySnapshot resultado = query.get().get();
-            List<ClienteAppHistorico> lista = new ArrayList<>();
-            for (DocumentSnapshot doc : resultado.getDocuments()) {
-                lista.add(doc.toObject(ClienteAppHistorico.class));
-            }
-            return lista;
+            List<ClienteAppHistorico> todos = findAll();
+            String nombreLower = nombre.toLowerCase();
+            return todos.stream().filter(c -> c.getNombre() != null && c.getNombre().toLowerCase().contains(nombreLower)).toList();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -127,20 +121,26 @@ public class ClienteAppHistoricoRepo {
 
     public List<ClienteAppHistorico> findByFilters(Map<String, Object> filtros) {
         try {
-            Query query = historicos(); // referencia a la colección Firestore
+            String nombreFiltro = null;
+            Map<String, Object> filtrosSinNombre = new HashMap<>(filtros);
 
-            // Aplicar solo filtros no nulos
-            for (Map.Entry<String, Object> entry : filtros.entrySet()) {
+            if (filtros.containsKey("nombre")) {
+                nombreFiltro = filtros.get("nombre").toString().toLowerCase();
+                filtrosSinNombre.remove("nombre");
+            }
+
+            Query query = historicos();
+
+            for (Map.Entry<String, Object> entry : filtrosSinNombre.entrySet()) {
                 String campo = entry.getKey();
                 Object valor = entry.getValue();
 
                 if (valor != null) {
-                    // Convertimos string ISO a Date si el campo es fecha
                     if ("fechaNacimiento".equals(campo) && valor instanceof String) {
                         String fechaStr = ((String) valor).trim();
                         try {
-                            Instant instant = Instant.parse(fechaStr); // parse ISO 8601
-                            Date fecha = Date.from(instant);           // convertimos a java.util.Date
+                            Instant instant = Instant.parse(fechaStr);
+                            Date fecha = Date.from(instant);
                             query = query.whereEqualTo(campo, fecha);
                         } catch (DateTimeParseException e) {
                             throw new RuntimeException("Formato de fecha inválido: " + fechaStr, e);
@@ -151,16 +151,23 @@ public class ClienteAppHistoricoRepo {
                 }
             }
 
-            // Ejecutar query
             QuerySnapshot resultado = query.get().get();
             List<ClienteAppHistorico> lista = new ArrayList<>();
             for (DocumentSnapshot doc : resultado.getDocuments()) {
                 lista.add(doc.toObject(ClienteAppHistorico.class));
             }
+
+            if (nombreFiltro != null) {
+                final String nombreFinal = nombreFiltro;
+                lista = lista.stream().filter(c -> c.getNombre() != null &&
+                                c.getNombre().toLowerCase().contains(nombreFinal))
+                        .toList();
+            }
+
             return lista;
 
         } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Error buscando clientes", e);
+            throw new RuntimeException("Error buscando clientes en el historico", e);
         }
     }
 }
