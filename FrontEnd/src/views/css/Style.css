@@ -895,8 +895,9 @@ body.passwordBody {
 .password {
     background-color: #ffffff;
     width: 400px;
-    height: 390px;
+    height: auto;
     padding: 18px;
+    padding-bottom: 24px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     border: 1px solid #e1e4e8;
