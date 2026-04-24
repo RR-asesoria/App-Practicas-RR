@@ -352,16 +352,15 @@ filaDetalle.innerHTML = `
 
 async function inicializarSelectAnios() {
     try {
-        const response = await fetchConToken('http://localhost:8080/api/clientesHistorico');
+        const response = await fetchConToken('http://localhost:8080/api/clientesHistorico/anios');
         if (!response.ok) return;
-        const todos = await response.json();
+        const anios = await response.json();
 
         const selectAnio = document.getElementById('filtroCampania');
         if (!selectAnio) return;
 
-        const aniosUnicos = [...new Set(todos.map(c => c.anioFiscal).filter(a => a))].sort().reverse();
-        selectAnio.innerHTML = '<option value="">Todos los años</option>';
-        aniosUnicos.forEach(anio => {
+        selectAnio.innerHTML = '<option value="">Selecciona un año</option>';
+        anios.forEach(anio => {
             const option = document.createElement('option');
             option.value = anio;
             option.textContent = anio;
@@ -419,7 +418,7 @@ class App {
 
 //cambiar nif
 initCambiarNif() {
-    this.cargarClientesCambiarNif();
+//    this.cargarClientesCambiarNif(); se quita para que no se cargue automaticamente y no se consuman querys
 
     const btnBuscar = document.getElementById('btnBuscar');
     if (btnBuscar) {
