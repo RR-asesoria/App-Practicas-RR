@@ -206,4 +206,18 @@ public class ClienteAppController {
         }
     }
 
+    @GetMapping("/paginado")
+    @PreAuthorize("hasAnyRole('USERBASE', 'ADMIN')")
+    public ResponseEntity<Map<String, Object>> obtenerPaginado(
+            @RequestParam(defaultValue = "10") int limite,
+            @RequestParam(required = false) String ultimoNif) {
+        try {
+            Map<String, Object> resultado = clienteService.obtenerPaginado(limite, ultimoNif);
+            return ResponseEntity.ok(resultado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 }
