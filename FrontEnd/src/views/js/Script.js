@@ -27,6 +27,7 @@ function logout() {
     window.location.href = "../html/index.html";
 }
 
+
 // ===== ELIMINAR CLIENTE =====
 async function eliminarCliente(nifCif, nombre) {
     if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
