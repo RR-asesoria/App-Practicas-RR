@@ -856,6 +856,21 @@ initAgregarUsuario() {
             alert("Error al agregar usuario");
         }
     });
+
+    // Ojitos contraseñas agregar usuario
+    [['toggleNuevaPassword', 'nuevaPassword'], ['toggleRepetirPassword', 'repetirPassword']]
+        .forEach(([toggleId, inputId]) => {
+            const toggle = document.getElementById(toggleId);
+            const input = document.getElementById(inputId);
+            if (toggle && input) {
+                toggle.addEventListener('click', () => {
+                    input.type = input.type === 'password' ? 'text' : 'password';
+                    toggle.classList.toggle('fa-eye');
+                    toggle.classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+
 }
 
     // ===== CAMBIAR CONTRASEÑA =====
@@ -904,6 +919,21 @@ initCambiarPassword() {
             alert("Error al cambiar contraseña: " + error.message);
         }
     });
+
+    // Ojitos contraseñas cambiar password
+    [['toggleNuevaContrasena', 'nuevaContrasena'], ['toggleRepetirContrasena', 'repetirContrasena']]
+        .forEach(([toggleId, inputId]) => {
+            const toggle = document.getElementById(toggleId);
+            const input = document.getElementById(inputId);
+            if (toggle && input) {
+                toggle.addEventListener('click', () => {
+                    input.type = input.type === 'password' ? 'text' : 'password';
+                    toggle.classList.toggle('fa-eye');
+                    toggle.classList.toggle('fa-eye-slash');
+                });
+            }
+        });
+
 }
 
     // ===== ELIMINAR USUARIO =====
