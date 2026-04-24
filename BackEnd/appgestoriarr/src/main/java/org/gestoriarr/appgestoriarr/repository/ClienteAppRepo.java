@@ -253,4 +253,36 @@ public class ClienteAppRepo {
         }
     }
 
+    public Map<String, Object> findPaginado(int limite, String ultimoNif) {
+        try {
+            Query query = clientes().orderBy("nombre").limit(limite);
+
+            if (ultimoNif != null && !ultimoNif.isEmpty()) {
+                DocumentSnapshot ultimoDoc = clientes().document(ultimoNif).get().get();
+                if (ultimoDoc.exists()) {
+                    query = query.startAfter(ultimoDoc);
+                }
+            }
+
+            QuerySnapshot resultado = query.get().get();
+            List<ClienteApp> lista = new ArrayList<>();
+            for (DocumentSnapshot doc : resultado.getDocuments()) {
+                lista.add(doc.toObject(ClienteApp.class));
+            }
+
+            String ultimoNifDevuelto = lista.isEmpty() ? null : lista.get(lista.size() - 1).getNifCif();
+            boolean hayMas = resultado.size() == limite;
+
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("clientes", lista);
+            respuesta.put("ultimoNif", ultimoNifDevuelto);
+            respuesta.put("hayMas", hayMas);
+
+            return respuesta;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

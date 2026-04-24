@@ -184,4 +184,8 @@ public class ClienteAppService {
         }
         repo.actualizarDatosBasicos(cliente);
     }
+    public Map<String, Object> obtenerPaginado(int limite, String ultimoNif) {
+        return repo.findPaginado(limite, ultimoNif);
+    }
+
 }
