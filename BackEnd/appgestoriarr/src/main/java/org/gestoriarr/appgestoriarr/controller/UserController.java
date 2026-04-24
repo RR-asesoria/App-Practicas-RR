@@ -25,9 +25,15 @@ public class UserController {
 
     //TEST
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/test")
+    @GetMapping("/admin/test")
     public ResponseEntity<String> admin() {
         return ResponseEntity.ok("Zona ADMIN");
+    }
+
+    @PreAuthorize("hasRole('USERBASE')")
+    @GetMapping("/userbase/test")
+    public ResponseEntity<String> userbase() {
+        return ResponseEntity.ok("Zona USERBASE");
     }
 
     //CREATE
