@@ -22,8 +22,17 @@
     <nav class="agregarUsuarios-menu">
         <input type="text" placeholder="Nombre del nuevo Usuario" class="agregarUsuarios-inp" id="nuevoNombre">
         <input type="email" placeholder="Correo electrónico" class="agregarUsuarios-inp" id="nuevoCorreo">
-        <input type="password" placeholder="Contraseña" class="agregarUsuarios-inp" id="nuevaPassword">
-        <input type="password" placeholder="Repetir contraseña" class="agregarUsuarios-inp" id="repetirPassword">
+
+        <div class="login-password-container">
+            <input type="password" placeholder="Contraseña" class="agregarUsuarios-inp" id="nuevaPassword">
+            <i class="fa-solid fa-eye" id="toggleNuevaPassword"></i>
+        </div>
+
+        <div class="login-password-container">
+            <input type="password" placeholder="Repetir contraseña" class="agregarUsuarios-inp" id="repetirPassword">
+            <i class="fa-solid fa-eye" id="toggleRepetirPassword"></i>
+        </div>
+
         <button class="agregar-aceptar">
             Aceptar
         </button>
@@ -33,7 +42,6 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth-compat.js"></script>
-
 <script src="../js/Script.js"></script>
 
 </body>

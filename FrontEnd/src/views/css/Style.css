@@ -1815,3 +1815,25 @@ th:last-child, td:last-child {
     white-space: nowrap;
     min-width: 160px;
 }
+
+/* ===== OJITO EN AGREGAR USUARIO Y CAMBIAR CONTRASEÑA ===== */
+
+.agregarUsuarios-menu .login-password-container,
+.passwordUsuarios-menu .login-password-container {
+    width: 100%;
+    margin: 0;
+}
+
+.agregarUsuarios-menu .login-password-container input,
+.passwordUsuarios-menu .login-password-container input {
+    width: 100%;
+    margin: 0;
+    padding: 18px 40px 18px 12px;
+    background: #f7f8fa;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #2f3640;
+    box-sizing: border-box;
+}
