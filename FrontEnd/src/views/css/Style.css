@@ -22,11 +22,20 @@ body.dark-mode {
 }
 
 /* ===== RESET ===== */
+* {
+  box-sizing: border-box;
+}
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+body {
+    min-width: 800px; /* evita que se rompa en muy pequeño /
+}
+
+/ Evitar contenedores con ancho fijo como width: 1200px /
+/ Usar en su lugar: */
+.contenedor {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 /*Css del Login*/
