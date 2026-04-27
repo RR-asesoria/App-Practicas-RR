@@ -172,7 +172,7 @@ function logout() {
 }
 
 
-// ===== ELIMINAR CLIENTE =====
+// ===== ELIMINAR CLIENTE ====
 async function eliminarCliente(nifCif, nombre) {
     try {
         const response = await fetchConToken(`http://localhost:8080/api/clientes/eliminarcliente/${nifCif}`, {
