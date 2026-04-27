@@ -84,11 +84,14 @@ function createLoadingWindow() {
 }
 
 function showMainWindow() {
-    if (mainWindow) return; // evitar que se abra dos veces
+    if (mainWindow) return;
 
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 800,
+        minWidth: 900,        // ← mínimo ancho antes de que se rompa
+        minHeight: 600,       // ← mínimo alto
+        resizable: true,      // ← permite redimensionar (por defecto ya es true, pero lo dejamos explícito)
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true
