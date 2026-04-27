@@ -691,50 +691,104 @@ initHistorico() {
 
     // ===== MENU PRINCIPAL =====
   initMenuPrincipal() {
-      const resetButton = document.getElementById("resetButton");
-      const fileInput = document.getElementById("excelFile");
-      const importButton = document.getElementById("importButton");
+        const resetButton = document.getElementById("resetButton");
+        const fileInput = document.getElementById("excelFile");
+        const importButton = document.getElementById("importButton");
 
-    if (resetButton) {
-        resetButton.addEventListener("click", async () => {
-            const confirmacion = prompt("Esta acción es irreversible. Escribe ACEPTAR para confirmar el cierre de ejercicio:");
+        if (resetButton) {
+            resetButton.addEventListener("click", () => {
+                this.mostrarModalConfirmacion(
+                    "Esta acción es irreversible. Escribe ACEPTAR para confirmar el cierre de ejercicio:",
+                    async (texto) => {
+                        if (texto !== "ACEPTAR") {
+                            alert("Texto incorrecto. Debes escribir exactamente ACEPTAR.");
+                            return;
+                        }
+                        if (!confirm("¿Seguro que quieres realizar esta acción?")) return;
 
-            if (confirmacion === null) return; // canceló
+                        try {
+                            const response = await fetchConToken(
+                                "http://localhost:8080/api/clientes/cierre-ejercicio",
+                                { method: "POST" }
+                            );
+                            if (!response.ok) throw new Error("Error en el cierre de ejercicio");
+                            alert("Cierre de ejercicio realizado correctamente.");
+                        } catch (error) {
+                            console.error(error);
+                            alert("Error al realizar el cierre: " + error.message);
+                        }
+                    }
+                );
+            });
+        }
 
-            if (confirmacion !== "ACEPTAR") {
-                alert("Texto incorrecto. Debes escribir exactamente ACEPTAR. El uso de mayúsculas es necesario.");
-                return;
-            }
-
-            // Segunda confirmación
-            const seguro = confirm("¿Seguro que quieres realizar esta acción?");
-
-            if (!seguro) return; // usuario canceló aquí
-
-            try {
-                const response = await fetchConToken(
-                    "http://localhost:8080/api/clientes/cierre-ejercicio", {
-                    method: "POST"
-                });
-
-                if (!response.ok) throw new Error("Error en el cierre de ejercicio");
-
-                alert("Cierre de ejercicio realizado correctamente.");
-            } catch (error) {
-                console.error(error);
-                alert("Error al realizar el cierre: " + error.message);
-            }
-        });
+        if (importButton) importButton.addEventListener("click", () => fileInput.click());
+        if (fileInput) fileInput.addEventListener("change", (e) => this.handleFile(e));
     }
 
-      if (importButton) {
-          importButton.addEventListener("click", () => fileInput.click());
-      }
-      if (fileInput) {
-          fileInput.addEventListener("change", (e) => this.handleFile(e));
-      }
-  }
+    mostrarModalConfirmacion(mensaje, onAceptar) {
+        // Evitar duplicados
+        document.getElementById('__modal-confirmacion')?.remove();
 
+        const overlay = document.createElement('div');
+        overlay.id = '__modal-confirmacion';
+        overlay.style.cssText = `
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                background: var(--color-card, #fff); border-radius: 10px;
+                padding: 28px; max-width: 420px; width: 90%;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+                display: flex; flex-direction: column; gap: 16px;
+            ">
+                <p style="margin:0; font-size:14px; color:var(--color-text, #333);">⚠️ ${mensaje}</p>
+                <input id="__modal-input" type="text" placeholder="Escribe ACEPTAR"
+                    style="
+                        padding: 8px 12px; border-radius: 6px; font-size:14px;
+                        border: 1px solid var(--color-border, #ccc);
+                        background: var(--input-bg, #fff); color: var(--color-text, #333);
+                    "
+                />
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                    <button id="__modal-cancelar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: 1px solid var(--color-border, #ccc);
+                        background: var(--button-bg, #eee); color: var(--color-text, #333);
+                    ">Cancelar</button>
+                    <button id="__modal-aceptar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: none; background: var(--color-primary, #d9534f); color: white;
+                    ">Confirmar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const input = overlay.querySelector('#__modal-input');
+        input.focus();
+
+        overlay.querySelector('#__modal-cancelar').addEventListener('click', () => overlay.remove());
+        overlay.querySelector('#__modal-aceptar').addEventListener('click', () => {
+            const valor = input.value.trim();
+            overlay.remove();
+            onAceptar(valor);
+        });
+
+        // Enter para confirmar
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const valor = input.value.trim();
+                overlay.remove();
+                onAceptar(valor);
+            }
+            if (e.key === 'Escape') overlay.remove();
+        });
+    }
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
         const form = document.querySelector(".cliente-form");
