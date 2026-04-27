@@ -20,6 +20,150 @@ async function fetchConToken(url, options = {}) {
     });
 }
 
+// ===== MODAL ALERT =====
+function mostrarAlert(mensaje) {
+    return new Promise((resolve) => {
+        document.getElementById('__modal-alert')?.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = '__modal-alert';
+        overlay.style.cssText = `
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                background: var(--color-card, #fff); border-radius: 10px;
+                padding: 28px; max-width: 420px; width: 90%;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+                display: flex; flex-direction: column; gap: 16px;
+            ">
+                <p style="margin:0; font-size:14px; color:var(--color-text, #333); white-space: pre-line;">${mensaje}</p>
+                <div style="display:flex; justify-content:flex-end;">
+                    <button id="__alert-aceptar" style="
+                        padding: 7px 24px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: none; background: var(--color-primary, #4f8ef7); color: white;
+                        font-weight: 600;
+                    ">Aceptar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        overlay.querySelector('#__alert-aceptar').focus();
+
+        const cerrar = () => { overlay.remove(); resolve(); };
+
+        overlay.querySelector('#__alert-aceptar').addEventListener('click', cerrar);
+        overlay.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === 'Escape') cerrar(); });
+    });
+}
+
+// ===== MODAL CONFIRM =====
+function mostrarConfirm(mensaje) {
+    return new Promise((resolve) => {
+        document.getElementById('__modal-confirm')?.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = '__modal-confirm';
+        overlay.style.cssText = `
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                background: var(--color-card, #fff); border-radius: 10px;
+                padding: 28px; max-width: 420px; width: 90%;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+                display: flex; flex-direction: column; gap: 16px;
+            ">
+                <p style="margin:0; font-size:14px; color:var(--color-text, #333); white-space: pre-line;">${mensaje}</p>
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                    <button id="__confirm-cancelar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: 1px solid var(--color-border, #ccc);
+                        background: var(--button-bg, #eee); color: var(--color-text, #333);
+                    ">Cancelar</button>
+                    <button id="__confirm-aceptar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: none; background: var(--color-primary, #4f8ef7); color: white;
+                        font-weight: 600;
+                    ">Aceptar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+        overlay.querySelector('#__confirm-aceptar').focus();
+
+        overlay.querySelector('#__confirm-cancelar').addEventListener('click', () => { overlay.remove(); resolve(false); });
+        overlay.querySelector('#__confirm-aceptar').addEventListener('click', () => { overlay.remove(); resolve(true); });
+        overlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { overlay.remove(); resolve(true); }
+            if (e.key === 'Escape') { overlay.remove(); resolve(false); }
+        });
+    });
+}
+
+// ===== MODAL INPUT (reemplaza prompt) =====
+function mostrarPrompt(mensaje) {
+    return new Promise((resolve) => {
+        document.getElementById('__modal-prompt')?.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = '__modal-prompt';
+        overlay.style.cssText = `
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        `;
+
+        overlay.innerHTML = `
+            <div style="
+                background: var(--color-card, #fff); border-radius: 10px;
+                padding: 28px; max-width: 420px; width: 90%;
+                box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+                display: flex; flex-direction: column; gap: 16px;
+            ">
+                <p style="margin:0; font-size:14px; color:var(--color-text, #333); white-space: pre-line;">${mensaje}</p>
+                <input id="__prompt-input" type="text" style="
+                    padding: 8px 12px; border-radius: 6px; font-size:14px;
+                    border: 1px solid var(--color-border, #ccc);
+                    background: var(--input-bg, #fff); color: var(--color-text, #333);
+                "/>
+                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                    <button id="__prompt-cancelar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: 1px solid var(--color-border, #ccc);
+                        background: var(--button-bg, #eee); color: var(--color-text, #333);
+                    ">Cancelar</button>
+                    <button id="__prompt-aceptar" style="
+                        padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
+                        border: none; background: var(--color-primary, #4f8ef7); color: white;
+                        font-weight: 600;
+                    ">Aceptar</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const input = overlay.querySelector('#__prompt-input');
+        input.focus();
+
+        overlay.querySelector('#__prompt-cancelar').addEventListener('click', () => { overlay.remove(); resolve(null); });
+        overlay.querySelector('#__prompt-aceptar').addEventListener('click', () => { const v = input.value; overlay.remove(); resolve(v); });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { const v = input.value; overlay.remove(); resolve(v); }
+            if (e.key === 'Escape') { overlay.remove(); resolve(null); }
+        });
+    });
+}
+
 // ===== LOGOUT =====
 function logout() {
     firebase.auth().signOut();
@@ -30,19 +174,17 @@ function logout() {
 
 // ===== ELIMINAR CLIENTE =====
 async function eliminarCliente(nifCif, nombre) {
-    if (!confirm(`¿Seguro que deseas eliminar a "${nombre}"?`)) return;
-
     try {
         const response = await fetchConToken(`http://localhost:8080/api/clientes/eliminarcliente/${nifCif}`, {
             method: 'DELETE'
         });
         if (!response.ok) throw new Error("Error al eliminar");
-        alert("Cliente eliminado correctamente");
+        await mostrarAlert("Cliente eliminado correctamente");
         invalidarCache();
         cargarClientes();
     } catch (error) {
         console.error(error);
-        alert("Error al eliminar el cliente");
+        await mostrarAlert("Error al eliminar el cliente");
     }
 }
 
@@ -160,7 +302,7 @@ async function cargarClientes() {
 
     } catch (error) {
         console.error("Error al cargar clientes:", error);
-        alert("Error al cargar los clientes");
+        await mostrarAlert("Error al cargar los clientes");
     }
 }
 
@@ -235,10 +377,11 @@ function renderizarConPaginacion(clientes) {
                 fila.style.background = visible ? '' : 'var(--button-hover-bg)';
             });
 
-            fila.querySelector('.btn-eliminar').addEventListener('click', (e) => {
+            fila.querySelector('.btn-eliminar').addEventListener('click', async (e) => {
                 e.stopPropagation();
                 const aviso = `⚠️ ATENCIÓN\n\nVas a eliminar a "${cliente.nombre}" (${cliente.nifCif}).\n\n¿Confirmas la eliminación?`;
-                if (confirm(aviso)) eliminarCliente(cliente.nifCif, cliente.nombre);
+                const confirmado = await mostrarConfirm(aviso);
+                if (confirmado) eliminarCliente(cliente.nifCif, cliente.nombre);
             });
 
             tabla.appendChild(fila);
@@ -435,7 +578,7 @@ filaDetalle.innerHTML = `
      });
     } catch (error) {
         console.error("Error al cargar histórico:", error);
-        alert("Error al cargar el histórico");
+        await mostrarAlert("Error al cargar el histórico");
     }
 }
 
@@ -506,111 +649,109 @@ class App {
     }
 
 
-//cambiar nif
-initCambiarNif() {
-//    this.cargarClientesCambiarNif(); se quita para que no se cargue automaticamente y no se consuman querys
-
-    const btnBuscar = document.getElementById('btnBuscar');
-    if (btnBuscar) {
-        btnBuscar.addEventListener('click', () => this.cargarClientesCambiarNif());
-    }
-
-    document.getElementById('buscarNombre')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') this.cargarClientesCambiarNif();
-    });
-    document.getElementById('buscarDni')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') this.cargarClientesCambiarNif();
-    });
-}
-
-async cargarClientesCambiarNif() {
-    try {
-        const nombre = document.getElementById('buscarNombre')?.value;
-        const dni = document.getElementById('buscarDni')?.value;
-
-        const filtros = {};
-        if (nombre) filtros.nombre = nombre;
-        if (dni) filtros.nifCif = dni;
-
-        let clientes;
-
-        if (Object.keys(filtros).length > 0) {
-            const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
-                method: 'POST',
-                body: JSON.stringify(filtros)
-            });
-            if (!response.ok) throw new Error("Error al buscar clientes");
-            clientes = await response.json();
-        } else {
-            const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
-            if (!response.ok) throw new Error("Error al obtener clientes");
-            clientes = await response.json();
+    //cambiar nif
+    initCambiarNif() {
+        const btnBuscar = document.getElementById('btnBuscar');
+        if (btnBuscar) {
+            btnBuscar.addEventListener('click', () => this.cargarClientesCambiarNif());
         }
 
-        const tabla = document.getElementById('tablaClientes');
-        if (!tabla) return;
-        tabla.innerHTML = '';
+        document.getElementById('buscarNombre')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') this.cargarClientesCambiarNif();
+        });
+        document.getElementById('buscarDni')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') this.cargarClientesCambiarNif();
+        });
+    }
 
-        clientes.forEach(cliente => {
-            const fila = document.createElement('tr');
-            fila.innerHTML = `
-                <td>${cliente.nombre ?? ''}</td>
-                <td>${cliente.nifCif ?? ''}</td>
-                <td>
-                    <button class="btn-editar btn-cambiar-nif">
-                        <i class="fa-solid fa-pen"></i> Cambiar NIF
-                    </button>
-                </td>
-            `;
+    async cargarClientesCambiarNif() {
+        try {
+            const nombre = document.getElementById('buscarNombre')?.value;
+            const dni = document.getElementById('buscarDni')?.value;
 
-            fila.querySelector('.btn-cambiar-nif').addEventListener('click', () => {
-                this.ejecutarCambioNif(cliente.nifCif, cliente.nombre);
+            const filtros = {};
+            if (nombre) filtros.nombre = nombre;
+            if (dni) filtros.nifCif = dni;
+
+            let clientes;
+
+            if (Object.keys(filtros).length > 0) {
+                const response = await fetchConToken('http://localhost:8080/api/clientes/buscarporfiltros', {
+                    method: 'POST',
+                    body: JSON.stringify(filtros)
+                });
+                if (!response.ok) throw new Error("Error al buscar clientes");
+                clientes = await response.json();
+            } else {
+                const response = await fetchConToken('http://localhost:8080/api/clientes/obtenerTodos');
+                if (!response.ok) throw new Error("Error al obtener clientes");
+                clientes = await response.json();
+            }
+
+            const tabla = document.getElementById('tablaClientes');
+            if (!tabla) return;
+            tabla.innerHTML = '';
+
+            clientes.forEach(cliente => {
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${cliente.nombre ?? ''}</td>
+                    <td>${cliente.nifCif ?? ''}</td>
+                    <td>
+                        <button class="btn-editar btn-cambiar-nif">
+                            <i class="fa-solid fa-pen"></i> Cambiar NIF
+                        </button>
+                    </td>
+                `;
+
+                fila.querySelector('.btn-cambiar-nif').addEventListener('click', () => {
+                    this.ejecutarCambioNif(cliente.nifCif, cliente.nombre);
+                });
+
+                tabla.appendChild(fila);
             });
 
-            tabla.appendChild(fila);
-        });
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al cargar clientes");
-    }
-}
-
-async ejecutarCambioNif(nifViejo, nombre) {
-    const aviso = `⚠️ Vas a cambiar el NIF/CIF de "${nombre}" (${nifViejo}).\n\nRecuerda revisar el Excel y el CRM tras este cambio para evitar inconsistencias.\n\nEscribe el nuevo NIF/CIF:`;
-    const nifNuevo = prompt(aviso);
-
-    if (nifNuevo === null) return;
-
-    if (!nifNuevo.trim()) {
-        alert("El nuevo NIF/CIF no puede estar vacío.");
-        return;
+        } catch (error) {
+            console.error(error);
+            await mostrarAlert("Error al cargar clientes");
+        }
     }
 
-    const confirmacion = confirm(`¿Confirmas cambiar el NIF de "${nombre}" de ${nifViejo} a ${nifNuevo}?`);
-    if (!confirmacion) return;
+    async ejecutarCambioNif(nifViejo, nombre) {
+        const aviso = `⚠️ Vas a cambiar el NIF/CIF de "${nombre}" (${nifViejo}).\n\nRecuerda revisar el Excel y el CRM tras este cambio para evitar inconsistencias.\n\nEscribe el nuevo NIF/CIF:`;
+        const nifNuevo = await mostrarPrompt(aviso);
 
-    try {
-        const response = await fetchConToken(
-            `http://localhost:8080/api/clientes/cambiar-nif?nifViejo=${encodeURIComponent(nifViejo)}&nifNuevo=${encodeURIComponent(nifNuevo.trim())}`, {
-            method: 'PUT'
-        });
+        if (nifNuevo === null) return;
 
-        const mensaje = await response.text();
-
-        if (!response.ok) {
-            alert("Error: " + "Los usuarios sin permisos de administrador no pueden realizar esta acción, consulta con tu administrador");
+        if (!nifNuevo.trim()) {
+            await mostrarAlert("El nuevo NIF/CIF no puede estar vacío.");
             return;
         }
 
-        alert(mensaje);
-        this.cargarClientesCambiarNif();
+        const confirmado = await mostrarConfirm(`¿Confirmas cambiar el NIF de "${nombre}" de ${nifViejo} a ${nifNuevo}?`);
+        if (!confirmado) return;
 
-    } catch (error) {
-        console.error(error);
-        alert("Error al cambiar el NIF: " + error.message);
+        try {
+            const response = await fetchConToken(
+                `http://localhost:8080/api/clientes/cambiar-nif?nifViejo=${encodeURIComponent(nifViejo)}&nifNuevo=${encodeURIComponent(nifNuevo.trim())}`, {
+                method: 'PUT'
+            });
+
+            const mensaje = await response.text();
+
+            if (!response.ok) {
+                await mostrarAlert("Error: Los usuarios sin permisos de administrador no pueden realizar esta acción, consulta con tu administrador");
+                return;
+            }
+
+            await mostrarAlert(mensaje);
+            this.cargarClientesCambiarNif();
+
+        } catch (error) {
+            console.error(error);
+            await mostrarAlert("Error al cambiar el NIF: " + error.message);
+        }
     }
-}
 
 
     // ===== LOGIN =====
@@ -629,7 +770,7 @@ async ejecutarCambioNif(nifViejo, nombre) {
                 window.location.href = "../html/menu.html";
             } catch (error) {
                 console.error("Error al iniciar sesión:", error);
-                alert("Usuario o contraseña incorrectos");
+                await mostrarAlert("Usuario o contraseña incorrectos");
             }
         };
 
@@ -656,41 +797,41 @@ async ejecutarCambioNif(nifViejo, nombre) {
     }
 
     // ===== HISTORICO =====
-initHistorico() {
-    inicializarSelectAnios(); // ← solo carga los años, sin cargar clientes
+    initHistorico() {
+        inicializarSelectAnios();
 
-    const selectAnio = document.getElementById('filtroCampania');
-    if (selectAnio) {
-        selectAnio.addEventListener('change', () => {
-            if (selectAnio.value) cargarHistorico();
+        const selectAnio = document.getElementById('filtroCampania');
+        if (selectAnio) {
+            selectAnio.addEventListener('change', () => {
+                if (selectAnio.value) cargarHistorico();
+            });
+        }
+
+        const botonBuscar = document.querySelector(".consultas-aceptar");
+        if (botonBuscar) {
+            botonBuscar.addEventListener("click", () => cargarHistorico());
+        }
+
+        document.querySelector('.consultas-input[placeholder="Nombre"]')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') cargarHistorico();
         });
-    }
-
-    const botonBuscar = document.querySelector(".consultas-aceptar");
-    if (botonBuscar) {
-        botonBuscar.addEventListener("click", () => cargarHistorico());
-    }
-
-    document.querySelector('.consultas-input[placeholder="Nombre"]')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') cargarHistorico();
-    });
-    document.querySelector('.consultas-input[placeholder="DNI / NIE"]')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') cargarHistorico();
-    });
-
-    const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
-    const panel = document.getElementById('panelFiltrosAvanzados');
-    if (btnAvanzados && panel) {
-        btnAvanzados.addEventListener("click", () => {
-            const visible = panel.style.display !== 'none';
-            panel.style.display = visible ? 'none' : 'flex';
-            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        document.querySelector('.consultas-input[placeholder="DNI / NIE"]')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') cargarHistorico();
         });
+
+        const btnAvanzados = document.getElementById('btnFiltrosAvanzados');
+        const panel = document.getElementById('panelFiltrosAvanzados');
+        if (btnAvanzados && panel) {
+            btnAvanzados.addEventListener("click", () => {
+                const visible = panel.style.display !== 'none';
+                panel.style.display = visible ? 'none' : 'flex';
+                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+            });
+        }
     }
-}
 
     // ===== MENU PRINCIPAL =====
-  initMenuPrincipal() {
+    initMenuPrincipal() {
         const resetButton = document.getElementById("resetButton");
         const fileInput = document.getElementById("excelFile");
         const importButton = document.getElementById("importButton");
@@ -701,10 +842,11 @@ initHistorico() {
                     "Esta acción es irreversible. Escribe ACEPTAR para confirmar el cierre de ejercicio:",
                     async (texto) => {
                         if (texto !== "ACEPTAR") {
-                            alert("Texto incorrecto. Debes escribir exactamente ACEPTAR.");
+                            await mostrarAlert("Texto incorrecto. Debes escribir exactamente ACEPTAR.");
                             return;
                         }
-                        if (!confirm("¿Seguro que quieres realizar esta acción?")) return;
+                        const seguro = await mostrarConfirm("¿Seguro que quieres realizar esta acción?");
+                        if (!seguro) return;
 
                         try {
                             const response = await fetchConToken(
@@ -712,10 +854,10 @@ initHistorico() {
                                 { method: "POST" }
                             );
                             if (!response.ok) throw new Error("Error en el cierre de ejercicio");
-                            alert("Cierre de ejercicio realizado correctamente.");
+                            await mostrarAlert("Cierre de ejercicio realizado correctamente.");
                         } catch (error) {
                             console.error(error);
-                            alert("Error al realizar el cierre: " + error.message);
+                            await mostrarAlert("Error al realizar el cierre: " + error.message);
                         }
                     }
                 );
@@ -727,7 +869,6 @@ initHistorico() {
     }
 
     mostrarModalConfirmacion(mensaje, onAceptar) {
-        // Evitar duplicados
         document.getElementById('__modal-confirmacion')?.remove();
 
         const overlay = document.createElement('div');
@@ -762,6 +903,7 @@ initHistorico() {
                     <button id="__modal-aceptar" style="
                         padding: 7px 18px; border-radius: 6px; cursor:pointer; font-size:13px;
                         border: none; background: var(--color-primary, #d9534f); color: white;
+                        font-weight: 600;
                     ">Confirmar</button>
                 </div>
             </div>
@@ -779,7 +921,6 @@ initHistorico() {
             onAceptar(valor);
         });
 
-        // Enter para confirmar
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 const valor = input.value.trim();
@@ -789,6 +930,7 @@ initHistorico() {
             if (e.key === 'Escape') overlay.remove();
         });
     }
+
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
         const form = document.querySelector(".cliente-form");
@@ -827,257 +969,248 @@ initHistorico() {
 
                 if (!response.ok) throw new Error("Error al guardar cliente");
 
-                alert("Cliente guardado correctamente");
+                await mostrarAlert("Cliente guardado correctamente");
                 window.location.href = "../html/campaniaActual.html";
             } catch (error) {
                 console.error(error);
-                alert("Error al guardar cliente");
+                await mostrarAlert("Error al guardar cliente");
             }
         });
     }
 
 
-
-// ===== EDITAR CLIENTE =====
-async initEditarCliente() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    if (!id) return;
-
-    try {
-        const response = await fetchConToken(`http://localhost:8080/api/clientes/obtenerpornif/${id}`);
-        if (!response.ok) throw new Error("Error al obtener cliente");
-        const cliente = await response.json();
-
-        document.getElementById('nombre').value            = cliente.nombre ?? '';
-        const nifInput = document.getElementById('nifCif');
-        nifInput.value = cliente.nifCif ?? '';
-        nifInput.setAttribute('readonly', true);
-        document.getElementById('telefono').value          = cliente.telefono ?? '';
-        document.getElementById('correoElectronico').value = cliente.correoElectronico ?? '';
-        document.getElementById('fechaNacimiento').value   = cliente.fechaNacimiento?.split('T')[0] ?? '';
-        document.getElementById('referencia').value        = cliente.referencia ?? '';
-        document.getElementById('casilla505anterior').value = cliente.casilla505anterior ?? '';
-        document.getElementById('importe').value           = cliente.importe ?? '';
-        document.getElementById('casilla505Actual').value  = cliente.casilla505Actual ?? '';
-        document.getElementById('datosFiscalesDescargados').value = cliente.datosFiscalesDescargados ? 'true' : 'false';
-        document.getElementById('excelDatosElaboracion').value    = cliente.excelDatosElaboracion ? 'true' : 'false';
-        document.getElementById('tipoFacturado').value     = cliente.tipoFacturado ?? '';
-        document.getElementById('recogidaDatos').value     = cliente.recogidaDatos ?? '';
-        document.getElementById('borrador').value          = cliente.borrador ?? '';
-        document.getElementById('presentada').value        = cliente.presentada ?? '';
-        document.getElementById('cobrado').value           = cliente.cobrado ?? '';
-        document.getElementById('tipoCliente').value       = cliente.tipoCliente ?? '';
-        document.getElementById('estadoCliente').value     = cliente.estadoCliente ?? '';
-
-    } catch (error) {
-        console.error(error);
-        alert("Error al cargar los datos del cliente");
-    }
-
-    const form = document.querySelector(".cliente-form");
-    if (!form) return;
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const clienteActualizado = {
-            nombre: document.getElementById("nombre").value || null,
-            nifCif: document.getElementById("nifCif").value || null,
-            telefono: document.getElementById("telefono").value || null,
-            correoElectronico: document.getElementById("correoElectronico").value || null,
-            fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
-            referencia: document.getElementById("referencia").value || null,
-            casilla505anterior: document.getElementById("casilla505anterior").value || null,
-            datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value === "true",
-            importe: document.getElementById("importe").value || "0",
-            tipoFacturado: document.getElementById("tipoFacturado").value || null,
-            recogidaDatos: document.getElementById("recogidaDatos").value || null,
-            excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value === "true",
-            borrador: document.getElementById("borrador").value || null,
-            presentada: document.getElementById("presentada").value || null,
-            cobrado: document.getElementById("cobrado").value || "NO",
-            tipoCliente: document.getElementById("tipoCliente").value || null,
-            estadoCliente: document.getElementById("estadoCliente").value || null,
-            casilla505Actual: document.getElementById("casilla505Actual").value || null
-        };
+    // ===== EDITAR CLIENTE =====
+    async initEditarCliente() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        if (!id) return;
 
         try {
-            const response = await fetchConToken(`http://localhost:8080/api/clientes/actualizarcliente/${id}`, {
-                method: "PUT",
-                body: JSON.stringify(clienteActualizado)
-            });
+            const response = await fetchConToken(`http://localhost:8080/api/clientes/obtenerpornif/${id}`);
+            if (!response.ok) throw new Error("Error al obtener cliente");
+            const cliente = await response.json();
 
-            if (!response.ok) throw new Error("Error al actualizar cliente");
+            document.getElementById('nombre').value            = cliente.nombre ?? '';
+            const nifInput = document.getElementById('nifCif');
+            nifInput.value = cliente.nifCif ?? '';
+            nifInput.setAttribute('readonly', true);
+            document.getElementById('telefono').value          = cliente.telefono ?? '';
+            document.getElementById('correoElectronico').value = cliente.correoElectronico ?? '';
+            document.getElementById('fechaNacimiento').value   = cliente.fechaNacimiento?.split('T')[0] ?? '';
+            document.getElementById('referencia').value        = cliente.referencia ?? '';
+            document.getElementById('casilla505anterior').value = cliente.casilla505anterior ?? '';
+            document.getElementById('importe').value           = cliente.importe ?? '';
+            document.getElementById('casilla505Actual').value  = cliente.casilla505Actual ?? '';
+            document.getElementById('datosFiscalesDescargados').value = cliente.datosFiscalesDescargados ? 'true' : 'false';
+            document.getElementById('excelDatosElaboracion').value    = cliente.excelDatosElaboracion ? 'true' : 'false';
+            document.getElementById('tipoFacturado').value     = cliente.tipoFacturado ?? '';
+            document.getElementById('recogidaDatos').value     = cliente.recogidaDatos ?? '';
+            document.getElementById('borrador').value          = cliente.borrador ?? '';
+            document.getElementById('presentada').value        = cliente.presentada ?? '';
+            document.getElementById('cobrado').value           = cliente.cobrado ?? '';
+            document.getElementById('tipoCliente').value       = cliente.tipoCliente ?? '';
+            document.getElementById('estadoCliente').value     = cliente.estadoCliente ?? '';
 
-            alert("Cliente actualizado correctamente");
-            window.location.href = "../html/campaniaActual.html";
         } catch (error) {
             console.error(error);
-            alert("Error al actualizar el cliente");
+            await mostrarAlert("Error al cargar los datos del cliente");
         }
-    });
-}
 
+        const form = document.querySelector(".cliente-form");
+        if (!form) return;
 
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const clienteActualizado = {
+                nombre: document.getElementById("nombre").value || null,
+                nifCif: document.getElementById("nifCif").value || null,
+                telefono: document.getElementById("telefono").value || null,
+                correoElectronico: document.getElementById("correoElectronico").value || null,
+                fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
+                referencia: document.getElementById("referencia").value || null,
+                casilla505anterior: document.getElementById("casilla505anterior").value || null,
+                datosFiscalesDescargados: document.getElementById("datosFiscalesDescargados").value === "true",
+                importe: document.getElementById("importe").value || "0",
+                tipoFacturado: document.getElementById("tipoFacturado").value || null,
+                recogidaDatos: document.getElementById("recogidaDatos").value || null,
+                excelDatosElaboracion: document.getElementById("excelDatosElaboracion").value === "true",
+                borrador: document.getElementById("borrador").value || null,
+                presentada: document.getElementById("presentada").value || null,
+                cobrado: document.getElementById("cobrado").value || "NO",
+                tipoCliente: document.getElementById("tipoCliente").value || null,
+                estadoCliente: document.getElementById("estadoCliente").value || null,
+                casilla505Actual: document.getElementById("casilla505Actual").value || null
+            };
+
+            try {
+                const response = await fetchConToken(`http://localhost:8080/api/clientes/actualizarcliente/${id}`, {
+                    method: "PUT",
+                    body: JSON.stringify(clienteActualizado)
+                });
+
+                if (!response.ok) throw new Error("Error al actualizar cliente");
+
+                await mostrarAlert("Cliente actualizado correctamente");
+                window.location.href = "../html/campaniaActual.html";
+            } catch (error) {
+                console.error(error);
+                await mostrarAlert("Error al actualizar el cliente");
+            }
+        });
+    }
 
 
     // ===== CONSULTAR TABLAS =====
-initConsultarTablas() {
-    cargarClientes();
+    initConsultarTablas() {
+        cargarClientes();
 
-    const botonBuscar = document.querySelector(".consultasActuales-aceptar");
-    if (botonBuscar) {
-        botonBuscar.addEventListener("click", () => cargarClientes());
-    }
+        const botonBuscar = document.querySelector(".consultasActuales-aceptar");
+        if (botonBuscar) {
+            botonBuscar.addEventListener("click", () => cargarClientes());
+        }
 
-    document.getElementById('filtroNombre')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') cargarClientes();
-    });
-    document.getElementById('filtroDni')?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') cargarClientes();
-    });
-
-    const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
-    const panel = document.getElementById('panelFiltrosAvanzadosClientes');
-    if (btnAvanzados && panel) {
-        btnAvanzados.addEventListener("click", () => {
-            const visible = panel.style.display !== 'none';
-            panel.style.display = visible ? 'none' : 'flex';
-            btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+        document.getElementById('filtroNombre')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') cargarClientes();
         });
+        document.getElementById('filtroDni')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') cargarClientes();
+        });
+
+        const btnAvanzados = document.getElementById('btnFiltrosAvanzadosClientes');
+        const panel = document.getElementById('panelFiltrosAvanzadosClientes');
+        if (btnAvanzados && panel) {
+            btnAvanzados.addEventListener("click", () => {
+                const visible = panel.style.display !== 'none';
+                panel.style.display = visible ? 'none' : 'flex';
+                btnAvanzados.textContent = visible ? 'Filtros avanzados ▼' : 'Filtros avanzados ▲';
+            });
+        }
     }
-}
 
     // ===== AGREGAR USUARIO =====
-initAgregarUsuario() {
-    const botonAceptar = document.querySelector(".agregar-aceptar");
-    if (!botonAceptar) return;
+    initAgregarUsuario() {
+        const botonAceptar = document.querySelector(".agregar-aceptar");
+        if (!botonAceptar) return;
 
-    botonAceptar.addEventListener("click", async () => {
-        const nombre = document.getElementById("nuevoNombre").value;
-        const correo = document.getElementById("nuevoCorreo").value;
-        const password = document.getElementById("nuevaPassword").value;
-        const repetirPassword = document.getElementById("repetirPassword").value;
+        botonAceptar.addEventListener("click", async () => {
+            const nombre = document.getElementById("nuevoNombre").value;
+            const correo = document.getElementById("nuevoCorreo").value;
+            const password = document.getElementById("nuevaPassword").value;
+            const repetirPassword = document.getElementById("repetirPassword").value;
 
+            if (!nombre || !correo || !password || !repetirPassword) {
+                await mostrarAlert("Todos los campos son obligatorios");
+                return;
+            }
 
-        if (!nombre || !correo || !password || !repetirPassword) {
-            alert("Todos los campos son obligatorios");
-            return;
-        }
+            if (password !== repetirPassword) {
+                await mostrarAlert("Las contraseñas no coinciden");
+                return;
+            }
 
-        if (password !== repetirPassword) {
-            alert("Las contraseñas no coinciden");
-            return;
-        }
+            if (password.length < 6) {
+                await mostrarAlert("La contraseña debe tener al menos 6 caracteres");
+                return;
+            }
 
-        if (password.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres");
-            return;
-        }
+            const confirmado = await mostrarConfirm(`¿Quieres crear el usuario ${correo}?`);
+            if (!confirmado) return;
 
-
-        if (!confirm(`¿Quieres crear el usuario ${correo}?`)) return;
-
-        try {
-            const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
-                method: "POST",
-                body: JSON.stringify({
-                    nombre: nombre,
-                    correo: correo,
-                    psw: password
-                })
-            });
-
-            if (!response.ok) throw new Error("Error al crear usuario");
-
-            alert("Usuario agregado correctamente");
-            window.location.href = "../html/menu.html";
-
-        } catch (error) {
-            console.error(error);
-            alert("Error al agregar usuario");
-        }
-    });
-
-    // Ojitos contraseñas agregar usuario
-    [['toggleNuevaPassword', 'nuevaPassword'], ['toggleRepetirPassword', 'repetirPassword']]
-        .forEach(([toggleId, inputId]) => {
-            const toggle = document.getElementById(toggleId);
-            const input = document.getElementById(inputId);
-            if (toggle && input) {
-                toggle.addEventListener('click', () => {
-                    input.type = input.type === 'password' ? 'text' : 'password';
-                    toggle.classList.toggle('fa-eye');
-                    toggle.classList.toggle('fa-eye-slash');
+            try {
+                const response = await fetchConToken("http://localhost:8080/user/crearusuario", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        correo: correo,
+                        psw: password
+                    })
                 });
+
+                if (!response.ok) throw new Error("Error al crear usuario");
+
+                await mostrarAlert("Usuario agregado correctamente");
+                window.location.href = "../html/menu.html";
+
+            } catch (error) {
+                console.error(error);
+                await mostrarAlert("Error al agregar usuario");
             }
         });
 
-}
+        [['toggleNuevaPassword', 'nuevaPassword'], ['toggleRepetirPassword', 'repetirPassword']]
+            .forEach(([toggleId, inputId]) => {
+                const toggle = document.getElementById(toggleId);
+                const input = document.getElementById(inputId);
+                if (toggle && input) {
+                    toggle.addEventListener('click', () => {
+                        input.type = input.type === 'password' ? 'text' : 'password';
+                        toggle.classList.toggle('fa-eye');
+                        toggle.classList.toggle('fa-eye-slash');
+                    });
+                }
+            });
+    }
 
     // ===== CAMBIAR CONTRASEÑA =====
-initCambiarPassword() {
-    const botonAceptar = document.querySelector(".password-aceptar");
-    if (!botonAceptar) return;
+    initCambiarPassword() {
+        const botonAceptar = document.querySelector(".password-aceptar");
+        if (!botonAceptar) return;
 
-    botonAceptar.addEventListener("click", async () => {
-        const correo = document.getElementById("correoUsuario").value;
-        const nuevaPassword = document.getElementById("nuevaContrasena").value;
-        const repetirPassword = document.getElementById("repetirContrasena").value;
+        botonAceptar.addEventListener("click", async () => {
+            const correo = document.getElementById("correoUsuario").value;
+            const nuevaPassword = document.getElementById("nuevaContrasena").value;
+            const repetirPassword = document.getElementById("repetirContrasena").value;
 
-        // Validaciones previas
-        if (!correo || !nuevaPassword || !repetirPassword) {
-            alert("Todos los campos son obligatorios");
-            return;
-        }
+            if (!correo || !nuevaPassword || !repetirPassword) {
+                await mostrarAlert("Todos los campos son obligatorios");
+                return;
+            }
 
-        if (nuevaPassword !== repetirPassword) {
-            alert("Las contraseñas no coinciden");
-            return;
-        }
+            if (nuevaPassword !== repetirPassword) {
+                await mostrarAlert("Las contraseñas no coinciden");
+                return;
+            }
 
-        if (nuevaPassword.length < 6) {
-            alert("La contraseña debe tener al menos 6 caracteres");
-            return;
-        }
+            if (nuevaPassword.length < 6) {
+                await mostrarAlert("La contraseña debe tener al menos 6 caracteres");
+                return;
+            }
 
+            const confirmado = await mostrarConfirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`);
+            if (!confirmado) return;
 
-        if (!confirm(`¿Seguro que quieres cambiar la contraseña del usuario ${correo}?`)) return;
-
-        try {
-            const response = await fetchConToken(
-                `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
-                method: "PUT",
-                body: JSON.stringify({ passwordNueva: nuevaPassword })
-            });
-
-            if (!response.ok) throw new Error("Error al cambiar contraseña");
-
-            alert("Contraseña cambiada correctamente");
-            window.location.href = "../html/menu.html";
-
-        } catch (error) {
-            console.error(error);
-            alert("Error al cambiar contraseña: " + error.message);
-        }
-    });
-
-    // Ojitos contraseñas cambiar password
-    [['toggleNuevaContrasena', 'nuevaContrasena'], ['toggleRepetirContrasena', 'repetirContrasena']]
-        .forEach(([toggleId, inputId]) => {
-            const toggle = document.getElementById(toggleId);
-            const input = document.getElementById(inputId);
-            if (toggle && input) {
-                toggle.addEventListener('click', () => {
-                    input.type = input.type === 'password' ? 'text' : 'password';
-                    toggle.classList.toggle('fa-eye');
-                    toggle.classList.toggle('fa-eye-slash');
+            try {
+                const response = await fetchConToken(
+                    `http://localhost:8080/user/admin/users/${encodeURIComponent(correo)}/password`, {
+                    method: "PUT",
+                    body: JSON.stringify({ passwordNueva: nuevaPassword })
                 });
+
+                if (!response.ok) throw new Error("Error al cambiar contraseña");
+
+                await mostrarAlert("Contraseña cambiada correctamente");
+                window.location.href = "../html/menu.html";
+
+            } catch (error) {
+                console.error(error);
+                await mostrarAlert("Error al cambiar contraseña: " + error.message);
             }
         });
 
-}
+        [['toggleNuevaContrasena', 'nuevaContrasena'], ['toggleRepetirContrasena', 'repetirContrasena']]
+            .forEach(([toggleId, inputId]) => {
+                const toggle = document.getElementById(toggleId);
+                const input = document.getElementById(inputId);
+                if (toggle && input) {
+                    toggle.addEventListener('click', () => {
+                        input.type = input.type === 'password' ? 'text' : 'password';
+                        toggle.classList.toggle('fa-eye');
+                        toggle.classList.toggle('fa-eye-slash');
+                    });
+                }
+            });
+    }
 
     // ===== ELIMINAR USUARIO =====
     initEliminarUsuario() {
@@ -1087,7 +1220,8 @@ initCambiarPassword() {
         botonAceptar.addEventListener("click", async () => {
             const correo = document.getElementById("correoEliminar").value;
 
-            if (!confirm(`¿Seguro que quieres eliminar el usuario ${correo}?`)) return;
+            const confirmado = await mostrarConfirm(`¿Seguro que quieres eliminar el usuario ${correo}?`);
+            if (!confirmado) return;
 
             try {
                 const responseUsuario = await fetchConToken(
@@ -1105,12 +1239,12 @@ initCambiarPassword() {
 
                 if (!responseEliminar.ok) throw new Error("Error al eliminar usuario");
 
-                alert("Usuario eliminado correctamente");
+                await mostrarAlert("Usuario eliminado correctamente");
                 window.location.href = "../html/menu.html";
 
             } catch (error) {
                 console.error(error);
-                alert("Error: " + error.message);
+                await mostrarAlert("Error: " + error.message);
             }
         });
     }
@@ -1143,94 +1277,92 @@ initCambiarPassword() {
     }
 
     // ===== FUNCIONES =====
-    resetFiscalYear() {
-        const confirmacion = confirm("¿Seguro que desea resetear el año fiscal?");
-        if (confirmacion) {
+    async resetFiscalYear() {
+        const confirmado = await mostrarConfirm("¿Seguro que desea resetear el año fiscal?");
+        if (confirmado) {
             fetchConToken("http://localhost:8080/api/clientes/cierre-ejercicio", {
                 method: "POST"
             })
-            .then(response => {
+            .then(async response => {
                 if (!response.ok) throw new Error("Error en cierre de ejercicio");
-                alert("Año fiscal reseteado correctamente");
+                await mostrarAlert("Año fiscal reseteado correctamente");
             })
-            .catch(error => {
+            .catch(async error => {
                 console.error(error);
-                alert("Error al resetear el año fiscal");
+                await mostrarAlert("Error al resetear el año fiscal");
             });
         }
     }
 
-handleFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+    async handleFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
 
-    const aviso = `⚠️ AVISO ANTES DE IMPORTAR ⚠️\n\n` +
-        `1. Los clientes sin NIF/CIF en el Excel recibirán un identificador temporal (SIN-NIF-XXXXXX).\n\n` +
-        `2. Si un cliente tiene un NIF/CIF diferente en el Excel al de la aplicación, se creará como cliente nuevo y puede generar duplicados. Revisa el Excel y el CRM antes de continuar.\n\n` +
-        `3. Al importar, solo se actualizarán los datos básicos del cliente (nombre, teléfono, correo, fecha de nacimiento, tipo de cliente y números CC). El resto de estados se conservarán tal como están en la aplicación.\n\n` +
-        `¿Deseas continuar con la importación?`;
+        const aviso = `⚠️ AVISO ANTES DE IMPORTAR ⚠️\n\n` +
+            `1. Los clientes sin NIF/CIF en el Excel recibirán un identificador temporal (SIN-NIF-XXXXXX).\n\n` +
+            `2. Si un cliente tiene un NIF/CIF diferente en el Excel al de la aplicación, se creará como cliente nuevo y puede generar duplicados. Revisa el Excel y el CRM antes de continuar.\n\n` +
+            `3. Al importar, solo se actualizarán los datos básicos del cliente (nombre, teléfono, correo, fecha de nacimiento, tipo de cliente y números CC). El resto de estados se conservarán tal como están en la aplicación.\n\n` +
+            `¿Deseas continuar con la importación?`;
 
-    if (!confirm(aviso)) {
-        event.target.value = '';
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const token = localStorage.getItem('token');
-
-    // Mostrar overlay
-    const overlay = document.getElementById('loadingOverlay');
-    if (overlay) overlay.style.display = 'flex';
-
-    fetch("http://localhost:8080/api/clientes/excel/importar", {
-        method: "POST",
-        headers: {
-            'Authorization': `Bearer ${token}`
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Ocultar overlay
-        if (overlay) overlay.style.display = 'none';
-
-        console.log("Resultado importación:", data);
-
-        let mensaje = `✅ Importación completada:\n\n`;
-        mensaje += `• Clientes importados: ${data.creados}\n`;
-        mensaje += `• Clientes actualizados: ${data.actualizados}\n`;
-
-        if (data.filasSinNif && data.filasSinNif.length > 0) {
-            mensaje += `\n⚠️ Clientes sin NIF/CIF a los que se les asignó uno temporal:\n`;
-            data.filasSinNif.forEach(fila => {
-                mensaje += `  - Fila ${fila} del Excel\n`;
-            });
+        const confirmado = await mostrarConfirm(aviso);
+        if (!confirmado) {
+            event.target.value = '';
+            return;
         }
 
-        if (data.yaExistian && data.yaExistian.length > 0) {
-            const errores = data.yaExistian.filter(n => n.startsWith('ERROR-'));
-            if (errores.length > 0) {
-                mensaje += `\n❌ NIFs con error al procesar:\n${errores.map(e => e.replace('ERROR-', '')).join(', ')}`;
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const token = localStorage.getItem('token');
+
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay) overlay.style.display = 'flex';
+
+        fetch("http://localhost:8080/api/clientes/excel/importar", {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(async data => {
+            if (overlay) overlay.style.display = 'none';
+
+            console.log("Resultado importación:", data);
+
+            let mensaje = `✅ Importación completada:\n\n`;
+            mensaje += `• Clientes importados: ${data.creados}\n`;
+            mensaje += `• Clientes actualizados: ${data.actualizados}\n`;
+
+            if (data.filasSinNif && data.filasSinNif.length > 0) {
+                mensaje += `\n⚠️ Clientes sin NIF/CIF a los que se les asignó uno temporal:\n`;
+                data.filasSinNif.forEach(fila => {
+                    mensaje += `  - Fila ${fila} del Excel\n`;
+                });
             }
-        }
 
-        if (data.error) {
-            mensaje += `\n\n❌ Error: ${data.error}`;
-        }
+            if (data.yaExistian && data.yaExistian.length > 0) {
+                const errores = data.yaExistian.filter(n => n.startsWith('ERROR-'));
+                if (errores.length > 0) {
+                    mensaje += `\n❌ NIFs con error al procesar:\n${errores.map(e => e.replace('ERROR-', '')).join(', ')}`;
+                }
+            }
 
-        alert(mensaje);
-        event.target.value = '';
-    })
-    .catch(error => {
-        // Ocultar overlay en caso de error también
-        if (overlay) overlay.style.display = 'none';
-        console.error(error);
-        alert("Error al importar el archivo");
-        event.target.value = '';
-    });
-}
+            if (data.error) {
+                mensaje += `\n\n❌ Error: ${data.error}`;
+            }
+
+            await mostrarAlert(mensaje);
+            event.target.value = '';
+        })
+        .catch(async error => {
+            if (overlay) overlay.style.display = 'none';
+            console.error(error);
+            await mostrarAlert("Error al importar el archivo");
+            event.target.value = '';
+        });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
