@@ -47,7 +47,14 @@
       <input id="correoElectronico" type="email">
 
       <label>Fecha Nacimiento</label>
-      <input id="fechaNacimiento" type="date">
+      <div style="position: relative; display: flex; align-items: center;">
+        <input id="fechaNacimiento" type="text" placeholder="DD/MM/AAAA" maxlength="10" autocomplete="off"
+               style="padding-right: 36px; width: 100%; box-sizing: border-box;">
+        <input id="fechaNacimientoPicker" type="date"
+               style="position:absolute; right:0; width:36px; opacity:0; cursor:pointer; height:100%;">
+        <i class="fa-solid fa-calendar-days"
+           style="position:absolute; right:10px; pointer-events:none; color:#888;"></i>
+      </div>
 
       <label>Referencia</label>
       <input id="referencia" type="text">

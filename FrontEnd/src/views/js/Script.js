@@ -933,18 +933,47 @@ class App {
 
     // ===== AGREGAR CLIENTE =====
     initAgregarCliente() {
+        initFechaMascara('fechaNacimiento', 'fechaNacimientoPicker');
         const form = document.querySelector(".cliente-form");
         if (!form) return;
 
+        function validarFecha(valor) {
+            if (!valor || valor.length < 10) return false;
+            const [dia, mes, anio] = valor.split('/').map(Number);
+            if (!dia || !mes || !anio) return false;
+            if (mes < 1 || mes > 12) return false;
+            if (dia < 1 || dia > 31) return false;
+            if (anio < 1900 || anio > new Date().getFullYear()) return false;
+
+            const fecha = new Date(anio, mes - 1, dia);
+            return fecha.getFullYear() === anio &&
+                   fecha.getMonth() === mes - 1 &&
+                   fecha.getDate() === dia;
+        }
+
+        function parsearFecha(valor) {
+            if (!valor || valor.length < 10) return null;
+            const [dia, mes, anio] = valor.split('/');
+            if (!dia || !mes || !anio || anio.length < 4) return null;
+            return `${anio}-${mes}-${dia}`;
+        }
+
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
+
+            // Validar fecha ANTES de construir el objeto
+            const fechaVal = document.getElementById("fechaNacimiento").value;
+            if (fechaVal && !validarFecha(fechaVal)) {
+                await mostrarAlert("La fecha de nacimiento no es válida.\nUsa el formato DD/MM/AAAA.");
+                return;
+            }
 
             let cliente = {
                 nombre: document.getElementById("nombre").value || null,
                 nifCif: document.getElementById("nifCif").value || null,
                 telefono: document.getElementById("telefono").value || null,
                 correoElectronico: document.getElementById("correoElectronico").value || null,
-                fechaNacimiento: document.getElementById("fechaNacimiento").value || null,
+                fechaNacimiento: parsearFecha(fechaVal),
                 referencia: document.getElementById("referencia").value || null,
                 casilla505anterior: document.getElementById("casilla505anterior").value || null,
                 numerosCC: document.getElementById("numerosCC").value || null,
@@ -1368,3 +1397,33 @@ class App {
 document.addEventListener("DOMContentLoaded", () => {
     new App();
 });
+
+function initFechaMascara(inputTextoId, inputPickerId) {
+    const inputTexto = document.getElementById(inputTextoId);
+    const inputPicker = document.getElementById(inputPickerId);
+    if (!inputTexto || !inputPicker) return;
+
+
+    inputTexto.addEventListener('input', (e) => {
+        let val = inputTexto.value.replace(/\D/g, '');
+        if (val.length > 8) val = val.slice(0, 8);
+
+        let formatted = '';
+        if (val.length <= 2) {
+            formatted = val;
+        } else if (val.length <= 4) {
+            formatted = val.slice(0, 2) + '/' + val.slice(2);
+        } else {
+            formatted = val.slice(0, 2) + '/' + val.slice(2, 4) + '/' + val.slice(4);
+        }
+        inputTexto.value = formatted;
+    });
+
+
+    inputPicker.addEventListener('change', () => {
+        const val = inputPicker.value;
+        if (!val) return;
+        const [anio, mes, dia] = val.split('-');
+        inputTexto.value = `${dia}/${mes}/${anio}`;
+    });
+}
