@@ -1445,6 +1445,58 @@ function initFechaMascara(inputTextoId, inputPickerId) {
     const inputPicker = document.getElementById(inputPickerId);
     if (!inputTexto || !inputPicker) return;
 
+    let autoCompleteTimer = null;
+
+    inputTexto.addEventListener('keydown', (e) => {
+        if (['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            clearTimeout(autoCompleteTimer);
+            return;
+        }
+
+        if (!/^\d$/.test(e.key)) {
+            e.preventDefault();
+            return;
+        }
+
+        const val = inputTexto.value.replace(/\D/g, '');
+        const digits = val.length;
+
+        // Avance automático inmediato si el dígito no puede ser inicio de dos cifras válidas
+        if (digits === 0 && parseInt(e.key) > 3) {
+            e.preventDefault();
+            inputTexto.value = '0' + e.key + '/';
+            return;
+        }
+        if (digits === 2 && parseInt(e.key) > 1) {
+            e.preventDefault();
+            inputTexto.value = inputTexto.value + '0' + e.key + '/';
+            return;
+        }
+
+        // Avance automático por timeout si el dígito SÍ podría ser inicio válido
+        // Día: dígito 1, 2 o 3 — Mes: dígito 1
+        clearTimeout(autoCompleteTimer);
+
+        if (digits === 0 && parseInt(e.key) <= 3) {
+            autoCompleteTimer = setTimeout(() => {
+                const current = inputTexto.value.replace(/\D/g, '');
+                if (current.length === 1) {
+                    inputTexto.value = '0' + current + '/';
+                }
+            }, 800);
+        }
+
+        if (digits === 2 && parseInt(e.key) === 1) {
+            autoCompleteTimer = setTimeout(() => {
+                const current = inputTexto.value.replace(/\D/g, '');
+                if (current.length === 3) {
+                    const dia = current.slice(0, 2);
+                    const mes = '0' + current.slice(2);
+                    inputTexto.value = dia + '/' + mes + '/';
+                }
+            }, 800);
+        }
+    });
 
     inputTexto.addEventListener('input', (e) => {
         let val = inputTexto.value.replace(/\D/g, '');
@@ -1460,7 +1512,6 @@ function initFechaMascara(inputTextoId, inputPickerId) {
         }
         inputTexto.value = formatted;
     });
-
 
     inputPicker.addEventListener('change', () => {
         const val = inputPicker.value;
