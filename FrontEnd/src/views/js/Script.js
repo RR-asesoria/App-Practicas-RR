@@ -247,6 +247,27 @@ function invalidarCache() {
     cacheTimestamp = null;
 }
 
+// ===== HELPER: fila vacía sin resultados =====
+function mostrarFilaSinResultados(tabla, colspan) {
+    tabla.innerHTML = '';
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+        <td colspan="${colspan}" style="
+            text-align: center;
+            padding: 40px 16px;
+            color: var(--color-text-muted, #888);
+            font-size: 14px;
+            font-style: italic;
+        ">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-magnifying-glass" style="font-size: 24px; opacity: 0.4;"></i>
+                <span>No se han encontrado clientes con estas características</span>
+            </div>
+        </td>
+    `;
+    tabla.appendChild(fila);
+}
+
 // ===== CARGAR CLIENTES =====
 async function cargarClientes() {
     try {
@@ -314,6 +335,15 @@ function renderizarConPaginacion(clientes) {
         const tabla = document.getElementById('tablaClientes');
         if (!tabla) return;
         tabla.innerHTML = '';
+
+        // ── Sin resultados ──
+        if (clientes.length === 0) {
+            mostrarFilaSinResultados(tabla, 10);
+            // Limpiar paginación si existe
+            const controles = document.getElementById('paginacion-clientes');
+            if (controles) controles.innerHTML = '';
+            return;
+        }
 
         const inicio = paginaActual * pageSize;
         const pagina = clientes.slice(inicio, inicio + pageSize);
@@ -508,6 +538,12 @@ async function cargarHistorico() {
         if (!tabla) return;
         tabla.innerHTML = '';
 
+        // ── Sin resultados ──
+        if (clientes.length === 0) {
+            mostrarFilaSinResultados(tabla, 9);
+            return;
+        }
+
      clientes.forEach(cliente => {
          const fila = document.createElement('tr');
          fila.innerHTML = `
@@ -691,6 +727,12 @@ class App {
             const tabla = document.getElementById('tablaClientes');
             if (!tabla) return;
             tabla.innerHTML = '';
+
+            // ── Sin resultados ──
+            if (clientes.length === 0) {
+                mostrarFilaSinResultados(tabla, 3);
+                return;
+            }
 
             clientes.forEach(cliente => {
                 const fila = document.createElement('tr');
