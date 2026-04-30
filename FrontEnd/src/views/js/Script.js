@@ -1180,8 +1180,9 @@ class App {
                 return;
             }
 
-            if (password.length < 6) {
-                await mostrarAlert("La contraseña debe tener al menos 6 caracteres");
+            const formatoPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+            if (!formatoPassword.test(password)) {
+                await mostrarAlert("La contraseña no cumple los requisitos mínimos:\n\n• Al menos 8 caracteres\n• Una letra mayúscula\n• Una letra minúscula\n• Un número\n• Un símbolo (@$!%*?&)");
                 return;
             }
 
@@ -1249,8 +1250,9 @@ class App {
                 return;
             }
 
-            if (nuevaPassword.length < 6) {
-                await mostrarAlert("La contraseña debe tener al menos 6 caracteres");
+            const formatoPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
+            if (!formatoPassword.test(nuevaPassword)) {
+                await mostrarAlert("La contraseña no cumple los requisitos mínimos:\n\n• Al menos 8 caracteres\n• Una letra mayúscula\n• Una letra minúscula\n• Un número\n• Un símbolo (@$!%*?&)");
                 return;
             }
 
