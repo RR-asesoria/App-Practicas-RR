@@ -782,7 +782,7 @@ class App {
             const mensaje = await response.text();
 
             if (!response.ok) {
-                await mostrarAlert("Error: Los usuarios sin permisos de administrador no pueden realizar esta acción, consulta con tu administrador");
+                await mostrarAlert("No tienes permisos para cambiar el NIF. Esta acción solo puede realizarla un administrador.");
                 return;
             }
 
@@ -791,7 +791,7 @@ class App {
 
         } catch (error) {
             console.error(error);
-            await mostrarAlert("Error al cambiar el NIF: " + error.message);
+            await mostrarAlert("No se ha podido cambiar el NIF. Inténtalo de nuevo o contacta con el administrador.");
         }
     }
 
@@ -899,7 +899,7 @@ class App {
                             await mostrarAlert("Cierre de ejercicio realizado correctamente.");
                         } catch (error) {
                             console.error(error);
-                            await mostrarAlert("Error al realizar el cierre: " + error.message);
+                            await mostrarAlert("No se ha podido realizar el cierre de ejercicio. Es posible que no tengas permisos de administrador.");
                         }
                     }
                 );
@@ -1185,6 +1185,12 @@ class App {
                 return;
             }
 
+            const formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!formatoCorreo.test(correo)) {
+                await mostrarAlert("El correo electrónico no es válido. Asegúrate de que tiene el formato correcto (ejemplo@dominio.com).");
+                return;
+            }
+
             const confirmado = await mostrarConfirm(`¿Quieres crear el usuario ${correo}?`);
             if (!confirmado) return;
 
@@ -1205,7 +1211,7 @@ class App {
 
             } catch (error) {
                 console.error(error);
-                await mostrarAlert("Error al agregar usuario");
+                await mostrarAlert("No se ha podido crear el usuario. Comprueba que el correo no esté ya registrado o que tengas permisos de administrador.");
             }
         });
 
@@ -1265,7 +1271,7 @@ class App {
 
             } catch (error) {
                 console.error(error);
-                await mostrarAlert("Error al cambiar contraseña: " + error.message);
+                await mostrarAlert("No se ha podido cambiar la contraseña. Comprueba que el correo sea correcto o que tengas permisos de administrador.");
             }
         });
 
@@ -1315,7 +1321,7 @@ class App {
 
             } catch (error) {
                 console.error(error);
-                await mostrarAlert("Error: " + error.message);
+                await mostrarAlert("No se ha podido eliminar el usuario. Comprueba que el correo sea correcto o que tengas permisos de administrador.");
             }
         });
     }
@@ -1360,7 +1366,7 @@ class App {
             })
             .catch(async error => {
                 console.error(error);
-                await mostrarAlert("Error al resetear el año fiscal");
+                await mostrarAlert("No se ha podido resetear el año fiscal. Es posible que no tengas permisos de administrador.");
             });
         }
     }
