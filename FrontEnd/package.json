@@ -1,0 +1,38 @@
+{
+  "name": "frontend",
+  "version": "2.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:patch": "npm version patch && electron-builder",
+    "build:minor": "npm version minor && electron-builder",
+    "build:major": "npm version major && electron-builder"
+  },
+  "build": {
+    "appId": "com.gestoriarr.app",
+    "productName": "GestoriaRR",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "files": [
+      "main.js",
+      "src/**/*"
+    ],
+    "extraResources": [
+      "backend.jar",
+      {
+        "from": "jre",
+        "to": "jre"
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
